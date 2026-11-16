@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مَحَكّ — ورقة امتحان بروح حيّة</title>
+    <title>مَحَكّ — النسخة المركّزة (67 سؤالاً)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,13 +19,11 @@
                     },
                     colors: {
                         paper: '#fbf7ee',
-                        paperDark: '#f3ebd9',
                         ink: '#16325c',
                         inkLight: '#2b548e',
                         redPen: '#c53030',
                         greenPen: '#15803d',
                         board: '#17231f',
-                        boardCard: '#1f2f2a',
                         chalk: '#f1f5f9',
                         chalkYellow: '#fde047',
                         chalkRed: '#fca5a5',
@@ -39,20 +37,20 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'IBM Plex Sans Arabic', sans-serif;
-            transition: background-color 0.35s ease, color 0.35s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .font-ruqaa { font-family: 'Aref Ruqaa', serif; }
 
-        /* خلفية ورقة الامتحان المسطرة في الوضع الفاتح */
+        /* الوضع الفاتح: ورقة الامتحان */
         body:not(.dark) {
             background-color: #fbf7ee;
             background-image:
-                linear-gradient(90deg, transparent 94%, rgba(197, 48, 48, 0.22) 94%, rgba(197, 48, 48, 0.22) 94.3%, transparent 94.3%),
+                linear-gradient(90deg, transparent 94%, rgba(197, 48, 48, 0.2) 94%, rgba(197, 48, 48, 0.2) 94.3%, transparent 94.3%),
                 repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(22, 50, 92, 0.06) 31px, rgba(22, 50, 92, 0.06) 32px);
             color: #16325c;
         }
 
-        /* خلفية سبورة الطباشير في الوضع الداكن */
+        /* الوضع الداكن: سبورة الطباشير */
         body.dark {
             background-color: #17231f;
             background-image:
@@ -63,20 +61,17 @@
             color: #f1f5f9;
         }
 
-        /* بطاقة الورقة / السبورة */
         .exam-sheet {
-            background: rgba(255, 253, 247, 0.92);
+            background: rgba(255, 253, 247, 0.94);
             border: 1px solid #e2d5b8;
-            box-shadow: 0 8px 25px -5px rgba(22, 50, 92, 0.08), 0 0 1px rgba(22, 50, 92, 0.2);
-            position: relative;
+            box-shadow: 0 6px 20px -4px rgba(22, 50, 92, 0.08);
         }
         .dark .exam-sheet {
-            background: rgba(31, 47, 42, 0.92);
+            background: rgba(31, 47, 42, 0.94);
             border: 2px solid #334e45;
-            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.45);
         }
 
-        /* هامش الورقة الأحمر */
         .paper-margin-line {
             border-right: 2px dashed rgba(197, 48, 48, 0.3);
         }
@@ -84,13 +79,13 @@
             border-right: 2px dashed rgba(253, 224, 71, 0.25);
         }
 
-        /* رسم الدائرة اليدوية والشطب بالقلم الأحمر عبر SVG */
+        /* الدائرة اليدوية والشطب بالقلم الأحمر */
         .hand-circle-svg {
             position: absolute;
-            top: -6px;
-            right: -6px;
-            width: 44px;
-            height: 44px;
+            top: -5px;
+            right: -5px;
+            width: 42px;
+            height: 42px;
             pointer-events: none;
             overflow: visible;
         }
@@ -100,7 +95,7 @@
             stroke-linecap: round;
             stroke-dasharray: 160;
             stroke-dashoffset: 160;
-            animation: drawHandStroke 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: drawStroke 0.4s ease-out forwards;
         }
         .hand-strike-svg {
             position: absolute;
@@ -116,37 +111,23 @@
             stroke-linecap: round;
             stroke-dasharray: 600;
             stroke-dashoffset: 600;
-            animation: drawHandStroke 0.4s ease-out forwards;
+            animation: drawStroke 0.35s ease-out forwards;
         }
-        .dark .hand-strike-path {
-            stroke: #fca5a5;
-        }
-        @keyframes drawHandStroke {
-            to { stroke-dashoffset: 0; }
-        }
+        .dark .hand-strike-path { stroke: #fca5a5; }
+        @keyframes drawStroke { to { stroke-dashoffset: 0; } }
 
-        /* ملاحظة الهامش بالقلم الأحمر */
         .margin-note {
             font-family: 'Aref Ruqaa', serif;
             color: #c53030;
-            transform: rotate(-2deg);
-            animation: popMarginNote 0.35s ease-out forwards;
+            transform: rotate(-1.5deg);
         }
-        .dark .margin-note {
-            color: #fca5a5;
-        }
-        @keyframes popMarginNote {
-            from { opacity: 0; transform: rotate(-6deg) translateY(6px); }
-            to { opacity: 1; transform: rotate(-2deg) translateY(0); }
-        }
+        .dark .margin-note { color: #fca5a5; }
 
-        /* ختم الدرجة النهائية */
         .exam-stamp {
             font-family: 'Aref Ruqaa', serif;
             border: 3px double #c53030;
             color: #c53030;
-            transform: rotate(-8deg);
-            box-shadow: inset 0 0 0 1px rgba(197,48,48,0.2);
+            transform: rotate(-6deg);
         }
         .dark .exam-stamp {
             border-color: #fde047;
@@ -175,66 +156,44 @@
             background: #16325c;
             border: 3px solid #fbf7ee;
             margin-top: -8px;
-            cursor: grab;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            cursor: pointer;
         }
         .dark input[type=range].confidence-range::-webkit-slider-thumb {
             background: #fde047;
             border-color: #17231f;
         }
-
-        /* نبض النجوم في سماء المعرفة */
-        @keyframes starPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-        .star-node {
-            animation: starPulse 3s infinite ease-in-out;
-            cursor: pointer;
-        }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { background: #fff !important; color: #000 !important; }
-            .exam-sheet { box-shadow: none !important; border: 1px solid #000 !important; }
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20 md:pb-8">
 
-    <!-- الشريط العلوي -->
-    <header class="sticky top-0 z-30 backdrop-blur-md bg-[#fbf7ee]/90 dark:bg-[#17231f]/90 border-b border-[#e2d5b8] dark:border-[#334e45] no-print">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="navigate('home')">
-                <div class="w-10 h-10 rounded-xl bg-ink dark:bg-chalkYellow text-paper dark:text-board flex items-center justify-center font-ruqaa text-2xl font-bold shadow">
+    <!-- الشريط العلوي المختصر -->
+    <header class="sticky top-0 z-30 backdrop-blur-md bg-[#fbf7ee]/90 dark:bg-[#17231f]/90 border-b border-[#e2d5b8] dark:border-[#334e45]">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigate('home')">
+                <div class="w-9 h-9 rounded-xl bg-ink dark:bg-chalkYellow text-paper dark:text-board flex items-center justify-center font-ruqaa text-xl font-bold">
                     مـ
                 </div>
                 <div>
-                    <h1 class="font-ruqaa text-2xl md:text-3xl font-bold leading-none text-ink dark:text-chalk">مَحَكّ</h1>
-                    <p class="text-[11px] text-gray-500 dark:text-gray-400">هل كنت تعرف أنك تعرف؟</p>
+                    <h1 class="font-ruqaa text-2xl font-bold leading-none">مَحَكّ</h1>
+                    <p class="text-[11px] opacity-70">اختبر صدق معرفتك • 67 سؤالاً</p>
                 </div>
             </div>
 
-            <!-- تنقل سطح المكتب -->
-            <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-                <button onclick="navigate('home')" data-nav="home" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">الرئيسية</button>
-                <button onclick="navigate('library')" data-nav="library" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">المكتبة (67)</button>
-                <button onclick="navigate('sky')" data-nav="sky" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">سماء المعرفة ✨</button>
-                <button onclick="navigate('generator')" data-nav="generator" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">من ملاحظاتك</button>
-                <button onclick="navigate('profile')" data-nav="profile" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">صدق معرفتك</button>
-                <button onclick="navigate('teacher')" data-nav="teacher" class="nav-btn px-3 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">لوحة المدرّس</button>
+            <!-- تنقل سطح المكتب (4 صفحات أساسية فقط) -->
+            <nav class="hidden md:flex items-center gap-1.5 text-sm font-bold">
+                <button onclick="navigate('home')" data-nav="home" class="nav-btn px-3.5 py-1.5 rounded-lg">الرئيسية</button>
+                <button onclick="navigate('library')" data-nav="library" class="nav-btn px-3.5 py-1.5 rounded-lg">المكتبة الكاملة (67)</button>
+                <button onclick="navigate('sky')" data-nav="sky" class="nav-btn px-3.5 py-1.5 rounded-lg">سماء المعرفة ✨</button>
+                <button onclick="navigate('profile')" data-nav="profile" class="nav-btn px-3.5 py-1.5 rounded-lg">ملفي وصدق معرفتي</button>
             </nav>
 
-            <!-- أدوات الحالة -->
+            <!-- أدوات سريعة -->
             <div class="flex items-center gap-2">
-                <div class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100/80 dark:bg-amber-900/40 text-amber-900 dark:text-chalkYellow border border-amber-300/60 flex items-center gap-1" title="سلسلة الأيام">
-                    <span>🔥</span><span id="header-streak">1</span>
+                <div class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100/80 dark:bg-emerald-900/40 text-ink dark:text-chalkGreen border border-blue-300/60">
+                    ⚖️ <span id="header-score">0</span>
                 </div>
-                <div class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100/80 dark:bg-emerald-900/40 text-ink dark:text-chalkGreen border border-blue-300/60 flex items-center gap-1" title="نقاط المعايرة">
-                    <span>⚖️</span><span id="header-score">0</span>
-                </div>
-                <button onclick="toggleSound()" id="sound-btn" class="p-2 rounded-lg border border-[#e2d5b8] dark:border-[#334e45] text-sm" title="صوت القلم والطباشير">🔊</button>
-                <button onclick="toggleTheme()" id="theme-btn" class="px-2.5 py-1.5 rounded-lg border border-[#e2d5b8] dark:border-[#334e45] text-xs font-bold flex items-center gap-1">
+                <button onclick="toggleSound()" id="sound-btn" class="p-2 rounded-lg border border-[#e2d5b8] dark:border-[#334e45] text-xs" title="الصوت">🔊</button>
+                <button onclick="toggleTheme()" class="px-2.5 py-1.5 rounded-lg border border-[#e2d5b8] dark:border-[#334e45] text-xs font-bold flex items-center gap-1">
                     <span id="theme-icon">🖍️</span>
                     <span id="theme-label" class="hidden sm:inline">السبورة</span>
                 </button>
@@ -242,227 +201,156 @@
         </div>
     </header>
 
-    <!-- الحاوية الرئيسية -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 pt-5">
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 pt-5">
 
-        <!-- ==================== 1. الصفحة الرئيسية ==================== -->
-        <section id="view-home" class="view-section space-y-6">
-            <!-- لافتة الهوية -->
-            <div class="exam-sheet rounded-2xl p-6 md:p-8 relative overflow-hidden">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div class="space-y-3 max-w-xl">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-ink/10 dark:bg-chalkYellow/20 text-ink dark:text-chalkYellow">
-                            <span>✒️ ورقة امتحان بروح حيّة</span>
-                            <span>•</span>
-                            <span>67 سؤالاً في الاقتصاد الجزئي</span>
-                        </div>
-                        <h2 class="font-ruqaa text-3xl md:text-5xl font-bold leading-tight">
-                            لا نسألك فقط «هل أجبت صح؟»<br>
-                            <span class="text-redPen dark:text-chalkYellow">بل: هل كنت تعرف أنك تعرف؟</span>
+        <!-- ==================== 1. الرئيسية ==================== -->
+        <section id="view-home" class="view-section space-y-5">
+            <!-- البطاقة الرئيسية وزر الأسئلة الـ 67 الكاملة -->
+            <div class="exam-sheet rounded-2xl p-6 space-y-5">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-2">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-ink/10 dark:bg-chalkYellow/20 text-ink dark:text-chalkYellow">
+                            ♾️ وقت مفتوح • تصحيح وتشريح فوري
+                        </span>
+                        <h2 class="font-ruqaa text-3xl md:text-4xl font-bold leading-tight">
+                            بنك أسئلة الاقتصاد الكامل (67 سؤالاً)
                         </h2>
-                        <p class="text-sm md:text-base opacity-85 leading-relaxed">
-                            في «مَحَكّ»، كل إجابة تقترن بـ <strong>عيار الثقة (50%–100%)</strong> لتكافئ المعايرة الصادقة وتكشف الثقة العمياء، مع <strong>تشريح فوري للفخاخ</strong> بالقلم الأحمر في هامش ورقتك.
+                        <p class="text-sm opacity-80 leading-relaxed">
+                            اختر الإجابة، حدّد <strong>عيار ثقتك (50%–100%)</strong>، وتعرّف فوراً على الفخاخ المنصوبة في الخيارات الخاطئة بدون ضغط وقت.
                         </p>
-                        <div class="flex flex-wrap gap-3 pt-2">
-                            <button onclick="startQuizMode('exam', 'all')" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm shadow hover:opacity-95 transition">
-                                📄 ابدأ ورقة الامتحان الكاملة
-                            </button>
-                            <button onclick="navigate('library')" class="px-4 py-2.5 rounded-xl border-2 border-ink dark:border-chalk text-ink dark:text-chalk font-bold text-sm hover:bg-ink/5 transition">
-                                📚 تصفّح المكتبة حسب الفصل
-                            </button>
-                        </div>
                     </div>
 
-                    <!-- بطاقة ختم المعايرة السريع -->
-                    <div class="exam-stamp p-4 rounded-xl text-center min-w-[180px] self-center md:self-start bg-white/60 dark:bg-black/20">
-                        <div class="text-xs font-sans font-bold tracking-wider">مؤشر صدق المعرفة</div>
-                        <div id="home-calibration-badge" class="text-3xl font-bold my-1">100%</div>
+                    <div class="exam-stamp p-3.5 rounded-xl text-center min-w-[155px] self-center">
+                        <div class="text-[11px] font-sans font-bold">مؤشر صدق المعرفة</div>
+                        <div id="home-calibration-badge" class="text-3xl font-bold my-0.5">100%</div>
                         <div id="home-calibration-desc" class="text-xs">معايرة متزنة</div>
                     </div>
                 </div>
+
+                <!-- إعدادات الترتيب السريعة -->
+                <div class="flex flex-wrap items-center gap-4 p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-[#e2d5b8] dark:border-[#334e45] text-xs font-bold">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="home-order-toggle" onchange="toggleOrderQuestions(this.checked)" class="w-4 h-4">
+                        <span>خلط ترتيب الأسئلة عشوائياً (إذا أغلقته ستظهر بالتسلسل الأصلي 1 إلى 67)</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="home-shuffle-opts" checked onchange="toggleShuffleOpts(this.checked)" class="w-4 h-4">
+                        <span>خلط الخيارات (أ، ب، ج، د)</span>
+                    </label>
+                </div>
+
+                <!-- الزر الرئيسي للأسئلة الـ 67 الكاملة -->
+                <button onclick="startQuiz('all', 'exam')" class="w-full py-4 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-ruqaa text-2xl font-bold shadow-md hover:opacity-95 transition flex items-center justify-center gap-2">
+                    <span>📄 ابدأ الأسئلة الكاملة (جميع الـ 67 سؤالاً • وقت مفتوح)</span>
+                </button>
+
+                <!-- أزرار الفصول الكاملة -->
+                <div class="grid sm:grid-cols-3 gap-3 pt-1">
+                    <button onclick="startQuiz('ch1', 'exam')" class="p-4 rounded-xl border-2 border-ink/20 dark:border-chalk/20 hover:border-ink dark:hover:border-chalkYellow text-right transition bg-white/50 dark:bg-black/20">
+                        <div class="text-xs font-bold text-redPen dark:text-chalkYellow">الفصل الأول كامل</div>
+                        <div class="font-ruqaa text-xl font-bold mt-0.5">نظرية الطلب</div>
+                        <div class="text-xs opacity-75 mt-1">الأسئلة 1 إلى 42 (42 سؤالاً)</div>
+                    </button>
+
+                    <button onclick="startQuiz('ch2', 'exam')" class="p-4 rounded-xl border-2 border-ink/20 dark:border-chalk/20 hover:border-ink dark:hover:border-chalkYellow text-right transition bg-white/50 dark:bg-black/20">
+                        <div class="text-xs font-bold text-redPen dark:text-chalkYellow">الفصل الثاني كامل</div>
+                        <div class="font-ruqaa text-xl font-bold mt-0.5">نظرية العرض</div>
+                        <div class="text-xs opacity-75 mt-1">الأسئلة 43 إلى 60 (18 سؤالاً)</div>
+                    </button>
+
+                    <button onclick="startQuiz('ch3', 'exam')" class="p-4 rounded-xl border-2 border-ink/20 dark:border-chalk/20 hover:border-ink dark:hover:border-chalkYellow text-right transition bg-white/50 dark:bg-black/20">
+                        <div class="text-xs font-bold text-redPen dark:text-chalkYellow">الفصل الثالث كامل</div>
+                        <div class="font-ruqaa text-xl font-bold mt-0.5">توازن السوق</div>
+                        <div class="text-xs opacity-75 mt-1">الأسئلة 61 إلى 67 (7 أسئلة)</div>
+                    </button>
+                </div>
+
+                <!-- أزرار المراجعة الذكية ووضع البقاء -->
+                <div class="grid sm:grid-cols-2 gap-3 pt-1">
+                    <button onclick="startQuiz('mistakes', 'exam')" class="py-3 px-4 rounded-xl bg-redPen/10 text-redPen dark:text-chalkRed border border-redPen/30 font-bold text-sm flex items-center justify-center gap-2 hover:bg-redPen hover:text-white transition">
+                        <span>🎯 اختبر أخطائي والأسئلة المترددة فقط</span>
+                        <span id="mistakes-count-badge" class="px-2 py-0.5 rounded-full bg-redPen text-white text-xs">0</span>
+                    </button>
+
+                    <button onclick="startQuiz('all', 'survival')" class="py-3 px-4 rounded-xl bg-amber-500/10 text-amber-900 dark:text-chalkYellow border border-amber-500/30 font-bold text-sm flex items-center justify-center gap-2 hover:bg-amber-500 hover:text-white transition">
+                        <span>❤️❤️❤️ وضع البقاء (3 أرواح بأسئلة متدرجة)</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- سؤال اليوم (تجربة فورية بدون تسجيل) -->
-            <div class="exam-sheet rounded-2xl p-5 md:p-6">
-                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#e2d5b8] dark:border-[#334e45] pb-3 mb-4">
+            <!-- سؤال سريع للتجربة الفورية في الرئيسية -->
+            <div class="exam-sheet rounded-2xl p-5">
+                <div class="flex items-center justify-between border-b border-[#e2d5b8] dark:border-[#334e45] pb-3 mb-4">
                     <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-md bg-redPen text-white text-xs font-bold font-ruqaa">سؤال اليوم • تجربة فورية</span>
-                        <span id="qod-chapter" class="text-xs opacity-75 font-semibold"></span>
+                        <span class="px-2.5 py-0.5 rounded bg-ink text-white dark:bg-chalkYellow dark:text-board text-xs font-bold font-ruqaa">سؤال عشوائي سريع</span>
+                        <span id="qod-chapter" class="text-xs font-bold opacity-75"></span>
                     </div>
-                    <button onclick="loadRandomQOD()" class="text-xs font-bold text-inkLight dark:text-chalkYellow hover:underline">🔄 سؤال عشوائي آخر</button>
+                    <button onclick="loadRandomQOD()" class="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/10 text-xs font-bold hover:opacity-80">🔄 غيّر السؤال</button>
                 </div>
 
                 <div class="grid md:grid-cols-12 gap-4 items-start">
-                    <div class="md:col-span-8 paper-margin-line pl-0 md:pl-4 space-y-4">
+                    <div class="md:col-span-8 paper-margin-line pl-0 md:pl-4 space-y-3.5">
                         <h3 id="qod-text" class="font-ruqaa text-xl md:text-2xl leading-relaxed"></h3>
-                        <div id="qod-options" class="space-y-2.5"></div>
+                        <div id="qod-options" class="space-y-2"></div>
 
-                        <!-- شريط عيار الثقة لسؤال اليوم -->
-                        <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-[#e2d5b8] dark:border-[#334e45]">
-                            <div class="flex justify-between items-center mb-1.5">
-                                <span class="font-ruqaa text-base font-bold">عيار الثقة قبل التثبيت:</span>
-                                <span id="qod-conf-label" class="font-bold text-sm px-2 py-0.5 rounded bg-ink text-white dark:bg-chalkYellow dark:text-board">75% (واثق)</span>
+                        <div class="p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-[#e2d5b8] dark:border-[#334e45]">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-ruqaa text-base font-bold">عيار الثقة:</span>
+                                <span id="qod-conf-label" class="font-bold text-xs px-2 py-0.5 rounded bg-ink text-white dark:bg-chalkYellow dark:text-board">75% (واثق)</span>
                             </div>
                             <input type="range" id="qod-conf-slider" class="confidence-range" min="50" max="100" step="5" value="75" oninput="updateQodConf(this.value)">
-                            <div class="flex justify-between text-[11px] opacity-70 mt-1">
-                                <span>50% (تخمين محض)</span>
-                                <span>75% (مرجّح عندي)</span>
-                                <span>100% (يقين تام)</span>
-                            </div>
                         </div>
 
                         <button id="qod-submit-btn" onclick="submitQOD()" disabled class="w-full py-2.5 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm opacity-40 cursor-not-allowed transition">
-                            ثبّت الإجابة وافحص معيار ثقتك
+                            ثبّت الإجابة وافحص الفخ
                         </button>
                     </div>
 
-                    <!-- هامش التصحيح الجانبي لسؤال اليوم -->
-                    <div class="md:col-span-4 min-h-[160px] flex flex-col justify-center p-3 rounded-xl bg-amber-50/50 dark:bg-black/20 border border-dashed border-[#e2d5b8] dark:border-[#334e45]">
-                        <div class="text-xs font-bold opacity-60 mb-2">هامش المصحّح (القلم الأحمر):</div>
-                        <div id="qod-margin-box" class="text-sm opacity-75 italic">
-                            اختر إجابة ثم حدّد عيار ثقتك ليظهر تشريح الفخ هنا في الهامش...
+                    <div class="md:col-span-4 min-h-[140px] flex flex-col justify-center p-3 rounded-xl bg-amber-50/50 dark:bg-black/20 border border-dashed border-[#e2d5b8] dark:border-[#334e45]">
+                        <div class="text-xs font-bold opacity-60 mb-1">هامش التصحيح:</div>
+                        <div id="qod-margin-box" class="text-xs opacity-75 leading-relaxed">
+                            اختر إجابة وحدّد ثقتك ليظهر تشريح الفخ هنا...
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- أوضاع الاختبار الخمسة -->
-            <div>
-                <h3 class="font-ruqaa text-2xl font-bold mb-3">اختر وضع الاختبار</h3>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div onclick="startQuizMode('exam', 'all')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">📝</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-ink dark:text-blue-200 font-bold">كلاسيكي بمؤقت</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">ورقة الامتحان</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">20 سؤالاً بمؤقت زمني، تنقّل حر بين الأسئلة، وتصحيح شامل بالقلم الأحمر عند التسليم أو فوري لكل سؤال.</p>
-                    </div>
-
-                    <div onclick="startQuizMode('survival', 'all')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">❤️❤️❤️</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/40 text-redPen dark:text-red-200 font-bold">3 أرواح</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">وضع البقاء</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">تبدأ بـ 3 أرواح والأسئلة تتدرج في الصعوبة من المستوى التأسيسي إلى المسائل الرياضية والمرونات.</p>
-                    </div>
-
-                    <div onclick="startQuizMode('smart', 'all')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">🧠</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/40 text-purple-900 dark:text-purple-200 font-bold">تكرار متباعد</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">المراجعة الذكية</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">يعرض الأسئلة التي أخطأت بها سابقاً أو أجبت عنها بثقة مهزوزة أو أوشكت نجومها على الخفوت.</p>
-                    </div>
-
-                    <div onclick="startQuizMode('duel', 'all')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">⚔️</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-chalkYellow font-bold">تحدي 1 ضد 1</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">المبارزة المباشرة</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">تحدٍّ بنفس الأسئلة عبر رابط مشترك أو ضد خصم افتراضي ذكي، مع عدّاد توتر وحسم مضاعف في السؤال الأخير!</p>
-                    </div>
-
-                    <div onclick="navigate('sky')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">🌌</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/40 text-emerald-900 dark:text-chalkGreen font-bold">خريطة نجمية</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">سماء المعرفة</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">كل محور في الاقتصاد نجمة تلمع بإتقانك وتخفت مع النسيان. اضغط على أي نجمة خافتة لمراجعتها فوراً.</p>
-                    </div>
-
-                    <div onclick="navigate('generator')" class="exam-sheet p-5 rounded-2xl cursor-pointer hover:-translate-y-0.5 transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-2xl">✨</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/40 text-teal-900 dark:text-teal-200 font-bold">توليد ذكي</span>
-                        </div>
-                        <h4 class="font-ruqaa text-xl font-bold mb-1">من ملاحظاتك إلى اختبار</h4>
-                        <p class="text-xs opacity-80 leading-relaxed">الصق أي ملخص أو فقرة دراسية ليولّد الموقع أسئلة MCQ منها بمستوى صعوبة تختاره مع تشريح الفخاخ.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== 2. المكتبة حسب المادة والفصل ==================== -->
-        <section id="view-library" class="view-section hidden space-y-6">
-            <div class="exam-sheet p-6 rounded-2xl">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h2 class="font-ruqaa text-3xl font-bold">مكتبة الاقتصاد الجزئي</h2>
-                        <p class="text-xs opacity-75 mt-1">جميع الأسئلة الـ 67 من الفصول الثلاثة جاهزة للاختبار والتشريح مع إمكانية التصفية</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="startQuizMode('exam', 'ch1')" class="px-3.5 py-2 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">اختبار الفصل الأول (42)</button>
-                        <button onclick="startQuizMode('exam', 'ch2')" class="px-3.5 py-2 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">اختبار الفصل الثاني (18)</button>
-                        <button onclick="startQuizMode('exam', 'ch3')" class="px-3.5 py-2 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">اختبار الفصل الثالث (7)</button>
-                    </div>
-                </div>
-
-                <!-- فلاتر البحث -->
-                <div class="grid sm:grid-cols-3 gap-3 mb-5">
-                    <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="ابحث في نص السؤال أو المفهوم..." class="px-3.5 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                    <select id="lib-chapter-filter" onchange="renderLibrary()" class="px-3.5 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                        <option value="all">جميع الفصول (67 سؤالاً)</option>
-                        <option value="1">الفصل الأول: نظرية الطلب (42 سؤالاً)</option>
-                        <option value="2">الفصل الثاني: نظرية العرض (18 سؤالاً)</option>
-                        <option value="3">الفصل الثالث: توازن السوق (7 أسئلة)</option>
-                    </select>
-                    <select id="lib-diff-filter" onchange="renderLibrary()" class="px-3.5 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                        <option value="all">كل مستويات الصعوبة</option>
-                        <option value="1">مستوى تأسيسي (سهل)</option>
-                        <option value="2">مستوى تحليلي (متوسط)</option>
-                        <option value="3">مستوى متقدم / رياضي (عميق)</option>
-                    </select>
-                </div>
-
-                <div id="library-list" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
-            </div>
-        </section>
-
-        <!-- ==================== 3. شاشة الاختبار ==================== -->
+        <!-- ==================== 2. شاشة الاختبار (وقت مفتوح) ==================== -->
         <section id="view-quiz" class="view-section hidden space-y-4">
-            <!-- شريط معلومات ورقة الامتحان -->
-            <div class="exam-sheet p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-3">
+            <!-- الشريط العلوي للامتحان -->
+            <div class="exam-sheet p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
                     <span id="quiz-mode-badge" class="px-3 py-1 rounded-lg bg-ink text-white dark:bg-chalkYellow dark:text-board font-ruqaa font-bold text-sm">ورقة الامتحان</span>
-                    <span id="quiz-progress-text" class="text-sm font-bold">سؤال 1 من 10</span>
-                    <span id="quiz-lives-box" class="hidden text-lg tracking-widest">❤️❤️❤️</span>
+                    <span id="quiz-progress-text" class="text-xs md:text-sm font-bold">سؤال 1 من 67</span>
+                    <span id="quiz-lives-box" class="hidden text-base">❤️❤️❤️</span>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <label class="flex items-center gap-1.5 text-xs cursor-pointer">
-                        <input type="checkbox" id="shuffle-toggle" checked onchange="toggleShuffleSetting(this.checked)" class="rounded">
-                        <span>خلط الخيارات</span>
-                    </label>
-                    <div id="quiz-timer-box" class="px-3 py-1 rounded-lg bg-black/5 dark:bg-white/10 font-mono text-sm font-bold">⏱️ <span id="quiz-timer">10:00</span></div>
-                    <button onclick="finishQuizNow()" class="px-3 py-1 rounded-lg bg-redPen/10 text-redPen dark:text-chalkRed border border-redPen/30 text-xs font-bold hover:bg-redPen hover:text-white transition">تسليم الورقة</button>
-                </div>
-            </div>
-
-            <!-- شريط عداد التوتر (خاص بوضع المبارزة) -->
-            <div id="duel-tension-bar" class="hidden exam-sheet p-3.5 rounded-2xl border-2 border-amber-500/50">
-                <div class="flex justify-between items-center text-xs font-bold mb-1.5">
-                    <span>🧑 أنت: <span id="duel-my-score" class="text-blue-600 dark:text-chalkGreen">0</span></span>
-                    <span id="duel-status-label" class="font-ruqaa text-sm text-amber-600 dark:text-chalkYellow">⚡ عدّاد التوتر المباشر</span>
-                    <span>🤖 الخصم المنافس: <span id="duel-opp-score" class="text-redPen dark:text-chalkRed">0</span></span>
-                </div>
-                <div class="w-full h-3 rounded-full bg-red-200 dark:bg-red-950 overflow-hidden flex">
-                    <div id="duel-bar-fill" class="h-full bg-ink dark:bg-chalkGreen transition-all duration-500" style="width: 50%"></div>
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-greenPen dark:text-chalkGreen text-xs font-bold">
+                        ♾️ وقت مفتوح (<span id="quiz-elapsed">00:00</span>)
+                    </span>
+                    <button onclick="toggleQuestionMap()" class="px-2.5 py-1 rounded-lg border border-[#e2d5b8] dark:border-[#334e45] text-xs font-bold">
+                        🔢 خريطة الأسئلة
+                    </button>
+                    <button onclick="finishQuizNow()" class="px-3 py-1 rounded-lg bg-redPen text-white text-xs font-bold hover:opacity-90">
+                        إنهاء والنتيجة
+                    </button>
                 </div>
             </div>
 
-            <!-- أرقام الأسئلة للتنقل السريع -->
-            <div id="quiz-nav-pills" class="flex gap-1.5 overflow-x-auto pb-1 no-print"></div>
+            <!-- خريطة أرقام الأسئلة (تظهر وتختفي بالزر أو تبقى قابلة للتمرير) -->
+            <div id="quiz-map-drawer" class="exam-sheet p-3 rounded-2xl">
+                <div class="text-[11px] font-bold opacity-70 mb-2">انتقل لأي سؤال مباشرة (الأخضر = صحيح، الأحمر = خطأ):</div>
+                <div id="quiz-nav-pills" class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-1"></div>
+            </div>
 
-            <!-- ورقة السؤال الرئيسية + الهامش -->
-            <div class="exam-sheet rounded-2xl p-5 md:p-7">
+            <!-- ورقة السؤال والهامش -->
+            <div class="exam-sheet rounded-2xl p-5 md:p-6">
                 <div class="grid md:grid-cols-12 gap-6 items-start">
-                    <!-- متن الورقة (8 أعمدة) -->
-                    <div class="md:col-span-8 paper-margin-line pl-0 md:pl-6 space-y-5">
+                    <!-- متن السؤال (8 أعمدة) -->
+                    <div class="md:col-span-8 paper-margin-line pl-0 md:pl-5 space-y-4">
                         <div class="flex items-center justify-between text-xs opacity-75">
                             <span id="quiz-q-topic" class="font-bold"></span>
                             <span id="quiz-q-diff" class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/10"></span>
@@ -470,51 +358,60 @@
 
                         <h2 id="quiz-q-text" class="font-ruqaa text-2xl md:text-3xl leading-relaxed"></h2>
 
-                        <!-- الخيارات الأربعة -->
-                        <div id="quiz-options-list" class="space-y-3 pt-1"></div>
+                        <!-- الخيارات -->
+                        <div id="quiz-options-list" class="space-y-2.5"></div>
 
                         <!-- شريط عيار الثقة -->
-                        <div class="p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-[#e2d5b8] dark:border-[#334e45]">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-ruqaa text-lg font-bold">عيار الثقة في إجابتك:</span>
-                                <span id="quiz-conf-badge" class="px-2.5 py-0.5 rounded-md bg-ink text-white dark:bg-chalkYellow dark:text-board text-xs font-bold">75% • واثق</span>
+                        <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-[#e2d5b8] dark:border-[#334e45]">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="font-ruqaa text-base font-bold">عيار الثقة في إجابتك:</span>
+                                <span id="quiz-conf-badge" class="px-2.5 py-0.5 rounded bg-ink text-white dark:bg-chalkYellow dark:text-board text-xs font-bold">75% • واثق</span>
                             </div>
                             <input type="range" id="quiz-conf-slider" class="confidence-range" min="50" max="100" step="5" value="75" oninput="updateQuizConfLabel(this.value)">
-                            <div class="flex justify-between text-[11px] opacity-70 mt-1.5">
-                                <span>50% (متردد / تخمين)</span>
-                                <span>75% (أرجّح صحتها)</span>
+                            <div class="flex justify-between text-[11px] opacity-70 mt-1">
+                                <span>50% (تخمين)</span>
+                                <span>75% (مرجّح)</span>
                                 <span>100% (متأكد تماماً)</span>
                             </div>
                         </div>
 
-                        <!-- أزرار التثبيت والتنقل -->
-                        <div class="flex flex-wrap gap-3 pt-1">
-                            <button id="quiz-lock-btn" onclick="lockCurrentAnswer()" disabled class="flex-1 py-3 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-base opacity-40 cursor-not-allowed transition">
-                                ✒️ ثبّت الإجابة وصحّح بالقلم الأحمر
+                        <!-- أزرار التحكم بالسؤال -->
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <button onclick="goPrevQuestion()" id="quiz-prev-btn" class="px-4 py-3 rounded-xl border border-[#e2d5b8] dark:border-[#334e45] font-bold text-sm hover:bg-black/5">
+                                → السابق
                             </button>
-                            <button id="quiz-next-btn" onclick="goNextQuestion()" class="hidden flex-1 py-3 rounded-xl border-2 border-ink dark:border-chalkYellow text-ink dark:text-chalkYellow font-bold text-base hover:bg-ink hover:text-white dark:hover:bg-chalkYellow dark:hover:text-board transition">
-                                السؤال التالي ←
+
+                            <button id="quiz-lock-btn" onclick="lockCurrentAnswer()" disabled class="flex-1 py-3 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm md:text-base opacity-40 cursor-not-allowed transition">
+                                ✒️ ثبّت الإجابة وصحّح
+                            </button>
+
+                            <button id="quiz-reveal-btn" onclick="revealAnswerDirectly()" class="px-3.5 py-3 rounded-xl border border-amber-500/50 text-amber-800 dark:text-chalkYellow font-bold text-xs hover:bg-amber-500/10" title="اكشف الجواب الصحيح بدون نقاط">
+                                💡 اكشف الحل
+                            </button>
+
+                            <button id="quiz-next-btn" onclick="goNextQuestion()" class="px-5 py-3 rounded-xl border-2 border-ink dark:border-chalkYellow text-ink dark:text-chalkYellow font-bold text-sm hover:bg-ink hover:text-white dark:hover:bg-chalkYellow dark:hover:text-board transition">
+                                التالي ←
                             </button>
                         </div>
                     </div>
 
-                    <!-- هامش الورقة للتصحيح وتشريح الخطأ (4 أعمدة) -->
-                    <div class="md:col-span-4 space-y-4">
-                        <div class="p-4 rounded-xl bg-amber-50/60 dark:bg-black/25 border border-dashed border-[#d5c4a1] dark:border-[#334e45] min-h-[220px]">
+                    <!-- هامش المصحح وتشريح الخطأ (4 أعمدة) -->
+                    <div class="md:col-span-4">
+                        <div class="p-4 rounded-xl bg-amber-50/60 dark:bg-black/25 border border-dashed border-[#d5c4a1] dark:border-[#334e45] min-h-[210px]">
                             <div class="flex items-center justify-between border-b border-[#e2d5b8] dark:border-[#334e45] pb-2 mb-3">
-                                <span class="text-xs font-bold opacity-75">🖍️ هامش المصحح وتشريح الفخ</span>
+                                <span class="text-xs font-bold opacity-75">🖍️ هامش التصحيح وتشريح الفخ</span>
                                 <span id="margin-points-delta" class="text-xs font-bold"></span>
                             </div>
 
-                            <div id="quiz-margin-empty" class="text-xs opacity-65 leading-relaxed py-8 text-center">
-                                اختر إجابتك وحدّد عيار الثقة، ثم اضغط «ثبّت الإجابة» ليظهر التصحيح الحي بالهامش وتشريح الفخاخ الأربعة.
+                            <div id="quiz-margin-empty" class="text-xs opacity-65 leading-relaxed py-6 text-center">
+                                اختر إجابتك ثم اضغط «ثبّت الإجابة» أو «اكشف الحل» ليظهر تشريح الفخاخ الأربعة هنا.
                             </div>
 
                             <div id="quiz-margin-content" class="hidden space-y-3">
                                 <div id="margin-handwritten-note" class="margin-note text-xl font-bold leading-snug"></div>
-                                <div id="margin-trap-pill" class="inline-block text-xs font-bold px-2.5 py-1 rounded-md bg-red-100 dark:bg-red-950 text-redPen dark:text-chalkRed"></div>
+                                <div id="margin-trap-pill" class="inline-block text-xs font-bold px-2.5 py-1 rounded-md"></div>
                                 <p id="margin-explanation" class="text-xs leading-relaxed opacity-90"></p>
-                                <div id="margin-all-options-anatomy" class="pt-2 border-t border-[#e2d5b8] dark:border-[#334e45] space-y-1.5 text-[11px]"></div>
+                                <div id="margin-all-options-anatomy" class="pt-2 border-t border-[#e2d5b8] dark:border-[#334e45] space-y-1 text-[11px]"></div>
                             </div>
                         </div>
                     </div>
@@ -522,236 +419,127 @@
             </div>
         </section>
 
-        <!-- ==================== 4. شاشة النتيجة والتشريح ==================== -->
+        <!-- ==================== 3. شاشة النتيجة والتشريح ==================== -->
         <section id="view-results" class="view-section hidden space-y-6">
-            <div class="exam-sheet p-6 md:p-8 rounded-2xl">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-[#e2d5b8] dark:border-[#334e45] pb-6">
-                    <div class="space-y-2 text-center md:text-right">
-                        <span class="text-xs font-bold uppercase tracking-wider opacity-70">تقرير ورقة الامتحان والتشريح المعرفي</span>
-                        <h2 id="res-headline" class="font-ruqaa text-3xl md:text-4xl font-bold"></h2>
-                        <p id="res-summary-sub" class="text-sm opacity-85"></p>
+            <div class="exam-sheet p-6 rounded-2xl space-y-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-[#e2d5b8] dark:border-[#334e45] pb-5">
+                    <div class="space-y-1 text-center md:text-right">
+                        <span class="text-xs font-bold opacity-70">تقرير ورقة الامتحان</span>
+                        <h2 id="res-headline" class="font-ruqaa text-3xl font-bold"></h2>
+                        <p id="res-summary-sub" class="text-sm opacity-80"></p>
                     </div>
 
-                    <!-- ختم الدرجة النهائية -->
-                    <div class="exam-stamp px-6 py-4 rounded-2xl text-center min-w-[200px]">
+                    <div class="exam-stamp px-6 py-3.5 rounded-2xl text-center min-w-[190px]">
                         <div class="text-xs font-sans font-bold">الدرجة والصدق المعرفي</div>
-                        <div id="res-stamp-score" class="text-4xl font-bold my-1">0 / 0</div>
-                        <div id="res-stamp-calib" class="text-sm font-bold">نقاط المعايرة: 0</div>
+                        <div id="res-stamp-score" class="text-3xl font-bold my-1">0 / 0</div>
+                        <div id="res-stamp-calib" class="text-xs font-bold">نقاط المعايرة: 0</div>
                     </div>
                 </div>
 
-                <!-- بطاقات التحليل الأربع -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-6">
-                    <div class="p-3.5 rounded-xl bg-green-500/10 border border-green-500/30 text-center">
-                        <div class="text-xs opacity-75">معرفة راسخة (صح بثقة عالية)</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="p-3 rounded-xl bg-green-500/10 border border-green-500/30 text-center">
+                        <div class="text-xs opacity-75">معرفة راسخة (صح بثقة)</div>
                         <div id="res-solid-count" class="text-2xl font-bold text-greenPen dark:text-chalkGreen mt-1">0</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-center">
+                    <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 text-center">
                         <div class="text-xs opacity-75">تواضع معرفي (صح بتردد)</div>
                         <div id="res-humble-count" class="text-2xl font-bold text-inkLight dark:text-blue-300 mt-1">0</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center">
+                    <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center">
                         <div class="text-xs opacity-75">تردد صادق (خطأ بتردد)</div>
                         <div id="res-honest-miss-count" class="text-2xl font-bold text-amber-600 dark:text-chalkYellow mt-1">0</div>
                     </div>
-                    <div class="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-center">
+                    <div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-center">
                         <div class="text-xs opacity-75">ثقة عمياء! (خطأ بثقة ≥80%)</div>
                         <div id="res-blind-count" class="text-2xl font-bold text-redPen dark:text-chalkRed mt-1">0</div>
                     </div>
                 </div>
 
-                <!-- قائمة تشريح أسئلة الجلسة -->
-                <h3 class="font-ruqaa text-2xl font-bold mb-3">تشريح إجاباتك سؤالاً بسؤال</h3>
-                <div id="res-questions-breakdown" class="space-y-3"></div>
+                <div>
+                    <h3 class="font-ruqaa text-2xl font-bold mb-3">مراجعة الأسئلة التي حللتها في هذه الجلسة</h3>
+                    <div id="res-questions-breakdown" class="space-y-2.5 max-h-[450px] overflow-y-auto pr-1"></div>
+                </div>
 
-                <div class="flex flex-wrap gap-3 mt-6 pt-4 border-t border-[#e2d5b8] dark:border-[#334e45]">
-                    <button onclick="startQuizMode('smart', 'all')" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm">🧠 راجع أخطاءك وفخاخك الآن</button>
-                    <button onclick="navigate('profile')" class="px-5 py-2.5 rounded-xl border border-ink dark:border-chalk font-bold text-sm">📊 افتح منحنى «صدق معرفتك»</button>
-                    <button onclick="navigate('home')" class="px-4 py-2.5 rounded-xl border border-gray-400 text-sm">العودة للرئيسية</button>
+                <div class="flex flex-wrap gap-3 pt-3 border-t border-[#e2d5b8] dark:border-[#334e45]">
+                    <button onclick="startQuiz('mistakes', 'exam')" class="px-5 py-2.5 rounded-xl bg-redPen text-white font-bold text-sm">🎯 أعد اختبار أخطائك فقط</button>
+                    <button onclick="startQuiz('all', 'exam')" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm">📄 ابدأ الـ 67 سؤالاً من جديد</button>
+                    <button onclick="navigate('home')" class="px-4 py-2.5 rounded-xl border border-gray-400 text-sm font-bold">الرئيسية</button>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== 5. الملف الشخصي (صدق المعرفة + الفخاخ) ==================== -->
-        <section id="view-profile" class="view-section hidden space-y-6">
-            <div class="grid md:grid-cols-12 gap-6">
-                <!-- منحنى صدق المعرفة (7 أعمدة) -->
-                <div class="md:col-span-7 exam-sheet p-6 rounded-2xl space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h2 class="font-ruqaa text-2xl md:text-3xl font-bold">منحنى «صدق معرفتك»</h2>
-                            <p class="text-xs opacity-75">يقارن درجة ثقتك (50%–100%) بدقتك الفعلية. الخط المنقط هو الصدق المثالي.</p>
-                        </div>
-                        <button onclick="resetAllUserData()" class="text-xs text-redPen dark:text-chalkRed underline">تصفير السجل</button>
-                    </div>
-
-                    <!-- رسم SVG لمنحنى المعايرة -->
-                    <div class="p-3 rounded-xl bg-white/70 dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45]">
-                        <svg id="calibration-svg" viewBox="0 0 360 230" class="w-full h-auto"></svg>
-                    </div>
-
-                    <div id="calibration-diagnosis" class="p-3.5 rounded-xl bg-ink/5 dark:bg-white/5 text-xs leading-relaxed"></div>
-                </div>
-
-                <!-- رادار الفخاخ وسلسلة الأيام (5 أعمدة) -->
-                <div class="md:col-span-5 exam-sheet p-6 rounded-2xl space-y-5">
+        <!-- ==================== 4. المكتبة الكاملة (67 سؤالاً) ==================== -->
+        <section id="view-library" class="view-section hidden space-y-5">
+            <div class="exam-sheet p-5 md:p-6 rounded-2xl">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>
-                        <h3 class="font-ruqaa text-2xl font-bold">تشريح الفخاخ المتكررة</h3>
-                        <p class="text-xs opacity-75">أنواع الخيارات الخاطئة الأربعة التي تقع فيها أكثر أثناء الاختبارات</p>
+                        <h2 class="font-ruqaa text-3xl font-bold">مكتبة الأسئلة الـ 67 مع الحلول والتشريح</h2>
+                        <p class="text-xs opacity-75">تصفّح جميع أسئلة الملزمة أو ابحث عن أي سؤال</p>
                     </div>
-
-                    <div id="profile-traps-bars" class="space-y-3.5"></div>
-
-                    <div class="pt-4 border-t border-[#e2d5b8] dark:border-[#334e45] grid grid-cols-3 gap-2 text-center">
-                        <div class="p-2.5 rounded-xl bg-black/5 dark:bg-white/5">
-                            <div class="text-[11px] opacity-70">الأسئلة المجابة</div>
-                            <div id="prof-total-answered" class="text-xl font-bold mt-0.5">0</div>
-                        </div>
-                        <div class="p-2.5 rounded-xl bg-black/5 dark:bg-white/5">
-                            <div class="text-[11px] opacity-70">الدقة الخام</div>
-                            <div id="prof-raw-acc" class="text-xl font-bold mt-0.5">0%</div>
-                        </div>
-                        <div class="p-2.5 rounded-xl bg-black/5 dark:bg-white/5">
-                            <div class="text-[11px] opacity-70">سلسلة الأيام</div>
-                            <div id="prof-streak" class="text-xl font-bold mt-0.5">1 🔥</div>
-                        </div>
-                    </div>
+                    <button onclick="startQuiz('all', 'exam')" class="px-4 py-2 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">
+                        ابدأ اختبار الـ 67 سؤالاً ←
+                    </button>
                 </div>
+
+                <div class="grid sm:grid-cols-2 gap-3 mb-4">
+                    <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="ابحث عن كلمة أو رقم سؤال..." class="px-3.5 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
+                    <select id="lib-chapter-filter" onchange="renderLibrary()" class="px-3.5 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm font-bold">
+                        <option value="all">جميع الفصول (67 سؤالاً)</option>
+                        <option value="1">الفصل الأول: نظرية الطلب (1 - 42)</option>
+                        <option value="2">الفصل الثاني: نظرية العرض (43 - 60)</option>
+                        <option value="3">الفصل الثالث: توازن السوق (61 - 67)</option>
+                    </select>
+                </div>
+
+                <div id="library-list" class="space-y-3 max-h-[650px] overflow-y-auto pr-1"></div>
             </div>
         </section>
 
-        <!-- ==================== 6. سماء المعرفة (الخريطة السماوية) ==================== -->
-        <section id="view-sky" class="view-section hidden space-y-6">
-            <div class="exam-sheet p-6 rounded-2xl bg-[#0f172a] text-slate-100 border-slate-700">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <div>
-                        <h2 class="font-ruqaa text-3xl font-bold text-amber-300">✨ سماء المعرفة (كوكبة الاقتصاد الجزئي)</h2>
-                        <p class="text-xs text-slate-300 mt-1">كل محور نجمة تلمع بقدر إتقانك ومعايرتك الصادقة، وتخفت تدريجياً إذا طال عهدك بمراجعتها. اضغط على أي نجمة لاختبارها فوراً.</p>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs">
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-300 inline-block"></span> متقنة ساطعة</span>
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-sky-400 inline-block"></span> قيد التعلّم</span>
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-500 inline-block"></span> خافتة (تحتاج مراجعة)</span>
-                    </div>
+        <!-- ==================== 5. سماء المعرفة ==================== -->
+        <section id="view-sky" class="view-section hidden space-y-5">
+            <div class="exam-sheet p-5 md:p-6 rounded-2xl bg-[#0f172a] text-slate-100 border-slate-700">
+                <div class="mb-4">
+                    <h2 class="font-ruqaa text-3xl font-bold text-amber-300">✨ سماء المعرفة</h2>
+                    <p class="text-xs text-slate-300 mt-1">اضغط على أي نجمة لاختبار أسئلة ذلك المحور مباشرة.</p>
                 </div>
 
-                <!-- الخريطة السماوية التفاعلية SVG -->
                 <div class="relative rounded-2xl overflow-hidden border border-slate-700 bg-gradient-to-b from-[#090d16] via-[#111c33] to-[#17253b]">
-                    <svg id="sky-constellation-svg" viewBox="0 0 800 420" class="w-full h-[340px] md:h-[420px]"></svg>
+                    <svg id="sky-constellation-svg" viewBox="0 0 800 380" class="w-full h-[300px] md:h-[360px]"></svg>
                 </div>
 
-                <!-- بطاقات النجوم الثماني -->
                 <div id="sky-stars-cards" class="grid sm:grid-cols-2 md:grid-cols-4 gap-3 mt-4"></div>
             </div>
         </section>
 
-        <!-- ==================== 7. من ملاحظاتك إلى اختبار ==================== -->
-        <section id="view-generator" class="view-section hidden space-y-6">
-            <div class="exam-sheet p-6 rounded-2xl space-y-5">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                        <h2 class="font-ruqaa text-3xl font-bold">✨ من ملاحظاتك إلى اختبار</h2>
-                        <p class="text-xs opacity-75 mt-1">الصق ملخص محاضرتك أو أي فقرة نصية ليقوم «مَحَكّ» بتوليد أسئلة اختيار من متعدد مع فخاخ مشرّحة لكل خيار.</p>
-                    </div>
-                    <button onclick="fillSampleNotes()" class="px-3 py-1.5 rounded-lg border border-ink dark:border-chalkYellow text-xs font-bold">📋 املأ بنص تجريبي من الاقتصاد</button>
-                </div>
-
-                <textarea id="notes-input" rows="5" placeholder="الصق هنا ملخصك أو ملاحظاتك الدراسية (مثلاً: تعريف قانون الطلب، السلع المكملة والبديلة، أو أي مادة أخرى)..." class="w-full p-4 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm leading-relaxed"></textarea>
-
-                <div class="grid sm:grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold mb-1">مستوى الصعوبة المطلوب:</label>
-                        <select id="gen-difficulty" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                            <option value="1">سهل (مفاهيم مباشرة)</option>
-                            <option value="2" selected>متوسط (علاقات وتحليل)</option>
-                            <option value="3">عميق (فخاخ دقيقة واستنتاج)</option>
-                        </select>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-bold mb-1">مفتاح Gemini API (اختياري — يعمل بدونه عبر المحلل المحلي الذكي):</label>
-                        <input type="password" id="gemini-api-key" placeholder="AIzaSy... (اتركه فارغاً للتوليد المحلي الفوري بدون إنترنت)" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                    </div>
-                </div>
-
-                <button onclick="generateQuizFromNotes()" id="gen-btn" class="w-full py-3 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board font-bold text-sm shadow">
-                    ⚙️ ولّد أسئلة MCQ مع تشريح الفخاخ وابدأ الاختبار
-                </button>
-
-                <div id="generated-preview" class="hidden space-y-3 pt-4 border-t border-[#e2d5b8] dark:border-[#334e45]"></div>
-            </div>
-        </section>
-
-        <!-- ==================== 8. لوحة المدرّس ==================== -->
-        <section id="view-teacher" class="view-section hidden space-y-6">
-            <div class="exam-sheet p-6 rounded-2xl space-y-6">
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#e2d5b8] dark:border-[#334e45] pb-4">
-                    <div>
-                        <h2 class="font-ruqaa text-3xl font-bold">👨‍🏫 لوحة المدرّس وإدارة الاختبارات</h2>
-                        <p class="text-xs opacity-75 mt-1">أنشئ رابط اختبار أو رمز QR لطلابك، وراقب لوحة النتائج الحية والفخاخ الأكثر شيوعاً بينهم، وصدّر النتائج CSV.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="exportTeacherCSV()" class="px-3.5 py-2 rounded-xl bg-greenPen text-white text-xs font-bold">📥 تصدير النتائج (CSV)</button>
-                        <button onclick="window.print()" class="px-3.5 py-2 rounded-xl border border-ink dark:border-chalk text-xs font-bold">🖨️ طباعة ورقة الامتحان</button>
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-12 gap-6">
-                    <!-- إعداد الاختبار ومشاركة الرابط/QR -->
-                    <div class="md:col-span-5 space-y-4">
-                        <h3 class="font-ruqaa text-xl font-bold">إنشاء ومشاركة اختبار</h3>
+        <!-- ==================== 6. الملف الشخصي (صدق المعرفة والفخاخ) ==================== -->
+        <section id="view-profile" class="view-section hidden space-y-5">
+            <div class="grid md:grid-cols-12 gap-5">
+                <div class="md:col-span-7 exam-sheet p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <label class="block text-xs font-bold mb-1">عنوان الاختبار:</label>
-                            <input type="text" id="teacher-quiz-title" value="الاختبار الفصلي الأول — مبادئ الاقتصاد" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
+                            <h2 class="font-ruqaa text-2xl font-bold">رسم «صدق معرفتك»</h2>
+                            <p class="text-xs opacity-75">الخط المنقط هو التطابق المثالي بين ثقتك ودقتك الفعلية</p>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-xs font-bold mb-1">الفصل المشمول:</label>
-                                <select id="teacher-chapter" onchange="updateTeacherShareLink()" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                                    <option value="all">جميع الفصول (67)</option>
-                                    <option value="ch1">الفصل الأول: الطلب</option>
-                                    <option value="ch2">الفصل الثاني: العرض</option>
-                                    <option value="ch3">الفصل الثالث: التوازن</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold mb-1">عدد الأسئلة:</label>
-                                <select id="teacher-q-count" onchange="updateTeacherShareLink()" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-sm">
-                                    <option value="10">10 أسئلة</option>
-                                    <option value="20" selected>20 سؤالاً</option>
-                                    <option value="67">كامل البنك (67)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-xl bg-white/80 dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45] text-center space-y-3">
-                            <div id="teacher-qr-box" class="mx-auto w-36 h-36 bg-white p-2 rounded-xl border flex items-center justify-center"></div>
-                            <input type="text" id="teacher-share-url" readonly class="w-full text-[11px] font-mono p-2 rounded bg-black/5 dark:bg-white/5 text-center">
-                            <div class="flex gap-2">
-                                <button onclick="copyTeacherLink()" class="flex-1 py-2 rounded-lg bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">🔗 نسخ رابط الاختبار</button>
-                                <button onclick="copyDuelInvite()" class="flex-1 py-2 rounded-lg border border-ink dark:border-chalkYellow text-xs font-bold">⚔️ رابط مبارزة</button>
-                            </div>
-                        </div>
+                        <button onclick="resetAllUserData()" class="px-3 py-1 rounded-lg bg-redPen/10 text-redPen dark:text-chalkRed text-xs font-bold">🗑️ تصفير السجل</button>
                     </div>
 
-                    <!-- لوحة النتائج الحية -->
-                    <div class="md:col-span-7 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-ruqaa text-xl font-bold">لوحة نتائج الطلاب الحية</h3>
-                            <button onclick="simulateStudentSubmission()" class="text-xs px-2.5 py-1 rounded bg-blue-500/10 text-ink dark:text-chalkYellow font-bold">+ محاكاة تسليم طالب</button>
+                    <div class="p-3 rounded-xl bg-white/70 dark:bg-black/30 border border-[#e2d5b8] dark:border-[#334e45]">
+                        <svg id="calibration-svg" viewBox="0 0 360 220" class="w-full h-auto"></svg>
+                    </div>
+                </div>
+
+                <div class="md:col-span-5 exam-sheet p-5 rounded-2xl space-y-4">
+                    <h3 class="font-ruqaa text-2xl font-bold">أكثر الفخاخ التي تقع فيها</h3>
+                    <div id="profile-traps-bars" class="space-y-3"></div>
+
+                    <div class="pt-4 border-t border-[#e2d5b8] dark:border-[#334e45] grid grid-cols-2 gap-2 text-center">
+                        <div class="p-3 rounded-xl bg-black/5 dark:bg-white/5">
+                            <div class="text-xs opacity-70">إجمالي ما حللته</div>
+                            <div id="prof-total-answered" class="text-xl font-bold mt-0.5">0</div>
                         </div>
-                        <div class="overflow-x-auto rounded-xl border border-[#e2d5b8] dark:border-[#334e45]">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-black/5 dark:bg-white/5 font-bold">
-                                    <tr>
-                                        <th class="p-3">الطالب</th>
-                                        <th class="p-3">الدرجة الخام</th>
-                                        <th class="p-3">متوسط الثقة</th>
-                                        <th class="p-3">صدق المعرفة</th>
-                                        <th class="p-3">أكثر فخ وقع فيه</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="teacher-live-tbody" class="divide-y divide-[#e2d5b8] dark:divide-[#334e45]"></tbody>
-                            </table>
+                        <div class="p-3 rounded-xl bg-black/5 dark:bg-white/5">
+                            <div class="text-xs opacity-70">نسبة الدقة</div>
+                            <div id="prof-raw-acc" class="text-xl font-bold mt-0.5">0%</div>
                         </div>
                     </div>
                 </div>
@@ -760,120 +548,116 @@
 
     </main>
 
-    <!-- شريط التنقل السفلي للهواتف -->
-    <nav class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-[#fbf7ee]/95 dark:bg-[#17231f]/95 backdrop-blur border-t border-[#e2d5b8] dark:border-[#334e45] flex justify-around py-2 text-[11px] font-bold no-print">
-        <button onclick="navigate('home')" class="flex flex-col items-center gap-0.5"><span>🏠</span><span>الرئيسية</span></button>
-        <button onclick="navigate('library')" class="flex flex-col items-center gap-0.5"><span>📚</span><span>المكتبة</span></button>
+    <!-- شريط التنقل السفلي للهواتف (4 أيقونات فقط) -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-[#fbf7ee]/95 dark:bg-[#17231f]/95 backdrop-blur border-t border-[#e2d5b8] dark:border-[#334e45] flex justify-around py-2.5 text-xs font-bold">
+        <button onclick="navigate('home')" class="flex flex-col items-center gap-0.5"><span>🏠</span><span>الامتحان</span></button>
+        <button onclick="navigate('library')" class="flex flex-col items-center gap-0.5"><span>📚</span><span>الـ 67 سؤالاً</span></button>
         <button onclick="navigate('sky')" class="flex flex-col items-center gap-0.5"><span>✨</span><span>سماء المعرفة</span></button>
-        <button onclick="navigate('generator')" class="flex flex-col items-center gap-0.5"><span>📝</span><span>من ملاحظاتك</span></button>
-        <button onclick="navigate('profile')" class="flex flex-col items-center gap-0.5"><span>⚖️</span><span>ملفي</span></button>
-        <button onclick="navigate('teacher')" class="flex flex-col items-center gap-0.5"><span>👨‍🏫</span><span>المدرّس</span></button>
+        <button onclick="navigate('profile')" class="flex flex-col items-center gap-0.5"><span>⚖️</span><span>صدق معرفتي</span></button>
     </nav>
 
     <script>
     // =========================================================================
-    // 1. قاعدة بيانات الأسئلة الـ 67 الكاملة (من ملف Economics_MCQ_67.PDF)
+    // 1. جميع الأسئلة الـ 67 الكاملة من الملزمة
     // =========================================================================
-    // أنواع الفخاخ المعتمدة: "شبه صحيح" | "نصف الحقيقة" | "عكس المعنى" | "معلومة صحيحة بمكان خاطئ"
     const TRAP_TYPES = ["شبه صحيح", "نصف الحقيقة", "عكس المعنى", "معلومة صحيحة بمكان خاطئ"];
 
     const STARS_CONFIG = [
-        { id: 'ch1_concept', name: 'مفهوم الطلب والرغبة', ch: 1, x: 110, y: 120 },
-        { id: 'ch1_determinants', name: 'محددات الطلب والبدائل', ch: 1, x: 220, y: 80 },
-        { id: 'ch1_elasticity', name: 'مرونات الطلب الأربع', ch: 1, x: 340, y: 150 },
-        { id: 'ch1_exceptions', name: 'استثناءات قانون الطلب', ch: 1, x: 450, y: 95 },
-        { id: 'ch1_revenue', name: 'الإيراد الكلي والحدي', ch: 1, x: 540, y: 190 },
-        { id: 'ch2_supply', name: 'جدول ومحددات العرض', ch: 2, x: 630, y: 110 },
-        { id: 'ch2_elasticity', name: 'مرونة العرض السعرية', ch: 2, x: 690, y: 240 },
-        { id: 'ch3_equilibrium', name: 'توازن السوق والأسعار', ch: 3, x: 420, y: 300 }
+        { id: 'ch1_concept', name: 'مفهوم الطلب والرغبة', ch: 1, x: 110, y: 110 },
+        { id: 'ch1_determinants', name: 'محددات الطلب والبدائل', ch: 1, x: 230, y: 75 },
+        { id: 'ch1_elasticity', name: 'مرونات الطلب الأربع', ch: 1, x: 350, y: 140 },
+        { id: 'ch1_exceptions', name: 'استثناءات قانون الطلب', ch: 1, x: 460, y: 85 },
+        { id: 'ch1_revenue', name: 'الإيراد الكلي والحدي', ch: 1, x: 550, y: 180 },
+        { id: 'ch2_supply', name: 'جدول ومحددات العرض', ch: 2, x: 640, y: 100 },
+        { id: 'ch2_elasticity', name: 'مرونة العرض السعرية', ch: 2, x: 690, y: 230 },
+        { id: 'ch3_equilibrium', name: 'توازن السوق والأسعار', ch: 3, x: 420, y: 280 }
     ];
 
     const RAW_QUESTIONS = [
         // الفصل الأول: نظرية الطلب (1 - 42)
-        { id:1, ch:1, star:'ch1_concept', diff:1, q:"يتمثل المحور الأول للمشكلة الاقتصادية الرئيسية في:", opts:["ندرة الموارد الطبيعية فقط","الاحتياجات البشرية المتزايدة والمتنوعة","انخفاض مستويات التكنولوجيا","ثبات الدخل القومي"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"المحور الأول للمشكلة الاقتصادية ينطلق من تعدد وتجدد الاحتياجات البشرية في مقابل الندرة النسبية للموارد عامةً لا الطبيعية فقط." },
-        { id:2, ch:1, star:'ch1_concept', diff:1, q:"يعرف الطلب بأنه الكمية التي يرغب في الحصول عليها بسعر معين مصحوب بقدرة شرائية كل من:", opts:["الدولة فقط","الفرد أو المشروع","المنتج والمصدر فقط","البنوك التجارية"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الطلب في السوق يصدر عن الوحدات المستهلكة سواء كانت فرداً مستهلكاً أو مشروعاً يطلب مستلزمات بشرط اقتران الرغبة بالقدرة الشرائية." },
-        { id:3, ch:1, star:'ch1_concept', diff:1, q:"تعكس «الرغبة» عند دراسة سلوك المستهلك تطلعاته بالحصول على السلعة، وهي:", opts:["تقترن دائماً بقدرة شرائية عالية","قد لا تقترن بتحمل المستهلك أي تكلفة أو تضحية","تمثل الشرط الموضوعي للطلب","تساوي الطلب الفعلي في السوق"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الرغبة وحدها جانب نفسي (شرط ذاتي) لا يترتب عليه تضحية مالية ما لم يقترن بالقدرة الشرائية التي تمثل الشرط الموضوعي." },
-        { id:4, ch:1, star:'ch1_concept', diff:1, q:"المتغيرات التي يمكن قياسها بوحدات نقدية أو عينية في دالة الطلب تسمى:", opts:["المتغيرات النوعية","المتغيرات الكمية","المتغيرات الخارجية فقط","المتغيرات العشوائية"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","شبه صحيح"], exp:"المتغيرات القابلة للقياس النقدي أو العيني (كالسعر والدخل) هي المتغيرات الكمية، بينما الأذواق والتوقعات متغيرات نوعية." },
-        { id:5, ch:1, star:'ch1_concept', diff:1, q:"بسبب اتساع احتياجات الفرد المستهلك ومحدودية دخله، يكون من مصلحته عند شراء وحدة السلعة:", opts:["تعظيم السعر المدفوع","تدنية (Minimization) كلفة الحصول على وحدة السلعة بأقل سعر ممكن","تجاهل أسعار السلع البديلة","زيادة الإنفاق الكلي بغض النظر عن الكمية"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"رشادة المستهلك أمام محدودية دخله تدفعه دائماً لتدنية كلفة الشراء للحصول على أكبر إشباع ممكن." },
-        { id:6, ch:1, star:'ch1_determinants', diff:2, q:"المبرر الثالث لتفسير العلاقة العكسية بين سعر السلعة والكمية المطلوبة منها (إلى جانب تدنية الكلفة وتناقص المنفعة الحدية) هو:", opts:["ثبات أذواق المستهلكين","أن معظم السلع والخدمات الاعتيادية تكون لها بدائل أخرى بدرجات متفاوتة","تدخل الدولة في التسعير","انعدام القدرة الشرائية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","عكس المعنى"], exp:"وجود بدائل للسلعة يجعل ارتفاع سعرها دافعاً للمستهلك للتحول نحو البدائل الأرخص (أثر الإحلال)." },
-        { id:7, ch:1, star:'ch1_determinants', diff:1, q:"في التحليل الاقتصادي لدخول المستهلكين، يُنظر إلى زيادة دخل المستهلك وزيادة الكميات المطلوبة على أنهما:", opts:["تحرك سالب يقابله تحرك موجب","تحرك موجب يؤدي إلى تحرك موجب أيضاً","تحرك سالب يؤدي إلى تحرك سالب","تحرك صفري مستقر"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"العلاقة الطردية بين الدخل والطلب على السلع الاعتيادية تعني أن التحرك الموجب في الدخل يتبعه تحرك موجب في الكمية المطلوبة." },
-        { id:8, ch:1, star:'ch1_determinants', diff:2, q:"درجة العلاقة الطردية بين تغير الدخل وتغير الكميات المطلوبة من السلع الاعتيادية تكون:", opts:["متساوية وواحدة لجميع السلع","ليست واحدة بل تتفاوت من سلعة إلى أخرى","ثابتة لا تتغير أبداً","محصورة في السلع الرديئة فقط"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","عكس المعنى"], exp:"تستجيب السلع الاعتيادية لزيادة الدخل بدرجات متفاوتة بحسب أهمية السلعة (ضرورية أو كمالية)." },
-        { id:9, ch:1, star:'ch1_determinants', diff:2, q:"تقوم العلاقة الطردية بين التغير في سعر السلعة البديلة والكمية المطلوبة من السلعة الأصلية بافتراض:", opts:["ارتفاع سعر السلعة الأصلية","ثبات سعر السلعة الأصلية","انخفاض دخل المستهلك","انعدام السلع المكملة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"لقياس أثر تغير سعر السلعة البديلة على طلب السلعة الأصلية لا بد من افتراض ثبات سعر السلعة الأصلية." },
-        { id:10, ch:1, star:'ch1_determinants', diff:1, q:"يصبح سعر السلعة المكملة جزءاً من تكلفة أو سعر السلعة الأصلية عند:", opts:["الاستيراد فقط","الاستعمال","التخزين","الترويج والإعلان"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"السلعتان المكملتان تستهلكان معاً، لذا تندمج كلفة المكملة بكلفة الأصلية عند الاستعمال الفعلي." },
-        { id:11, ch:1, star:'ch1_determinants', diff:1, q:"تظهر زيادة سعر السلعة المكملة في صيغة زيادة في تكلفة السلعة الأصلية بشكل أوضح حين تكون درجة التكامل حادة، ومن أمثلتها:", opts:["السكر بالنسبة للشاي","الإطار بالنسبة للسيارة","لحم البقر بالنسبة للحم الغنم","الملابس الجديدة بالنسبة للمستعملة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"الإطار والسيارة يمثلان تكاملاً حاداً لا يمكن الاستغناء عنه، بينما السكر والشاي تكاملهما أقل حدة، واللحوم بدائل." },
-        { id:12, ch:1, star:'ch1_determinants', diff:1, q:"تعتبر علاقة السكر بالشاي مثالاً على درجة تكامل أقل حدة لأن الفرد عند ارتفاع سعر السكر يمكنه أن:", opts:["يستغني عن الشاي نهائياً وبفورية","يقلل من كمية السكر في الشاي","يستبدل الشاي بالسيارة","يزيد من كمية السكر المستهلكة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"مرونة تعديل نسبة السكر في الشاي تجعل درجة التكامل بينهما أقل حدة من تكامل السيارة والإطار." },
-        { id:13, ch:1, star:'ch1_determinants', diff:2, q:"يمارس التغير في أسعار السلع المكملة تأثيراً عكسياً على الكميات المطلوبة من السلعة الأصلية، أي باتجاه:", opts:["يطابق تأثير السلع البديلة","يتقاطع مع تأثير التغير في أسعار السلع البديلة","يوازي تأثير زيادة الدخل","لا علاقة له بسعر السلعة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"تأثير السلع المكملة عكسي، لذا فهو يتقاطع (يتعاكس) مع التأثير الطردي لأسعار السلع البديلة." },
-        { id:14, ch:1, star:'ch1_determinants', diff:1, q:"إلى جانب نشاط الترويج والإعلان، قد تحصل تغيرات في أذواق وتفضيلات المستهلكين كنتيجة لـ:", opts:["تغير في المعطيات الاقتصادية والاجتماعية","ثبات حجم السكان فقط","ثبات أسعار السلع المكملة","انخفاض مرونة العرض فقط"], ans:0, traps:["صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"تتطور الأذواق والتفضيلات تبعاً للتحولات الاقتصادية والاجتماعية والثقافية إلى جانب الدعاية." },
-        { id:15, ch:1, star:'ch1_determinants', diff:2, q:"يختلف النمط الاستهلاكي لمجتمع تستحوذ فيه أقلية على الجانب الأكبر من الدخل القومي عن مجتمع آخر يمتلك نفس مقدار الدخل القومي ولكنه:", opts:["يقلل من فرص التشغيل","يعتمد منهجية تتسع فيها قاعدة توزيع الدخل القومي وتقل حدة التفاوت في الدخول","يمنع استهلاك السلع الضرورية","يثبت أذواق المستهلكين بالقانون"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"طريقة توزيع الدخل القومي تغير هيكل الطلب الكلي؛ فكلما اتسعت قاعدة التوزيع زاد الطلب على السلع الاستهلاكية العامة." },
-        { id:16, ch:1, star:'ch1_determinants', diff:2, q:"لكي تتحول زيادة حجم السكان (الاحتياجات) إلى طلب فعلي يتوفر له القدرة الشرائية، يفترض أن يتزامن التوسع السكاني مع:", opts:["تقليص ساعات العمل","توسع فرص التشغيل وزيادة إنتاج السلع والخدمات","زيادة الضرائب المباشرة","استبعاد المتغيرات الكمية"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"النمو السكاني وحده يولد احتياجات فقط، ولا يتحول إلى طلب فعلي إلا بتوسع التشغيل والدخول." },
-        { id:17, ch:1, star:'ch1_determinants', diff:2, q:"في معادلة دالة الطلب Qd = f(P, MI, Pn)، يشير الرمزان (MI) و (Pn) على التوالي إلى:", opts:["حجم السكان وأذواق المستهلكين","قيمة الدخل النقدي، وأسعار السلع الأخرى البديلة والمكملة","الإيراد الحدي، والسعر التوازني","تكاليف الترويج، والمرونة السعرية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","نصف الحقيقة"], exp:"الرمز MI يمثل الدخل النقدي (Monetary Income) والرمز Pn يمثل أسعار السلع الأخرى البديلة والمكملة." },
-        { id:18, ch:1, star:'ch1_determinants', diff:2, q:"اقتصرت معادلة دالة الطلب الرياضية Qd = f(P, MI, Pn) على عدد محدد من العوامل المؤثرة في الطلب هو:", opts:["عامل واحد فقط من أصل ستة","ثلاثة عوامل فقط (المتغيرات الكمية) من أصل العوامل الستة","خمسة عوامل نوعية","جميع العوامل الستة دون استبعاد"], ans:1, traps:["نصف الحقيقة","صحيح","عكس المعنى","شبه صحيح"], exp:"تقتصر الدالة الرياضية على المتغيرات الثلاثة القابلة للقياس الكمي (السعر، الدخل، أسعار السلع الأخرى) من أصل ستة عوامل." },
-        { id:19, ch:1, star:'ch1_elasticity', diff:2, q:"تعبر المرونة بشكل عام عن مدى استجابة أو حساسية:", opts:["المتغير المستقل للتغير في المتغير التابع","المتغير التابع للتغير في العوامل المستقلة المؤثرة فيه","السعر للتغير في تكاليف النقل فقط","العوامل الخارجية للتغير في حجم السكان"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"المرونة تقيس استجابة المتغير التابع (الكمية المطلوبة) للتغير النسبي في أحد المتغيرات المستقلة (السعر أو الدخل...)." },
-        { id:20, ch:1, star:'ch1_elasticity', diff:2, q:"بناءً على المتغيرات المستقلة المؤثرة في الطلب، برزت أربعة أنواع لمرونات الطلب هي:", opts:["السعرية، الإنتاجية، الكلية، والحدية","السعرية، الدخلية، التقاطعية، والتعزيزية","الفردية، السوقية، الثابتة، والمتغيرة","الذاتية، الموضوعية، الكمية، والنوعية"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","نصف الحقيقة"], exp:"أنواع مرونات الطلب الأربعة هي: السعرية، الدخلية، التقاطعية، والتعزيزية (الإعلانية)." },
-        { id:21, ch:1, star:'ch1_elasticity', diff:3, q:"في مثال الطلب أحادي المرونة، إذا انخفض سعر السلعة من (200) إلى (150) وحدة نقدية، وزادت الكمية المطلوبة من (200) إلى (250)، فإن معامل المرونة السعرية يساوي:", opts:["-0.1","-1","صفر","+2"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"نسبة تغير الكمية (+25%) مقسومة على نسبة تغير السعر (-25%) تساوي (-1)، وهو الطلب أحادي المرونة." },
-        { id:22, ch:1, star:'ch1_elasticity', diff:2, q:"عندما يكون منحنى الطلب عمودياً تكون المرونة السعرية مساوية للصفر، والسبب في ذلك هو أن:", opts:["الأسعار لا تتغير أبداً في السوق","الكميات لا تستجيب لتغيرات الأسعار","الكميات تستجيب بصورة لا نهائية","السلعة لها بدائل كثيرة جداً"], ans:1, traps:["نصف الحقيقة","صحيح","عكس المعنى","عكس المعنى"], exp:"المنحنى العمودي يمثل طلباً عديم المرونة (Ed=0) حيث تظل الكمية المطلوبة ثابتة مهما تغير السعر." },
-        { id:23, ch:1, star:'ch1_elasticity', diff:2, q:"سميت مرونة الطلب التقاطعية بهذا الاسم لأنها:", opts:["تتقاطع مع محور الأسعار في نقطة الأصل","تمثل تقاطعاً بين سلعتين مثل (x و y)","تقيس تقاطع العرض مع الطلب","تلغي أثر الدخل النقدي"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"سميت تقاطعية لأنها تربط التغير في الكمية المطلوبة من السلعة X بالتغير في سعر سلعة أخرى Y." },
-        { id:24, ch:1, star:'ch1_elasticity', diff:2, q:"في صيغة مرونة الطلب التعزيزية، يمثل الرمز (CD):", opts:["دخل المستهلك المخصص للسلعة x","جميع ما يتحمله المشروع من تكاليف لترويج السلعة x","سعر السلعة المكملة للسلعة x","الكمية المعروضة من السلعة x"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","عكس المعنى"], exp:"الرمز CD يشير إلى تكاليف الدعاية والترويج (Commercial/Promotional Costs) للسلعة." },
-        { id:25, ch:1, star:'ch1_elasticity', diff:2, q:"إذا كانت إشارة معامل المرونة التعزيزية موجبة، فإن ذلك يشير إلى:", opts:["تراجع في نظرة المستهلكين تجاه السلعة","تحسن في نظرة المستهلكين إلى هذه السلعة","أن السلعة رديئة","أن السلعتين مستقلتان"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الإشارة الموجبة للمرونة التعزيزية تعني نجاح الحملة الترويجية في تحسين تفضيلات المستهلكين وزيادة الطلب." },
-        { id:26, ch:1, star:'ch1_elasticity', diff:1, q:"يفترض في حساب المرونة التعزيزية أن تكون العلاقة بين تغير تكاليف الترويج وتغير الكمية المطلوبة من السلعة علاقة:", opts:["عكسية","طردية","صفرية","غير منتظمة"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"يفترض أن زيادة الإنفاق الإعلاني والترويجي تؤدي طردياً إلى زيادة الكمية المطلوبة." },
-        { id:27, ch:1, star:'ch1_elasticity', diff:2, q:"يقوم منحنى الطلب بإحالة دالة الطلب إلى علاقة مفردة واحدة هي Qd = f(P)، وذلك بافتراض:", opts:["تغير الدخل والأسعار معاً","ثبات كافة المتغيرات أو العوامل الأخرى المؤثرة في طلب الأفراد","انعدام المرونة السعرية","ثبات سعر السلعة وتغير الكمية"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"يرسم منحنى الطلب بعلاقة ثنائية بين السعر والكمية فقط مع فرضية بقاء العوامل الأخرى ثابتة (Ceteris Paribus)." },
-        { id:28, ch:1, star:'ch1_elasticity', diff:2, q:"يعتمد انحدار منحنى الطلب وموقعه على المرونة السعرية، فكلما ازدادت درجة المرونة السعرية:", opts:["زحف منحنى الطلب إلى اليسار","زحف منحنى الطلب إلى اليمين","أصبح المنحنى عمودياً تماماً","تحول إلى منحنى عرض"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"كلما زادت درجة استجابة الكمية للسعر (المرونة السعرية) انبسط المنحنى وزحف باتجاه اليمين." },
-        { id:29, ch:1, star:'ch1_exceptions', diff:1, q:"العالم الذي أثبت استثناء السلع الدنيا من قانون الطلب في القرن التاسع عشر هو الاقتصادي:", opts:["الفرنسي فبلن","البريطاني جيفين (Giffin)","الأمريكي مارشال","الألماني إنجل"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"روبرت جيفين هو من لاحظ استثناء السلع الدنيا، بينما فبلن درس سلع المباهاة والاستفزاز." },
-        { id:30, ch:1, star:'ch1_exceptions', diff:2, q:"السمة الأساسية للسلعة الدنيا (مثل رغيف الخبز أو وجبة الفلافل) بالنسبة للمستهلك الفقير ذي الدخل المنخفض جداً هي أنها:", opts:["لا تشكل أي أهمية في إنفاقه اليومي","تحتل نسبة كبيرة في ميزانيته أو إنفاقه لتلبية احتياجاته الأساسية","تشترى لأغراض التفاخر والمباهاة","تزداد الكمية المطلوبة منها كلما ارتفع دخله"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"السلعة الدنيا تستحوذ على جزء كبير من ميزانية الفقير لرخصها النسبي مقارنة بالسلع الأغلى." },
-        { id:31, ch:1, star:'ch1_exceptions', diff:3, q:"يؤدي ارتفاع سعر السلعة الدنيا إلى قيام المستهلك الفقير بزيادة الكمية المطلوبة منها لأنه:", opts:["يرغب في التباهي بشرائها","يقلص من قدرته الشرائية الحقيقية ويجبره على إحلالها محل السلع الاعتيادية الأعلى سعراً","يتوقع انخفاض سعرها قريباً","يحصل على إعانات حكومية إضافية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","نصف الحقيقة"], exp:"ارتفاع سعر السلعة الدنيا يقتطع من دخل الفقير الحقيقي فيعجز عن شراء اللحوم والسلع الغالية ويضطر لزيادة استهلاك الخبز لتعويضها." },
-        { id:32, ch:1, star:'ch1_exceptions', diff:2, q:"إن انخفاض أسعار سلع المباهاة (السلع الاستفزازية) يؤدي إلى تخفيض الكميات المطلوبة منها من قبل الأغنياء لأنها:", opts:["تصبح غير صالحة للاستهلاك","ستفقد بعض قدرتها على الاستفزاز والمباهاة","تستنزف ميزانية الأغنياء","تتحول إلى سلع مكملة"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"قيمة سلع المباهاة لدى الأثرياء تكمن في ندرتها وارتفاع ثمنها؛ فإذا رخصت فقدت ميزة التفاخر." },
-        { id:33, ch:1, star:'ch1_exceptions', diff:3, q:"إذا ارتفع سعر السلعة (ص) بنسبة (7%)، وتشكلت توقعات تشاؤمية لدى المشترين بأن سعرها سيرتفع خلال وقت قصير بنسبة (60%)، فإن الارتفاع الأولي سيؤدي إلى زيادة الكمية المطلوبة، ويكون هذا التوجه أقل وضوحاً إذا كانت السلعة:", opts:["قابلة للخزن لفترات طويلة","سريعة التلف","من الجواهر الثمينة","ذات طلب عديم المرونة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"التهافت على الشراء التخزيني خوفاً من الغلاء يضعف كثيراً إذا كانت السلعة سريعة التلف ولا يمكن خزنها." },
-        { id:34, ch:1, star:'ch1_revenue', diff:2, q:"بالرجوع لجدول (1) لطلب السوق، عندما يكون سعر وحدة السلعة (1000) دينار، فإن حالة المستهلكين الثلاثة تكون كالآتي:", opts:["يطلب كل مستهلك وحدة واحدة","يطلب المستهلك (1) وحدة واحدة، ويمتنع المستهلكان الثاني والثالث عن الطلب","يمتنع جميع المستهلكين عن الشراء","يبلغ طلب السوق (6) وحدات"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"عند السعر المرتفع (1000 دينار) تقتصر القدرة والرغبة على المستهلك الأول بوحدة واحدة فقط." },
-        { id:35, ch:1, star:'ch1_revenue', diff:2, q:"بالرجوع لجدول (1) لطلب السوق، عندما ينخفض سعر السلعة إلى (800) دينار، ثم إلى (600) دينار، وأخيراً إلى (400) دينار، فإن إجمالي طلب السوق يرتفع بالتتابع من وحدة واحدة إلى:", opts:["(2) ثم (4) ثم (8) وحدات","(3) ثم (6) ثم (9) وحدات","(5) ثم (10) ثم (15) وحدة","يظل ثابتاً عند (3) وحدات"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","عكس المعنى"], exp:"وفق جدول طلب السوق التراكمي للمستهلكين الثلاثة، يرتفع الإجمالي بالتتابع إلى 3 ثم 6 ثم 9 وحدات." },
-        { id:36, ch:1, star:'ch1_revenue', diff:3, q:"في الجداول الافتراضية لعلاقة المرونة بالإيراد الكلي، إذا كان السعر (8) والكمية (9) بالإيراد الكلي (72)، ثم ارتفع السعر إلى (9) وانخفضت الكمية إلى (8) فظل الإيراد الكلي (72)، فإن هذا يمثل حالة:", opts:["طلب عالي المرونة","طلب أحادي (متكافئ) المرونة","طلب قليل المرونة","طلب لا نهائي المرونة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"بقاء الإيراد الكلي ثابتاً (72) رغم تغير السعر هو السمة المميزة للطلب أحادي (متكافئ) المرونة." },
-        { id:37, ch:1, star:'ch1_revenue', diff:2, q:"في حالة الطلب لا نهائي المرونة، إذا حدث انخفاض في السعر فإن ذلك يؤدي إلى:", opts:["انخفاض الإيراد الكلي إلى الصفر","ارتفاع (زيادة) الإيراد الكلي بصورة لا نهائية","ثبات الإيراد الكلي عند مستواه السابق","انخفاض الكمية المطلوبة إلى النصف"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"في الطلب لا نهائي المرونة، أي انخفاض في السعر يؤدي إلى زيادة الكمية المطلوبة والإيراد الكلي إلى ما لا نهاية." },
-        { id:38, ch:1, star:'ch1_revenue', diff:1, q:"يرغب المشروع الإنتاجي دائماً بمعرفة أثر تغير سعر السلعة على الإيراد الكلي لأنه يسعى دائماً إلى:", opts:["تقليل المبيعات الكلية","تعظيم إيراده الكلي أو مبيعاته الكلية","تثبيت المرونة عند الصفر","زيادة الضرائب المدفوعة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"يدرس المنتج مرونة الطلب السعرية ليرسم سياسته السعرية بما يحقق تعظيم الإيراد الكلي." },
-        { id:39, ch:1, star:'ch1_revenue', diff:2, q:"إذا ازداد الناتج المباع بمقدار وحدة واحدة فقط، فإن التغير في الإيراد الكلي يمثل:", opts:["السعر الكلي","الإيراد الحدي (MR)","المرونة التقاطعية","التكلفة الثابتة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","معلومة صحيحة بمكان خاطئ"], exp:"الإيراد الحدي (MR) هو مقدار التغير في الإيراد الكلي الناتج عن بيع وحدة إضافية واحدة." },
-        { id:40, ch:1, star:'ch1_revenue', diff:3, q:"في ظروف المنافسة التامة يصبح الإيراد الحدي هو نفسه سعر وحدة السلعة لأن:", opts:["التغير في الكمية يساوي صفراً","التغير في السعر يساوي صفراً","المرونة السعرية تساوي صفراً","السعر أكبر من الإيراد الكلي"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"في المنافسة التامة يكون السعر معطى وثابتاً للمنتج (التغير في السعر = صفر)، فيتساوى الإيراد الحدي مع السعر." },
-        { id:41, ch:1, star:'ch1_revenue', diff:2, q:"العلاقة بين الإيراد الكلي (TR) والإيراد الحدي (MR) تكون متماثلة تماماً مع العلاقة بين:", opts:["السعر والضريبة","الناتج الكلي والناتج الحدي","العرض والطلب","الدخل والادخار"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","معلومة صحيحة بمكان خاطئ"], exp:"العلاقة الرياضية والبيانية بين الإيراد الكلي والحدي تطابق علاقة الناتج الكلي بالناتج الحدي." },
-        { id:42, ch:1, star:'ch1_revenue', diff:3, q:"باستخدام معادلة الإيراد الحدي MR = P[1 - (1/Ed)] إذا افترضنا أن السعر (P=4) ومعامل المرونة (Ed=2) فإن قيمة الإيراد الحدي (MR) تساوي:", opts:["4","موجب 2","صفر","-2"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"بتطبيق القانون: MR = 4 × [1 - (1/2)] = 4 × 0.5 = +2." },
+        { id:1, ch:1, star:'ch1_concept', diff:1, q:"يتمثل المحور الأول للمشكلة الاقتصادية الرئيسية في:", opts:["ندرة الموارد الطبيعية فقط","الاحتياجات البشرية المتزايدة والمتنوعة","انخفاض مستويات التكنولوجيا","ثبات الدخل القومي"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"المحور الأول للمشكلة الاقتصادية ينطلق من تعدد وتجدد الاحتياجات البشرية في مقابل الندرة النسبية للموارد عامةً." },
+        { id:2, ch:1, star:'ch1_concept', diff:1, q:"يعرف الطلب بأنه الكمية التي يرغب في الحصول عليها بسعر معين مصحوب بقدرة شرائية كل من:", opts:["الدولة فقط","الفرد أو المشروع","المنتج والمصدر فقط","البنوك التجارية"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الطلب يصدر عن الفرد المستهلك أو المشروع بشرط اقتران الرغبة بالقدرة الشرائية." },
+        { id:3, ch:1, star:'ch1_concept', diff:1, q:"تعكس «الرغبة» عند دراسة سلوك المستهلك تطلعاته بالحصول على السلعة، وهي:", opts:["تقترن دائماً بقدرة شرائية عالية","قد لا تقترن بتحمل المستهلك أي تكلفة أو تضحية","تمثل الشرط الموضوعي للطلب","تساوي الطلب الفعلي في السوق"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الرغبة وحدها جانب نفسي قد لا يقترن بتحمل أي تكلفة ما لم تسنده القدرة الشرائية." },
+        { id:4, ch:1, star:'ch1_concept', diff:1, q:"المتغيرات التي يمكن قياسها بوحدات نقدية أو عينية في دالة الطلب تسمى:", opts:["المتغيرات النوعية","المتغيرات الكمية","المتغيرات الخارجية فقط","المتغيرات العشوائية"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","شبه صحيح"], exp:"المتغيرات القابلة للقياس النقدي أو العيني (كالسعر والدخل) هي المتغيرات الكمية." },
+        { id:5, ch:1, star:'ch1_concept', diff:1, q:"بسبب اتساع احتياجات الفرد المستهلك ومحدودية دخله، يكون من مصلحته عند شراء وحدة السلعة:", opts:["تعظيم السعر المدفوع","تدنية (Minimization) كلفة الحصول على وحدة السلعة بأقل سعر ممكن","تجاهل أسعار السلع البديلة","زيادة الإنفاق الكلي بغض النظر عن الكمية"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"رشادة المستهلك أمام محدودية دخله تدفعه دائماً لتدنية كلفة الحصول على السلعة بأقل سعر ممكن." },
+        { id:6, ch:1, star:'ch1_determinants', diff:2, q:"المبرر الثالث لتفسير العلاقة العكسية بين سعر السلعة والكمية المطلوبة منها (إلى جانب تدنية الكلفة وتناقص المنفعة الحدية) هو:", opts:["ثبات أذواق المستهلكين","أن معظم السلع والخدمات الاعتيادية تكون لها بدائل أخرى بدرجات متفاوتة","تدخل الدولة في التسعير","انعدام القدرة الشرائية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","عكس المعنى"], exp:"وجود بدائل للسلعة يدفع المستهلك للتحول نحو البدائل عند ارتفاع سعر السلعة الأصلية." },
+        { id:7, ch:1, star:'ch1_determinants', diff:1, q:"في التحليل الاقتصادي لدخول المستهلكين، يُنظر إلى زيادة دخل المستهلك وزيادة الكميات المطلوبة على أنهما:", opts:["تحرك سالب يقابله تحرك موجب","تحرك موجب يؤدي إلى تحرك موجب أيضاً","تحرك سالب يؤدي إلى تحرك سالب","تحرك صفري مستقر"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"العلاقة الطردية بين الدخل والطلب تعني أن التحرك الموجب في الدخل يؤدي إلى تحرك موجب في الكمية المطلوبة." },
+        { id:8, ch:1, star:'ch1_determinants', diff:2, q:"درجة العلاقة الطردية بين تغير الدخل وتغير الكميات المطلوبة من السلع الاعتيادية تكون:", opts:["متساوية وواحدة لجميع السلع","ليست واحدة بل تتفاوت من سلعة إلى أخرى","ثابتة لا تتغير أبداً","محصورة في السلع الرديئة فقط"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","عكس المعنى"], exp:"تتفاوت درجة استجابة الكميات المطلوبة لتغير الدخل من سلعة لأخرى حسب أهميتها." },
+        { id:9, ch:1, star:'ch1_determinants', diff:2, q:"تقوم العلاقة الطردية بين التغير في سعر السلعة البديلة والكمية المطلوبة من السلعة الأصلية بافتراض:", opts:["ارتفاع سعر السلعة الأصلية","ثبات سعر السلعة الأصلية","انخفاض دخل المستهلك","انعدام السلع المكملة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"لقياس أثر تغير سعر البديل على السلعة الأصلية يفترض بقاء سعر السلعة الأصلية ثابتاً." },
+        { id:10, ch:1, star:'ch1_determinants', diff:1, q:"يصبح سعر السلعة المكملة جزءاً من تكلفة أو سعر السلعة الأصلية عند:", opts:["الاستيراد فقط","الاستعمال","التخزين","الترويج والإعلان"], ans:1, traps:["نصف الحقيقة","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"السلعتان المكملتان تستهلكان معاً، لذا تندمج كلفتهما عند الاستعمال." },
+        { id:11, ch:1, star:'ch1_determinants', diff:1, q:"تظهر زيادة سعر السلعة المكملة في صيغة زيادة في تكلفة السلعة الأصلية بشكل أوضح حين تكون درجة التكامل حادة، ومن أمثلتها:", opts:["السكر بالنسبة للشاي","الإطار بالنسبة للسيارة","لحم البقر بالنسبة للحم الغنم","الملابس الجديدة بالنسبة للمستعملة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"الإطار بالنسبة للسيارة مثال على التكامل الحاد الذي لا يمكن الاستغناء عنه عند الاستعمال." },
+        { id:12, ch:1, star:'ch1_determinants', diff:1, q:"تعتبر علاقة السكر بالشاي مثالاً على درجة تكامل أقل حدة لأن الفرد عند ارتفاع سعر السكر يمكنه أن:", opts:["يستغني عن الشاي نهائياً وبفورية","يقلل من كمية السكر في الشاي","يستبدل الشاي بالسيارة","يزيد من كمية السكر المستهلكة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"يمكن للمستهلك تقليل كمية السكر في الشاي دون ترك الشاي كلياً، لذا فتكاملهما أقل حدة." },
+        { id:13, ch:1, star:'ch1_determinants', diff:2, q:"يمارس التغير في أسعار السلع المكملة تأثيراً عكسياً على الكميات المطلوبة من السلعة الأصلية، أي باتجاه:", opts:["يطابق تأثير السلع البديلة","يتقاطع مع تأثير التغير في أسعار السلع البديلة","يوازي تأثير زيادة الدخل","لا علاقة له بسعر السلعة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الأثر العكسي للسلع المكملة يتقاطع (يتعاكس) مع الأثر الطردي للسلع البديلة." },
+        { id:14, ch:1, star:'ch1_determinants', diff:1, q:"إلى جانب نشاط الترويج والإعلان، قد تحصل تغيرات في أذواق وتفضيلات المستهلكين كنتيجة لـ:", opts:["تغير في المعطيات الاقتصادية والاجتماعية","ثبات حجم السكان فقط","ثبات أسعار السلع المكملة","انخفاض مرونة العرض فقط"], ans:0, traps:["صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"تتغير الأذواق نتيجة التطور في المعطيات الاقتصادية والاجتماعية إلى جانب الترويج." },
+        { id:15, ch:1, star:'ch1_determinants', diff:2, q:"يختلف النمط الاستهلاكي لمجتمع تستحوذ فيه أقلية على الجانب الأكبر من الدخل القومي عن مجتمع آخر يمتلك نفس مقدار الدخل القومي ولكنه:", opts:["يقلل من فرص التشغيل","يعتمد منهجية تتسع فيها قاعدة توزيع الدخل القومي وتقل حدة التفاوت في الدخول","يمنع استهلاك السلع الضرورية","يثبت أذواق المستهلكين بالقانون"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"اتساع قاعدة توزيع الدخل القومي وتقليل التفاوت يغير النمط الاستهلاكي للمجتمع." },
+        { id:16, ch:1, star:'ch1_determinants', diff:2, q:"لكي تتحول زيادة حجم السكان (الاحتياجات) إلى طلب فعلي يتوفر له القدرة الشرائية، يفترض أن يتزامن التوسع السكاني مع:", opts:["تقليص ساعات العمل","توسع فرص التشغيل وزيادة إنتاج السلع والخدمات","زيادة الضرائب المباشرة","استبعاد المتغيرات الكمية"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"تتحول الزيادة السكانية إلى طلب فعلي عندما تقترن بتوسع فرص التشغيل والدخول." },
+        { id:17, ch:1, star:'ch1_determinants', diff:2, q:"في معادلة دالة الطلب Qd = f(P, MI, Pn)، يشير الرمزان (MI) و (Pn) على التوالي إلى:", opts:["حجم السكان وأذواق المستهلكين","قيمة الدخل النقدي، وأسعار السلع الأخرى البديلة والمكملة","الإيراد الحدي، والسعر التوازني","تكاليف الترويج، والمرونة السعرية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","نصف الحقيقة"], exp:"الرمز MI يمثل الدخل النقدي، والرمز Pn يمثل أسعار السلع الأخرى البديلة والمكملة." },
+        { id:18, ch:1, star:'ch1_determinants', diff:2, q:"اقتصرت معادلة دالة الطلب الرياضية Qd = f(P, MI, Pn) على عدد محدد من العوامل المؤثرة في الطلب هو:", opts:["عامل واحد فقط من أصل ستة","ثلاثة عوامل فقط (المتغيرات الكمية) من أصل العوامل الستة","خمسة عوامل نوعية","جميع العوامل الستة دون استبعاد"], ans:1, traps:["نصف الحقيقة","صحيح","عكس المعنى","شبه صحيح"], exp:"اقتصرت المعادلة الرياضية على العوامل الكمية الثلاثة القابلة للقياس من أصل العوامل الستة." },
+        { id:19, ch:1, star:'ch1_elasticity', diff:2, q:"تعبر المرونة بشكل عام عن مدى استجابة أو حساسية:", opts:["المتغير المستقل للتغير في المتغير التابع","المتغير التابع للتغير في العوامل المستقلة المؤثرة فيه","السعر للتغير في تكاليف النقل فقط","العوامل الخارجية للتغير في حجم السكان"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"المرونة تقيس مدى استجابة المتغير التابع (الكمية) للتغير في العوامل المستقلة المؤثرة فيه." },
+        { id:20, ch:1, star:'ch1_elasticity', diff:2, q:"بناءً على المتغيرات المستقلة المؤثرة في الطلب، برزت أربعة أنواع لمرونات الطلب هي:", opts:["السعرية، الإنتاجية، الكلية، والحدية","السعرية، الدخلية، التقاطعية، والتعزيزية","الفردية، السوقية، الثابتة، والمتغيرة","الذاتية، الموضوعية، الكمية، والنوعية"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","نصف الحقيقة"], exp:"مرونات الطلب الأربعة هي: السعرية، الدخلية، التقاطعية، والتعزيزية." },
+        { id:21, ch:1, star:'ch1_elasticity', diff:3, q:"في مثال الطلب أحادي المرونة، إذا انخفض سعر السلعة من (200) إلى (150) وحدة نقدية، وزادت الكمية المطلوبة من (200) إلى (250)، فإن معامل المرونة السعرية يساوي:", opts:["-0.1","-1","صفر","+2"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"نسبة التغير في الكمية (+25%) مقسومة على نسبة التغير في السعر (-25%) تساوي (-1)." },
+        { id:22, ch:1, star:'ch1_elasticity', diff:2, q:"عندما يكون منحنى الطلب عمودياً تكون المرونة السعرية مساوية للصفر، والسبب في ذلك هو أن:", opts:["الأسعار لا تتغير أبداً في السوق","الكميات لا تستجيب لتغيرات الأسعار","الكميات تستجيب بصورة لا نهائية","السلعة لها بدائل كثيرة جداً"], ans:1, traps:["نصف الحقيقة","صحيح","عكس المعنى","عكس المعنى"], exp:"المنحنى العمودي يعني أن الكمية المطلوبة ثابتة لا تستجيب مطلقاً لتغيرات الأسعار." },
+        { id:23, ch:1, star:'ch1_elasticity', diff:2, q:"سميت مرونة الطلب التقاطعية بهذا الاسم لأنها:", opts:["تتقاطع مع محور الأسعار في نقطة الأصل","تمثل تقاطعاً بين سلعتين مثل (x و y)","تقيس تقاطع العرض مع الطلب","تلغي أثر الدخل النقدي"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"سميت تقاطعية لأنها تقيس العلاقة المتقاطعة بين كمية السلعة x وسعر السلعة الأخرى y." },
+        { id:24, ch:1, star:'ch1_elasticity', diff:2, q:"في صيغة مرونة الطلب التعزيزية، يمثل الرمز (CD):", opts:["دخل المستهلك المخصص للسلعة x","جميع ما يتحمله المشروع من تكاليف لترويج السلعة x","سعر السلعة المكملة للسلعة x","الكمية المعروضة من السلعة x"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","عكس المعنى"], exp:"الرمز CD يمثل التكاليف الإعلانية والترويجية التي يتحملها المشروع لترويج السلعة x." },
+        { id:25, ch:1, star:'ch1_elasticity', diff:2, q:"إذا كانت إشارة معامل المرونة التعزيزية موجبة، فإن ذلك يشير إلى:", opts:["تراجع في نظرة المستهلكين تجاه السلعة","تحسن في نظرة المستهلكين إلى هذه السلعة","أن السلعة رديئة","أن السلعتين مستقلتان"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الإشارة الموجبة للمرونة التعزيزية تدل على تحسن نظرة المستهلكين للسلعة وزيادة إقبالهم عليها." },
+        { id:26, ch:1, star:'ch1_elasticity', diff:1, q:"يفترض في حساب المرونة التعزيزية أن تكون العلاقة بين تغير تكاليف الترويج وتغير الكمية المطلوبة من السلعة علاقة:", opts:["عكسية","طردية","صفرية","غير منتظمة"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"العلاقة المفترضة بين الإنفاق الترويجي والكمية المطلوبة هي علاقة طردية." },
+        { id:27, ch:1, star:'ch1_elasticity', diff:2, q:"يقوم منحنى الطلب بإحالة دالة الطلب إلى علاقة مفردة واحدة هي Qd = f(P)، وذلك بافتراض:", opts:["تغير الدخل والأسعار معاً","ثبات كافة المتغيرات أو العوامل الأخرى المؤثرة في طلب الأفراد","انعدام المرونة السعرية","ثبات سعر السلعة وتغير الكمية"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"يرسم منحنى الطلب بين السعر والكمية بافتراض ثبات كافة المتغيرات الأخرى المؤثرة في الطلب." },
+        { id:28, ch:1, star:'ch1_elasticity', diff:2, q:"يعتمد انحدار منحنى الطلب وموقعه على المرونة السعرية، فكلما ازدادت درجة المرونة السعرية:", opts:["زحف منحنى الطلب إلى اليسار","زحف منحنى الطلب إلى اليمين","أصبح المنحنى عمودياً تماماً","تحول إلى منحنى عرض"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"كلما ازدادت درجة المرونة السعرية زحف منحنى الطلب إلى اليمين." },
+        { id:29, ch:1, star:'ch1_exceptions', diff:1, q:"العالم الذي أثبت استثناء السلع الدنيا من قانون الطلب في القرن التاسع عشر هو الاقتصادي:", opts:["الفرنسي فبلن","البريطاني جيفين (Giffin)","الأمريكي مارشال","الألماني إنجل"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"الاقتصادي البريطاني روبرت جيفين هو من أثبت استثناء السلع الدنيا من قانون الطلب." },
+        { id:30, ch:1, star:'ch1_exceptions', diff:2, q:"السمة الأساسية للسلعة الدنيا (مثل رغيف الخبز أو وجبة الفلافل) بالنسبة للمستهلك الفقير ذي الدخل المنخفض جداً هي أنها:", opts:["لا تشكل أي أهمية في إنفاقه اليومي","تحتل نسبة كبيرة في ميزانيته أو إنفاقه لتلبية احتياجاته الأساسية","تشترى لأغراض التفاخر والمباهاة","تزداد الكمية المطلوبة منها كلما ارتفع دخله"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"السلعة الدنيا تحتل نسبة كبيرة في ميزانية المستهلك الفقير لتلبية حاجاته الأساسية." },
+        { id:31, ch:1, star:'ch1_exceptions', diff:3, q:"يؤدي ارتفاع سعر السلعة الدنيا إلى قيام المستهلك الفقير بزيادة الكمية المطلوبة منها لأنه:", opts:["يرغب في التباهي بشرائها","يقلص من قدرته الشرائية الحقيقية ويجبره على إحلالها محل السلع الاعتيادية الأعلى سعراً","يتوقع انخفاض سعرها قريباً","يحصل على إعانات حكومية إضافية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","شبه صحيح","نصف الحقيقة"], exp:"ارتفاع سعرها يقلص قدرته الشرائية الحقيقية فيضطر لإحلالها محل السلع الاعتيادية الأغلى." },
+        { id:32, ch:1, star:'ch1_exceptions', diff:2, q:"إن انخفاض أسعار سلع المباهاة (السلع الاستفزازية) يؤدي إلى تخفيض الكميات المطلوبة منها من قبل الأغنياء لأنها:", opts:["تصبح غير صالحة للاستهلاك","ستفقد بعض قدرتها على الاستفزاز والمباهاة","تستنزف ميزانية الأغنياء","تتحول إلى سلع مكملة"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"انخفاض سعر سلع المباهاة يفقدها عنصر الندرة والتميز والاستفزاز لدى الأثرياء." },
+        { id:33, ch:1, star:'ch1_exceptions', diff:3, q:"إذا ارتفع سعر السلعة (ص) بنسبة (7%)، وتشكلت توقعات تشاؤمية لدى المشترين بأن سعرها سيرتفع خلال وقت قصير بنسبة (60%)، فإن الارتفاع الأولي سيؤدي إلى زيادة الكمية المطلوبة، ويكون هذا التوجه أقل وضوحاً إذا كانت السلعة:", opts:["قابلة للخزن لفترات طويلة","سريعة التلف","من الجواهر الثمينة","ذات طلب عديم المرونة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"يكون التوجه للشراء التخزيني أقل وضوحاً إذا كانت السلعة سريعة التلف ولا يمكن خزنها." },
+        { id:34, ch:1, star:'ch1_revenue', diff:2, q:"بالرجوع لجدول (1) لطلب السوق، عندما يكون سعر وحدة السلعة (1000) دينار، فإن حالة المستهلكين الثلاثة تكون كالآتي:", opts:["يطلب كل مستهلك وحدة واحدة","يطلب المستهلك (1) وحدة واحدة، ويمتنع المستهلكان الثاني والثالث عن الطلب","يمتنع جميع المستهلكين عن الشراء","يبلغ طلب السوق (6) وحدات"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"عند سعر 1000 دينار يطلب المستهلك الأول وحدة واحدة فقط ويمتنع الثاني والثالث." },
+        { id:35, ch:1, star:'ch1_revenue', diff:2, q:"بالرجوع لجدول (1) لطلب السوق، عندما ينخفض سعر السلعة إلى (800) دينار، ثم إلى (600) دينار، وأخيراً إلى (400) دينار، فإن إجمالي طلب السوق يرتفع بالتتابع من وحدة واحدة إلى:", opts:["(2) ثم (4) ثم (8) وحدات","(3) ثم (6) ثم (9) وحدات","(5) ثم (10) ثم (15) وحدة","يظل ثابتاً عند (3) وحدات"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","عكس المعنى"], exp:"يرتفع إجمالي طلب السوق بالتتابع من وحدة واحدة إلى (3) ثم (6) ثم (9) وحدات." },
+        { id:36, ch:1, star:'ch1_revenue', diff:3, q:"في الجداول الافتراضية لعلاقة المرونة بالإيراد الكلي، إذا كان السعر (8) والكمية (9) بالإيراد الكلي (72)، ثم ارتفع السعر إلى (9) وانخفضت الكمية إلى (8) فظل الإيراد الكلي (72)، فإن هذا يمثل حالة:", opts:["طلب عالي المرونة","طلب أحادي (متكافئ) المرونة","طلب قليل المرونة","طلب لا نهائي المرونة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"ثبات الإيراد الكلي عند (72) رغم تغير السعر يمثل حالة الطلب أحادي (متكافئ) المرونة." },
+        { id:37, ch:1, star:'ch1_revenue', diff:2, q:"في حالة الطلب لا نهائي المرونة، إذا حدث انخفاض في السعر فإن ذلك يؤدي إلى:", opts:["انخفاض الإيراد الكلي إلى الصفر","ارتفاع (زيادة) الإيراد الكلي بصورة لا نهائية","ثبات الإيراد الكلي عند مستواه السابق","انخفاض الكمية المطلوبة إلى النصف"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"في الطلب لا نهائي المرونة يؤدي انخفاض السعر إلى زيادة الإيراد الكلي بصورة لا نهائية." },
+        { id:38, ch:1, star:'ch1_revenue', diff:1, q:"يرغب المشروع الإنتاجي دائماً بمعرفة أثر تغير سعر السلعة على الإيراد الكلي لأنه يسعى دائماً إلى:", opts:["تقليل المبيعات الكلية","تعظيم إيراده الكلي أو مبيعاته الكلية","تثبيت المرونة عند الصفر","زيادة الضرائب المدفوعة"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"يسعى المشروع الإنتاجي دائماً إلى تعظيم إيراده الكلي أو مبيعاته الكلية." },
+        { id:39, ch:1, star:'ch1_revenue', diff:2, q:"إذا ازداد الناتج المباع بمقدار وحدة واحدة فقط، فإن التغير في الإيراد الكلي يمثل:", opts:["السعر الكلي","الإيراد الحدي (MR)","المرونة التقاطعية","التكلفة الثابتة"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","معلومة صحيحة بمكان خاطئ"], exp:"التغير في الإيراد الكلي الناتج عن بيع وحدة إضافية واحدة يمثل الإيراد الحدي (MR)." },
+        { id:40, ch:1, star:'ch1_revenue', diff:3, q:"في ظروف المنافسة التامة يصبح الإيراد الحدي هو نفسه سعر وحدة السلعة لأن:", opts:["التغير في الكمية يساوي صفراً","التغير في السعر يساوي صفراً","المرونة السعرية تساوي صفراً","السعر أكبر من الإيراد الكلي"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"في المنافسة التامة يكون السعر ثابتاً (التغير في السعر يساوي صفراً) فيتساوى الإيراد الحدي مع السعر." },
+        { id:41, ch:1, star:'ch1_revenue', diff:2, q:"العلاقة بين الإيراد الكلي (TR) والإيراد الحدي (MR) تكون متماثلة تماماً مع العلاقة بين:", opts:["السعر والضريبة","الناتج الكلي والناتج الحدي","العرض والطلب","الدخل والادخار"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","معلومة صحيحة بمكان خاطئ"], exp:"تتماثل علاقة الإيراد الكلي والإيراد الحدي مع علاقة الناتج الكلي والناتج الحدي." },
+        { id:42, ch:1, star:'ch1_revenue', diff:3, q:"باستخدام معادلة الإيراد الحدي MR = P[1 - (1/Ed)] إذا افترضنا أن السعر (P=4) ومعامل المرونة (Ed=2) فإن قيمة الإيراد الحدي (MR) تساوي:", opts:["4","موجب 2","صفر","-2"], ans:1, traps:["شبه صحيح","صحيح","معلومة صحيحة بمكان خاطئ","عكس المعنى"], exp:"بتطبيق المعادلة: MR = 4 × [1 - (1/2)] = موجب 2." },
 
         // الفصل الثاني: نظرية العرض (43 - 60)
-        { id:43, ch:2, star:'ch2_supply', diff:2, q:"نضطر في دراسة جدول العرض إلى تثبيت العوامل الأخرى المؤثرة في الكميات المعروضة للتركيز على علاقة السعر بالكمية، خاصة وأن أكثر تلك العوامل:", opts:["لا تؤثر في العرض مطلقاً","تحتاج إلى وقت ما لكي تتغير","تتغير في كل ثانية","لا يمكن معرفتها"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","شبه صحيح"], exp:"أغلب محددات العرض الأخرى (كالتقنية وحجم المصانع) تحتاج لفترة زمنية لتتغير، لذا تثبت في الأجل القصير." },
-        { id:44, ch:2, star:'ch2_supply', diff:1, q:"تكمن أهمية تحديد الفترة الزمنية (عنصر الزمن) في جدول العرض في حقيقة أن السلع:", opts:["تباع بنفس السعر دائماً","تتفاوت من حيث الوقت اللازم لإنتاجها","لا تحتاج إلى وقت للإنتاج","تتلف فور إنتاجها"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","نصف الحقيقة"], exp:"تختلف الدورة الإنتاجية من سلعة لأخرى (زراعية أو صناعية)، مما يجعل عنصر الزمن حاسماً في استجابة العرض." },
-        { id:45, ch:2, star:'ch2_supply', diff:2, q:"بالرجوع لجدول (1) للعرض الافتراضي، عندما يرتفع سعر وحدة السلعة من (200) إلى (300) ثم (400) ثم (500) وأخيراً (600) دينار، فإن الكمية المعروضة شهرياً تزداد بالتتابع من (600) إلى:", opts:["800 ثم 1000 ثم 1200 ثم 1400","1000 ثم 1300 ثم 1700 ثم 1900","1500 ثم 2000 ثم 2500 ثم 3000","تظل ثابتة عند 600 وحدة"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","عكس المعنى"], exp:"حسب جدول العرض الافتراضي في المنهج، تزداد الكميات المعروضة طردياً بالتتابع: 1000 ثم 1300 ثم 1700 ثم 1900." },
-        { id:46, ch:2, star:'ch2_supply', diff:2, q:"إن زيادة الإنتاج من سلعة ما يستلزم سحب المزيد من المصادر وعناصر الإنتاج التي كانت تعمل في إنتاج سلع أخرى، مما يفرض على المنتجين:", opts:["تخفيض أجور العمال","دفع مكافآت أعلى لأصحاب تلك المصادر والعناصر","تقليل سعر بيع السلعة","إيقاف النشاط الإنتاجي"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","شبه صحيح"], exp:"لجذب عناصر الإنتاج من الفروع الأخرى، يضطر المنتجون لدفع عوائد ومكافآت أعلى، مما يفسر ارتفاع التكلفة." },
-        { id:47, ch:2, star:'ch2_supply', diff:2, q:"بالرجوع لجدول عرض الصناعة المكون من (4) مشاريع، عندما يكون سعر السلعة (100) دينار يكون عرض الصناعة الكلي (400) وحدة، وعندما يصل السعر إلى (600) دينار يبلغ عرض الصناعة الكلي:", opts:["900 وحدة","1400 وحدة","1150 وحدة","1650 وحدة"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","شبه صحيح"], exp:"بجمع الكميات المعروضة للمشاريع الأربعة عند السعر 600 دينار في جدول عرض الصناعة يبلغ الإجمالي 1400 وحدة." },
-        { id:48, ch:2, star:'ch2_supply', diff:1, q:"تشترك صناعة المعجنات والحلويات مع عمليات إنتاج سلع أخرى في استخدام مستلزمات عامة قابلة للتحويل والمناقلة هي:", opts:["المطاط والحديد","الدقيق والدهون والسكر","الآلات الثقيلة فقط","المواد الكيميائية النادرة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","نصف الحقيقة","شبه صحيح"], exp:"الدقيق والدهون والسكر مواد أولية عامة يسهل تحويلها ومناقلتها بين صناعات غذائية متعددة." },
-        { id:49, ch:2, star:'ch2_supply', diff:2, q:"عند ارتفاع السعر في الأجل القصير، يمكن تحقيق بعض الزيادة المحدودة في الإنتاج قبل تغيير المستلزمات الثابتة من خلال زيادة المدخلات المتغيرة مثل:", opts:["بناء منشآت ومصانع جديدة فوراً","استخدام أعداد إضافية من الأيدي العاملة أو زيادة وجبات (فترات) العمل","تقليص ساعات العمل اليومية","بيع الآلات والمكائن"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","عكس المعنى","عكس المعنى"], exp:"في الأجل القصير يتعذر بناء مصانع جديدة، فيتم التوسع بتشغيل وجبات عمل إضافية وزيادة العمال والمواد الخام." },
-        { id:50, ch:2, star:'ch2_supply', diff:1, q:"تتمثل معدات الإنتاج الثابتة التي يحتاج زيادة حجمها ومقاديرها إلى مرور فترات زمنية كافية في:", opts:["المواد الخام كالسكر والدقيق","الآلات والمكائن والمنشآت","وجبات العمل الإضافية","الدعاية والإعلان"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الآلات والمكائن والأبنية الصناعية هي الأصول الثابتة التي لا يمكن زيادتها إلا في الأجل الطويل." },
-        { id:51, ch:2, star:'ch2_supply', diff:2, q:"لا يكون من المجدي اقتصادياً زيادة المعدات الثابتة بصورة سريعة إذا كان ارتفاع السعر مؤقتاً، لأن زيادة الكمية المعروضة بهذا الشكل ينطوي على زيادات في:", opts:["الإعانات الحكومية","التكاليف الثابتة","المرونة السعرية للطلب","دخل المستهلكين"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"التوسع في شراء المكائن والمنشآت يرفع التكاليف الثابتة التي سيتحملها المشروع حتى لو عاد السعر للانخفاض." },
-        { id:52, ch:2, star:'ch2_supply', diff:1, q:"تتفاوت إمكانات تخزين السلعة في الأجل القصير حسب:", opts:["حجم السكان في الدولة","طبيعة السلعة وقابليتها للتلف","سعر السلعة البديلة فقط","عدد المشاريع في الصناعة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","نصف الحقيقة","شبه صحيح"], exp:"قابلية السلعة للتخزين تتوقف بالدرجة الأساس على خصائصها الطبيعية ومدى سرعة تلفها." },
-        { id:53, ch:2, star:'ch2_supply', diff:2, q:"تؤدي زيادة الإعانات الرسمية الممنوحة لإنتاج سلعة معينة إلى تخفيض تكلفة الإنتاج بمقدار يساوي:", opts:["ضعف سعر السلعة","مبلغ الإعانة","نصف التكاليف الثابتة","إجمالي إيرادات المشروع"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"الإعانة الحكومية تعمل كضريبة سالبة فتخفض تكلفة إنتاج الوحدة بمقدار مبلغ الإعانة الممنوح." },
-        { id:54, ch:2, star:'ch2_elasticity', diff:2, q:"لا تحقق الكميات المعروضة من السلع المختلفة نفس الدرجة من الاستجابة للتغير في السعر بسبب أن:", opts:["جميع السلع لها نفس تكلفة الإنتاج","العوامل الأخرى المحددة لمنحنى العرض تتفاوت من حيث تأثيرها على السلع المختلفة","قانون العرض لا ينطبق على السلع الاعتيادية","السعر لا يؤثر في العرض"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"تفاوت طبيعة السلع وقابلية الخزن وطول فترة الإنتاج يجعل مرونة العرض تختلف من سلعة لأخرى." },
-        { id:55, ch:2, star:'ch2_elasticity', diff:2, q:"الفرق الوحيد بين فكرة مرونة العرض (Es) وفكرة مرونة الطلب (Ed) من حيث استجابة الكمية للتغير في السعر هو أن:", opts:["مرونة العرض تقاس بالنقود ومرونة الطلب تقاس بالوحدات","الكمية المعروضة تستجيب طردياً للتغير في السعر، في حين أن الكمية المطلوبة تستجيب عكسياً","مرونة العرض لا تحتوي على بسط ومقام","الكمية المعروضة لا تتأثر بالزمن"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","عكس المعنى"], exp:"قانون القياس واحد، والفرق الجوهري هو اتجاه الاستجابة: طردي في العرض (إشارة موجبة) وعكسي في الطلب (إشارة سالبة)." },
-        { id:56, ch:2, star:'ch2_elasticity', diff:3, q:"إذا كانت الكمية المعروضة السابقة (Q1=100) والحالية (Q2=150)، وكان السعر السابق (P1=4) دولار والحالي (P2=5) دولار، فإن معامل مرونة العرض (Es) يساوي:", opts:["0.5","2","1","50"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"نسبة تغير الكمية = (50/100) = 50%، ونسبة تغير السعر = (1/4) = 25%، إذن Es = 50% / 25% = 2." },
-        { id:57, ch:2, star:'ch2_elasticity', diff:3, q:"في حالة العرض واطئ المرونة، إذا ارتفع سعر السلعة بنسبة (20%) وازدادت الكمية المعروضة بنسبة (10%)، فإن قيمة مرونة العرض تساوي:", opts:["2","1/2","صفر","10"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"بقسمة نسبة التغير في الكمية المعروضة (10%) على نسبة التغير في السعر (20%) نحصل على 1/2 (أي 0.5)." },
-        { id:58, ch:2, star:'ch2_elasticity', diff:2, q:"في حالة العرض لا نهائي المرونة، عند انخفاض السعر عن المستوى السائد المعطى فإن الكمية المعروضة:", opts:["تزداد إلى ما لا نهاية","تنخفض إلى الصفر","تظل ثابتة لا تتغير","تتساوى مع السعر"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"عندما يكون منحنى العرض أفقياً (لا نهائي المرونة)، فإن أي انخفاض عن السعر السائد يهبط بالكمية المعروضة إلى الصفر." },
-        { id:59, ch:2, star:'ch2_elasticity', diff:1, q:"إن منهجية وآلية قياس مرونة العرض مقارنة بقياس مرونة الطلب:", opts:["تختلف جذرياً في القوانين الرياضية","لا تختلف عن منهجية وآلية قياس مرونة الطلب","تقتصر على مرونة القوس فقط","لا يمكن تطبيقها بيانياً"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","شبه صحيح"], exp:"تعتمد مرونة العرض نفس الصيغة الرياضية النسبية المعتمدة في قياس مرونة الطلب السعرية." },
-        { id:60, ch:2, star:'ch2_elasticity', diff:2, q:"يمكن للمعطيات أو العوامل الأخرى المؤثرة على إمكانات العرض أن تتغير مما يحول منحنى العرض إلى اليمين أو اليسار، ويحدث ذلك في:", opts:["اللحظة الآنية الفورية فقط","الأمد المتوسط أو البعيد","حالة ثبات كافة العوامل","حالة انعدام الطلب فقط"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"انتقال منحنى العرض بأكمله يميناً أو يساراً نتيجة تغير الطاقة الإنتاجية والتقنية يتحقق في الأمد المتوسط أو البعيد." },
+        { id:43, ch:2, star:'ch2_supply', diff:2, q:"نضطر في دراسة جدول العرض إلى تثبيت العوامل الأخرى المؤثرة في الكميات المعروضة للتركيز على علاقة السعر بالكمية، خاصة وأن أكثر تلك العوامل:", opts:["لا تؤثر في العرض مطلقاً","تحتاج إلى وقت ما لكي تتغير","تتغير في كل ثانية","لا يمكن معرفتها"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","شبه صحيح"], exp:"أكثر العوامل المؤثرة في العرض تحتاج إلى وقت ما لكي تتغير، لذا يفترض ثباتها في الأجل القصير." },
+        { id:44, ch:2, star:'ch2_supply', diff:1, q:"تكمن أهمية تحديد الفترة الزمنية (عنصر الزمن) في جدول العرض في حقيقة أن السلع:", opts:["تباع بنفس السعر دائماً","تتفاوت من حيث الوقت اللازم لإنتاجها","لا تحتاج إلى وقت للإنتاج","تتلف فور إنتاجها"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","نصف الحقيقة"], exp:"السلع تتفاوت من حيث الوقت اللازم لإنتاجها واستجابتها السعرية." },
+        { id:45, ch:2, star:'ch2_supply', diff:2, q:"بالرجوع لجدول (1) للعرض الافتراضي، عندما يرتفع سعر وحدة السلعة من (200) إلى (300) ثم (400) ثم (500) وأخيراً (600) دينار، فإن الكمية المعروضة شهرياً تزداد بالتتابع من (600) إلى:", opts:["800 ثم 1000 ثم 1200 ثم 1400","1000 ثم 1300 ثم 1700 ثم 1900","1500 ثم 2000 ثم 2500 ثم 3000","تظل ثابتة عند 600 وحدة"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","عكس المعنى"], exp:"تزداد الكمية المعروضة شهرياً بالتتابع من 600 إلى: 1000 ثم 1300 ثم 1700 ثم 1900." },
+        { id:46, ch:2, star:'ch2_supply', diff:2, q:"إن زيادة الإنتاج من سلعة ما يستلزم سحب المزيد من المصادر وعناصر الإنتاج التي كانت تعمل في إنتاج سلع أخرى، مما يفرض على المنتجين:", opts:["تخفيض أجور العمال","دفع مكافآت أعلى لأصحاب تلك المصادر والعناصر","تقليل سعر بيع السلعة","إيقاف النشاط الإنتاجي"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","شبه صحيح"], exp:"لجذب عناصر الإنتاج من الصناعات الأخرى يتوجب دفع مكافآت وعوائد أعلى لأصحابها." },
+        { id:47, ch:2, star:'ch2_supply', diff:2, q:"بالرجوع لجدول عرض الصناعة المكون من (4) مشاريع، عندما يكون سعر السلعة (100) دينار يكون عرض الصناعة الكلي (400) وحدة، وعندما يصل السعر إلى (600) دينار يبلغ عرض الصناعة الكلي:", opts:["900 وحدة","1400 وحدة","1150 وحدة","1650 وحدة"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","شبه صحيح"], exp:"عندما يصل السعر إلى 600 دينار يبلغ عرض الصناعة الكلي للمشاريع الأربعة 1400 وحدة." },
+        { id:48, ch:2, star:'ch2_supply', diff:1, q:"تشترك صناعة المعجنات والحلويات مع عمليات إنتاج سلع أخرى في استخدام مستلزمات عامة قابلة للتحويل والمناقلة هي:", opts:["المطاط والحديد","الدقيق والدهون والسكر","الآلات الثقيلة فقط","المواد الكيميائية النادرة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","نصف الحقيقة","شبه صحيح"], exp:"الدقيق والدهون والسكر مستلزمات عامة قابلة للتحويل والمناقلة بين صناعات غذائية متعددة." },
+        { id:49, ch:2, star:'ch2_supply', diff:2, q:"عند ارتفاع السعر في الأجل القصير، يمكن تحقيق بعض الزيادة المحدودة في الإنتاج قبل تغيير المستلزمات الثابتة من خلال زيادة المدخلات المتغيرة مثل:", opts:["بناء منشآت ومصانع جديدة فوراً","استخدام أعداد إضافية من الأيدي العاملة أو زيادة وجبات (فترات) العمل","تقليص ساعات العمل اليومية","بيع الآلات والمكائن"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","عكس المعنى","عكس المعنى"], exp:"في الأجل القصير تتم زيادة الإنتاج عبر المدخلات المتغيرة كالأيدي العاملة وزيادة وجبات العمل." },
+        { id:50, ch:2, star:'ch2_supply', diff:1, q:"تتمثل معدات الإنتاج الثابتة التي يحتاج زيادة حجمها ومقاديرها إلى مرور فترات زمنية كافية في:", opts:["المواد الخام كالسكر والدقيق","الآلات والمكائن والمنشآت","وجبات العمل الإضافية","الدعاية والإعلان"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الآلات والمكائن والمنشآت هي معدات الإنتاج الثابتة التي تحتاج لفترة زمنية طويلة لزيادتها." },
+        { id:51, ch:2, star:'ch2_supply', diff:2, q:"لا يكون من المجدي اقتصادياً زيادة المعدات الثابتة بصورة سريعة إذا كان ارتفاع السعر مؤقتاً، لأن زيادة الكمية المعروضة بهذا الشكل ينطوي على زيادات في:", opts:["الإعانات الحكومية","التكاليف الثابتة","المرونة السعرية للطلب","دخل المستهلكين"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"زيادة المعدات الثابتة ترفع التكاليف الثابتة التي سيتحملها المنتج حتى لو انخفض السعر لاحقاً." },
+        { id:52, ch:2, star:'ch2_supply', diff:1, q:"تتفاوت إمكانات تخزين السلعة في الأجل القصير حسب:", opts:["حجم السكان في الدولة","طبيعة السلعة وقابليتها للتلف","سعر السلعة البديلة فقط","عدد المشاريع في الصناعة"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","نصف الحقيقة","شبه صحيح"], exp:"تعتمد إمكانية التخزين على طبيعة السلعة ومدى قابليتها للتلف." },
+        { id:53, ch:2, star:'ch2_supply', diff:2, q:"تؤدي زيادة الإعانات الرسمية الممنوحة لإنتاج سلعة معينة إلى تخفيض تكلفة الإنتاج بمقدار يساوي:", opts:["ضعف سعر السلعة","مبلغ الإعانة","نصف التكاليف الثابتة","إجمالي إيرادات المشروع"], ans:1, traps:["شبه صحيح","صحيح","نصف الحقيقة","معلومة صحيحة بمكان خاطئ"], exp:"تخفض الإعانات الرسمية تكلفة الإنتاج بمقدار يساوي مبلغ الإعانة." },
+        { id:54, ch:2, star:'ch2_elasticity', diff:2, q:"لا تحقق الكميات المعروضة من السلع المختلفة نفس الدرجة من الاستجابة للتغير في السعر بسبب أن:", opts:["جميع السلع لها نفس تكلفة الإنتاج","العوامل الأخرى المحددة لمنحنى العرض تتفاوت من حيث تأثيرها على السلع المختلفة","قانون العرض لا ينطبق على السلع الاعتيادية","السعر لا يؤثر في العرض"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"تتفاوت العوامل المحددة لمنحنى العرض في تأثيرها من سلعة إلى أخرى." },
+        { id:55, ch:2, star:'ch2_elasticity', diff:2, q:"الفرق الوحيد بين فكرة مرونة العرض (Es) وفكرة مرونة الطلب (Ed) من حيث استجابة الكمية للتغير في السعر هو أن:", opts:["مرونة العرض تقاس بالنقود ومرونة الطلب تقاس بالوحدات","الكمية المعروضة تستجيب طردياً للتغير في السعر، في حين أن الكمية المطلوبة تستجيب عكسياً","مرونة العرض لا تحتوي على بسط ومقام","الكمية المعروضة لا تتأثر بالزمن"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","عكس المعنى"], exp:"الكمية المعروضة تستجيب طردياً للتغير في السعر بينما الكمية المطلوبة تستجيب عكسياً." },
+        { id:56, ch:2, star:'ch2_elasticity', diff:3, q:"إذا كانت الكمية المعروضة السابقة (Q1=100) والحالية (Q2=150)، وكان السعر السابق (P1=4) دولار والحالي (P2=5) دولار، فإن معامل مرونة العرض (Es) يساوي:", opts:["0.5","2","1","50"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"نسبة تغير الكمية (50%) على نسبة تغير السعر (25%) تساوي 2." },
+        { id:57, ch:2, star:'ch2_elasticity', diff:3, q:"في حالة العرض واطئ المرونة، إذا ارتفع سعر السلعة بنسبة (20%) وازدادت الكمية المعروضة بنسبة (10%)، فإن قيمة مرونة العرض تساوي:", opts:["2","1/2","صفر","10"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"بقسمة 10% على 20% تكون قيمة مرونة العرض 1/2." },
+        { id:58, ch:2, star:'ch2_elasticity', diff:2, q:"في حالة العرض لا نهائي المرونة، عند انخفاض السعر عن المستوى السائد المعطى فإن الكمية المعروضة:", opts:["تزداد إلى ما لا نهاية","تنخفض إلى الصفر","تظل ثابتة لا تتغير","تتساوى مع السعر"], ans:1, traps:["عكس المعنى","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"في العرض لا نهائي المرونة يؤدي انخفاض السعر عن المستوى السائد إلى انخفاض الكمية المعروضة إلى الصفر." },
+        { id:59, ch:2, star:'ch2_elasticity', diff:1, q:"إن منهجية وآلية قياس مرونة العرض مقارنة بقياس مرونة الطلب:", opts:["تختلف جذرياً في القوانين الرياضية","لا تختلف عن منهجية وآلية قياس مرونة الطلب","تقتصر على مرونة القوس فقط","لا يمكن تطبيقها بيانياً"], ans:1, traps:["عكس المعنى","صحيح","نصف الحقيقة","شبه صحيح"], exp:"منهجية وآلية القياس الرياضي لمرونة العرض لا تختلف عن قياس مرونة الطلب." },
+        { id:60, ch:2, star:'ch2_elasticity', diff:2, q:"يمكن للمعطيات أو العوامل الأخرى المؤثرة على إمكانات العرض أن تتغير مما يحول منحنى العرض إلى اليمين أو اليسار، ويحدث ذلك في:", opts:["اللحظة الآنية الفورية فقط","الأمد المتوسط أو البعيد","حالة ثبات كافة العوامل","حالة انعدام الطلب فقط"], ans:1, traps:["عكس المعنى","صحيح","عكس المعنى","معلومة صحيحة بمكان خاطئ"], exp:"تغير المعطيات المسببة لانتقال منحنى العرض يحدث في الأمد المتوسط أو البعيد." },
 
         // الفصل الثالث: توازن السوق (61 - 67)
-        { id:61, ch:3, star:'ch3_equilibrium', diff:2, q:"يختلف سعر التوازن عن الأسعار الأخرى في جدولي العرض والطلب في أنه السعر الفعلي الذي يستقر عنده التبادل، بينما الأسعار الأخرى هي:", opts:["أسعار حكومية إلزامية","أسعار افتراضية تؤشر كميات مطلوبة ومعروضة متفاوتة ومتباينة","أسعار توازنية دائمة","أسعار مجانية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","عكس المعنى","شبه صحيح"], exp:"جميع الأسعار غير التوازنية في الجدول هي أسعار افتراضية يظهر عندها إما فائض طلب أو فائض عرض." },
-        { id:62, ch:3, star:'ch3_equilibrium', diff:2, q:"بالرجوع لجدول (1) لتوازن السوق، يتحقق التوازن عندما يتساوى الطلب والعرض عند كمية توازنية قدرها (10000) وحدة، ويكون السعر التوازني عندها مساوياً لـ:", opts:["600 دينار","400 دينار","300 دينار","200 دينار"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","شبه صحيح"], exp:"في جدول توازن السوق المعتمد، تتعادل الكمية المطلوبة والمعروضة (10000 وحدة) عند السعر التوازني 400 دينار." },
-        { id:63, ch:3, star:'ch3_equilibrium', diff:2, q:"عند انخفاض سعر وحدة السلعة عن المستوى التوازني وظهور شحة في العرض، فإن رد الفعل الذي يعيد السعر إلى التوازن تدريجياً يتمثل في قيام:", opts:["البائعين بتخفيض الأسعار أكثر","المشترين بإغراء البائعين عن طريق تقديم سعر أعلى","المنتجين بإتلاف السلع المتبقية","المشترين بالامتناع عن الشراء"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"عندما ينخفض السعر عن التوازن ينشأ فائض طلب (شحة)، فيتنافس المشترون بعرض أسعار أعلى مما يدفع السعر للعودة للتوازن." },
-        { id:64, ch:3, star:'ch3_equilibrium', diff:3, q:"في التمثيل الرياضي لدالتي الطلب والعرض، تمثل النقطتان (a) و (c):", opts:["ميل منحنى الطلب وميل منحنى العرض","نقطتي تقاطع منحنيي الطلب والعرض مع محور الكمية","السعر التوازني والكمية التوازنية","مقدار فائض العرض وفائض الطلب"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"الثابتان (a) و (c) في معادلتي الطلب والعرض الخطيتين يمثلان مقطعي المنحنيين مع محور الكمية، بينما (b) و(d) يمثلان الميل." },
-        { id:65, ch:3, star:'ch3_equilibrium', diff:2, q:"يقوم جهاز الأسعار بتوزيع السلع إلى الأشخاص القادرين على الدفع فقط، ومادامت القدرة على الدفع تعكس أسلوب توزيع الدخل القومي، فإن هذا يشكل مأخذاً سلبياً يدفع إلى:", opts:["إلغاء النقود من التعامل الاقتصادي","لجوء الدولة أحياناً للتدخل والرقابة على الأسعار","منع المنتجين من عرض السلع","ثبات الأسعار إلى الأبد دون تدخل"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","نصف الحقيقة"], exp:"لأن آلية السعر الحر قد تحرم ذوي الدخل المحدود من السلع الأساسية، تتدخل الدولة بالتسعير الإلزامي أو الدعم." },
-        { id:66, ch:3, star:'ch3_equilibrium', diff:3, q:"مع ثبات ظروف العرض، إذا ازدادت درجة مرونة منحنى الطلب (فارتفع السعر التوازني)، فإن الكمية التوازنية في السوق:", opts:["تتراجع من 20 إلى Q2","تزداد من 20 إلى Q1","تظل ثابتة عند Q0","تنخفض إلى الصفر"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"زيادة مرونة منحنى الطلب وزحفه يميناً مع ثبات العرض يرفع السعر التوازني ويزيد الكمية التوازنية من 20 إلى Q1." },
-        { id:67, ch:3, star:'ch3_equilibrium', diff:3, q:"مع ثبات ظروف الطلب، إذا ازدادت درجة مرونة منحنى العرض وزحف إلى اليمين، فإن الكمية التوازنية في السوق:", opts:["تتراجع من 20 إلى Q2","تزداد من 20 إلى Q1","تظل ثابتة دون تغير","تتساوى مع السعر التوازني"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"زحف منحنى العرض إلى اليمين مع ثبات الطلب يؤدي إلى زيادة الكمية التوازنية في السوق من 20 إلى Q1." }
+        { id:61, ch:3, star:'ch3_equilibrium', diff:2, q:"يختلف سعر التوازن عن الأسعار الأخرى في جدولي العرض والطلب في أنه السعر الفعلي الذي يستقر عنده التبادل، بينما الأسعار الأخرى هي:", opts:["أسعار حكومية إلزامية","أسعار افتراضية تؤشر كميات مطلوبة ومعروضة متفاوتة ومتباينة","أسعار توازنية دائمة","أسعار مجانية"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","عكس المعنى","شبه صحيح"], exp:"الأسعار الأخرى في الجدول هي أسعار افتراضية تتباين عندها الكميات المطلوبة والمعروضة." },
+        { id:62, ch:3, star:'ch3_equilibrium', diff:2, q:"بالرجوع لجدول (1) لتوازن السوق، يتحقق التوازن عندما يتساوى الطلب والعرض عند كمية توازنية قدرها (10000) وحدة، ويكون السعر التوازني عندها مساوياً لـ:", opts:["600 دينار","400 دينار","300 دينار","200 دينار"], ans:1, traps:["شبه صحيح","صحيح","شبه صحيح","شبه صحيح"], exp:"يتحقق التوازن عند كمية 10000 وحدة عندما يكون السعر التوازني 400 دينار." },
+        { id:63, ch:3, star:'ch3_equilibrium', diff:2, q:"عند انخفاض سعر وحدة السلعة عن المستوى التوازني وظهور شحة في العرض، فإن رد الفعل الذي يعيد السعر إلى التوازن تدريجياً يتمثل في قيام:", opts:["البائعين بتخفيض الأسعار أكثر","المشترين بإغراء البائعين عن طريق تقديم سعر أعلى","المنتجين بإتلاف السلع المتبقية","المشترين بالامتناع عن الشراء"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","عكس المعنى"], exp:"عند ظهور شحة في العرض يقوم المشترون بإغراء البائعين بتقديم سعر أعلى فيعود السعر للتوازن." },
+        { id:64, ch:3, star:'ch3_equilibrium', diff:3, q:"في التمثيل الرياضي لدالتي الطلب والعرض، تمثل النقطتان (a) و (c):", opts:["ميل منحنى الطلب وميل منحنى العرض","نقطتي تقاطع منحنيي الطلب والعرض مع محور الكمية","السعر التوازني والكمية التوازنية","مقدار فائض العرض وفائض الطلب"], ans:1, traps:["معلومة صحيحة بمكان خاطئ","صحيح","معلومة صحيحة بمكان خاطئ","شبه صحيح"], exp:"تمثل النقطتان (a) و (c) نقطتي تقاطع منحنيي الطلب والعرض مع محور الكمية." },
+        { id:65, ch:3, star:'ch3_equilibrium', diff:2, q:"يقوم جهاز الأسعار بتوزيع السلع إلى الأشخاص القادرين على الدفع فقط، ومادامت القدرة على الدفع تعكس أسلوب توزيع الدخل القومي، فإن هذا يشكل مأخذاً سلبياً يدفع إلى:", opts:["إلغاء النقود من التعامل الاقتصادي","لجوء الدولة أحياناً للتدخل والرقابة على الأسعار","منع المنتجين من عرض السلع","ثبات الأسعار إلى الأبد دون تدخل"], ans:1, traps:["شبه صحيح","صحيح","عكس المعنى","نصف الحقيقة"], exp:"هذا المأخذ يدفع الدولة أحياناً للتدخل والرقابة على الأسعار لحماية ذوي الدخل المحدود." },
+        { id:66, ch:3, star:'ch3_equilibrium', diff:3, q:"مع ثبات ظروف العرض، إذا ازدادت درجة مرونة منحنى الطلب (فارتفع السعر التوازني)، فإن الكمية التوازنية في السوق:", opts:["تتراجع من 20 إلى Q2","تزداد من 20 إلى Q1","تظل ثابتة عند Q0","تنخفض إلى الصفر"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","نصف الحقيقة"], exp:"مع ثبات العرض وزيادة مرونة الطلب تزداد الكمية التوازنية من Q0 إلى Q1." },
+        { id:67, ch:3, star:'ch3_equilibrium', diff:3, q:"مع ثبات ظروف الطلب، إذا ازدادت درجة مرونة منحنى العرض وزحف إلى اليمين، فإن الكمية التوازنية في السوق:", opts:["تتراجع من 20 إلى Q2","تزداد من 20 إلى Q1","تظل ثابتة دون تغير","تتساوى مع السعر التوازني"], ans:1, traps:["عكس المعنى","صحيح","شبه صحيح","معلومة صحيحة بمكان خاطئ"], exp:"مع ثبات الطلب وزحف منحنى العرض إلى اليمين تزداد الكمية التوازنية من Q0 إلى Q1." }
     ];
 
     // =========================================================================
-    // 2. حالة التطبيق والتخزين المحلي (PWA State & Persistence)
+    // 2. إدارة الحالة والتخزين المحلي
     // =========================================================================
-    const STORAGE_KEY = 'mahakk_state_v2';
+    const STORAGE_KEY = 'mahakk_focused_v3';
     let appState = {
         theme: 'light',
         sound: true,
+        shuffleQuestions: false, // الافتراضي: الترتيب الأصلي 1 إلى 67
         shuffleOpts: true,
         score: 0,
-        streak: 1,
-        lastActiveDate: new Date().toDateString(),
         history: [], // { qId, correct, conf, trap, ts }
         trapsCount: {
             "شبه صحيح": 0,
@@ -881,44 +665,40 @@
             "عكس المعنى": 0,
             "معلومة صحيحة بمكان خاطئ": 0
         },
-        starsMastery: {}, // starId -> { score: 0..100, lastTs }
-        customQuestions: [],
-        teacherSubmissions: [
-            { name: "علي حسين", raw: "18 / 20", avgConf: "84%", calib: "92% (صادق)", topTrap: "شبه صحيح" },
-            { name: "زينب كريم", raw: "15 / 20", avgConf: "91%", calib: "68% (ثقة زائدة)", topTrap: "نصف الحقيقة" },
-            { name: "مصطفى كامل", raw: "19 / 20", avgConf: "78%", calib: "89% (متزن)", topTrap: "معلومة صحيحة بمكان خاطئ" }
-        ]
+        starsMastery: {}
     };
 
     function loadState() {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                appState = { ...appState, ...parsed };
-            }
+            if (saved) appState = { ...appState, ...JSON.parse(saved) };
         } catch (e) {}
-        // تهيئة النجوم
         STARS_CONFIG.forEach(s => {
             if (!appState.starsMastery[s.id]) {
-                appState.starsMastery[s.id] = { score: 45, lastTs: Date.now() - 86400000 * 2 };
+                appState.starsMastery[s.id] = { score: 50, lastTs: Date.now() };
             }
         });
+        document.getElementById('home-order-toggle').checked = appState.shuffleQuestions;
+        document.getElementById('home-shuffle-opts').checked = appState.shuffleOpts;
     }
 
     function saveState() {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-        } catch (e) {}
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
         updateHeaderStats();
     }
 
-    function getAllQuestions() {
-        return [...RAW_QUESTIONS, ...appState.customQuestions];
+    function toggleOrderQuestions(val) {
+        appState.shuffleQuestions = val;
+        saveState();
+    }
+
+    function toggleShuffleOpts(val) {
+        appState.shuffleOpts = val;
+        saveState();
     }
 
     // =========================================================================
-    // 3. المؤثرات الصوتية (Web Audio API - صوت القلم والطباشير)
+    // 3. المؤثرات الصوتية والوضع الليلي
     // =========================================================================
     let audioCtx = null;
     function playSound(type) {
@@ -933,29 +713,26 @@
 
             if (type === 'circle') {
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(320, now);
-                osc.frequency.exponentialRampToValueAtTime(520, now + 0.09);
-                gain.gain.setValueAtTime(0.08, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-                osc.start(now);
-                osc.stop(now + 0.1);
+                osc.frequency.setValueAtTime(340, now);
+                osc.frequency.exponentialRampToValueAtTime(520, now + 0.08);
+                gain.gain.setValueAtTime(0.07, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                osc.start(now); osc.stop(now + 0.09);
             } else if (type === 'correct') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, now);
-                osc.frequency.setValueAtTime(659.25, now + 0.08);
-                osc.frequency.setValueAtTime(783.99, now + 0.16);
-                gain.gain.setValueAtTime(0.12, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-                osc.start(now);
-                osc.stop(now + 0.35);
+                osc.frequency.setValueAtTime(523, now);
+                osc.frequency.setValueAtTime(659, now + 0.08);
+                osc.frequency.setValueAtTime(784, now + 0.16);
+                gain.gain.setValueAtTime(0.11, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+                osc.start(now); osc.stop(now + 0.32);
             } else if (type === 'wrong') {
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, now);
-                osc.frequency.linearRampToValueAtTime(140, now + 0.25);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
-                osc.start(now);
-                osc.stop(now + 0.28);
+                osc.frequency.setValueAtTime(210, now);
+                osc.frequency.linearRampToValueAtTime(140, now + 0.22);
+                gain.gain.setValueAtTime(0.09, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now); osc.stop(now + 0.25);
             }
         } catch (e) {}
     }
@@ -980,10 +757,9 @@
     }
 
     // =========================================================================
-    // 4. محرك حساب المعايرة (Confidence Calibration Scoring Engine)
+    // 4. حساب عيار الثقة وصدق المعرفة
     // =========================================================================
     function calculateCalibrationDelta(isCorrect, conf) {
-        // conf بين 50 و 100
         if (isCorrect) {
             if (conf >= 90) return { pts: 20, tag: "معرفة راسخة (+20)", cat: "solid" };
             if (conf >= 70) return { pts: 15, tag: "معايرة متزنة (+15)", cat: "solid" };
@@ -997,27 +773,28 @@
 
     function computeGlobalCalibrationIndex() {
         if (appState.history.length === 0) return { index: 100, label: "معايرة متزنة" };
-        let totalError = 0;
+        let totalErr = 0;
         appState.history.forEach(h => {
-            const prob = h.conf / 100;
-            const actual = h.correct ? 1 : 0;
-            totalError += Math.abs(prob - actual);
+            totalErr += Math.abs((h.conf / 100) - (h.correct ? 1 : 0));
         });
-        const mae = totalError / appState.history.length;
-        const score = Math.max(0, Math.min(100, Math.round((1 - mae) * 100)));
-        let label = "معايرة دقيقة جداً";
-        if (score < 55) label = "حذر من الثقة العمياء";
-        else if (score < 75) label = "معايرة جيدة قيد التحسن";
+        const score = Math.max(0, Math.min(100, Math.round((1 - (totalErr / appState.history.length)) * 100)));
+        let label = "معايرة صادقة";
+        if (score < 60) label = "انتبه من الثقة العمياء";
+        else if (score < 80) label = "معايرة جيدة";
         return { index: score, label };
     }
 
-    // =========================================================================
-    // 5. سؤال اليوم في الصفحة الرئيسية (QOD)
-    // =========================================================================
-    let currentQOD = null;
-    let qodSelectedIdx = null;
-    let qodLocked = false;
+    function getMistakeQuestionIds() {
+        const wrongSet = new Set();
+        appState.history.forEach(h => {
+            if (!h.correct || h.conf < 70) wrongSet.add(h.qId);
+        });
+        return Array.from(wrongSet);
+    }
 
+    // =========================================================================
+    // 5. تجهيز الخيارات وسؤال التجربة السريع في الرئيسية
+    // =========================================================================
     function prepareDisplayOptions(qObj) {
         const items = qObj.opts.map((text, idx) => ({
             text,
@@ -1034,21 +811,22 @@
         return items;
     }
 
+    let currentQOD = null;
+    let qodSelectedIdx = null;
+    let qodLocked = false;
+
     function loadRandomQOD() {
-        const all = getAllQuestions();
-        const raw = all[Math.floor(Math.random() * all.length)];
+        const raw = RAW_QUESTIONS[Math.floor(Math.random() * RAW_QUESTIONS.length)];
         currentQOD = { ...raw, displayOpts: prepareDisplayOptions(raw) };
         qodSelectedIdx = null;
         qodLocked = false;
 
-        const chNames = { 1: "الفصل الأول: نظرية الطلب", 2: "الفصل الثاني: نظرية العرض", 3: "الفصل الثالث: توازن السوق" };
-        document.getElementById('qod-chapter').innerText = `${chNames[raw.ch] || 'ملاحظاتك'} • سؤال #${raw.id}`;
+        document.getElementById('qod-chapter').innerText = `الفصل ${raw.ch} • سؤال #${raw.id}`;
         document.getElementById('qod-text').innerText = raw.q;
-        document.getElementById('qod-margin-box').innerHTML = 'اختر إجابة ثم حدّد عيار ثقتك ليظهر تشريح الفخ هنا في الهامش...';
+        document.getElementById('qod-margin-box').innerHTML = 'اختر إجابة وحدّد ثقتك ليظهر تشريح الفخ هنا...';
         const btn = document.getElementById('qod-submit-btn');
         btn.disabled = true;
         btn.classList.add('opacity-40', 'cursor-not-allowed');
-
         renderQODOptions();
     }
 
@@ -1059,8 +837,8 @@
         currentQOD.displayOpts.forEach((opt, i) => {
             const isSelected = qodSelectedIdx === i;
             const div = document.createElement('div');
-            div.className = `relative p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
-                isSelected ? 'border-ink dark:border-chalkYellow bg-ink/5 dark:bg-white/5' : 'border-[#e2d5b8] dark:border-[#334e45] hover:bg-black/[0.02]'
+            div.className = `relative p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-2 ${
+                isSelected ? 'border-ink dark:border-chalkYellow bg-ink/5 dark:bg-white/5' : 'border-[#e2d5b8] dark:border-[#334e45]'
             }`;
             div.onclick = () => {
                 if (qodLocked) return;
@@ -1072,35 +850,24 @@
                 renderQODOptions();
             };
 
-            let circleSvg = '';
-            if (isSelected) {
-                circleSvg = `<svg class="hand-circle-svg" viewBox="0 0 50 50">
-                    <path class="hand-circle-path" stroke="currentColor" d="M25,5 C39,4 46,14 45,26 C44,39 33,46 21,45 C9,44 4,34 6,21 C8,10 18,6 29,8"/>
-                </svg>`;
-            }
-
+            const circleSvg = isSelected ? `<svg class="hand-circle-svg" viewBox="0 0 50 50"><path class="hand-circle-path" stroke="currentColor" d="M25,5 C39,4 46,14 45,26 C44,39 33,46 21,45 C9,44 4,34 6,21 C8,10 18,6 29,8"/></svg>` : '';
             let strikeSvg = '';
-            let statusBadge = '';
+            let badge = '';
+
             if (qodLocked) {
-                if (opt.isCorrect) {
-                    statusBadge = `<span class="text-greenPen dark:text-chalkGreen font-bold text-lg">✓</span>`;
-                } else if (isSelected && !opt.isCorrect) {
-                    strikeSvg = `<svg class="hand-strike-svg" preserveAspectRatio="none" viewBox="0 0 300 40">
-                        <path class="hand-strike-path" d="M 10,24 Q 150,14 290,22" />
-                    </svg>`;
-                    statusBadge = `<span class="text-xs px-2 py-0.5 rounded bg-red-100 dark:bg-red-950 text-redPen dark:text-chalkRed font-bold">${opt.trapType}</span>`;
+                if (opt.isCorrect) badge = `<span class="text-greenPen dark:text-chalkGreen font-bold text-lg">✓</span>`;
+                else if (isSelected) {
+                    strikeSvg = `<svg class="hand-strike-svg" preserveAspectRatio="none" viewBox="0 0 300 40"><path class="hand-strike-path" d="M 10,24 Q 150,14 290,22" /></svg>`;
+                    badge = `<span class="text-xs px-2 py-0.5 rounded bg-red-100 dark:bg-red-950 text-redPen dark:text-chalkRed font-bold">${opt.trapType}</span>`;
                 }
             }
 
             div.innerHTML = `
                 <div class="flex items-center gap-3 relative z-10">
-                    <div class="relative w-8 h-8 rounded-lg flex items-center justify-center font-ruqaa font-bold text-lg text-ink dark:text-chalkYellow">
-                        ${letters[i]}
-                        ${circleSvg}
-                    </div>
-                    <span class="text-sm md:text-base">${opt.text}</span>
+                    <div class="relative w-7 h-7 flex items-center justify-center font-ruqaa font-bold text-lg">${letters[i]}${circleSvg}</div>
+                    <span class="text-sm">${opt.text}</span>
                 </div>
-                <div class="relative z-10">${statusBadge}</div>
+                <div class="relative z-10">${badge}</div>
                 ${strikeSvg}
             `;
             box.appendChild(div);
@@ -1108,9 +875,7 @@
     }
 
     function updateQodConf(val) {
-        let desc = "متردد";
-        if (val >= 90) desc = "يقين تام";
-        else if (val >= 70) desc = "واثق";
+        const desc = val >= 90 ? "يقين تام" : (val >= 70 ? "واثق" : "متردد");
         document.getElementById('qod-conf-label').innerText = `${val}% (${desc})`;
     }
 
@@ -1120,68 +885,59 @@
         const chosen = currentQOD.displayOpts[qodSelectedIdx];
         const conf = parseInt(document.getElementById('qod-conf-slider').value, 10);
         const calc = calculateCalibrationDelta(chosen.isCorrect, conf);
-
         playSound(chosen.isCorrect ? 'correct' : 'wrong');
         recordAnswerHistory(currentQOD, chosen, conf, calc.pts);
         renderQODOptions();
 
         const margin = document.getElementById('qod-margin-box');
-        if (chosen.isCorrect) {
-            margin.innerHTML = `
-                <div class="margin-note text-xl font-bold text-greenPen dark:text-chalkGreen mb-1">✓ إجابة سديدة! (${calc.tag})</div>
-                <p class="text-xs not-italic leading-relaxed">${currentQOD.exp}</p>
-            `;
-        } else {
-            margin.innerHTML = `
-                <div class="margin-note text-xl font-bold mb-1">✗ فخ: «${chosen.trapType}» (${calc.tag})</div>
-                <p class="text-xs not-italic leading-relaxed">${currentQOD.exp}</p>
-            `;
-        }
+        margin.innerHTML = chosen.isCorrect
+            ? `<div class="margin-note text-lg font-bold text-greenPen dark:text-chalkGreen mb-1">✓ إجابة صحيحة (${calc.tag})</div><p>${currentQOD.exp}</p>`
+            : `<div class="margin-note text-lg font-bold mb-1">✗ فخ: «${chosen.trapType}» (${calc.tag})</div><p>${currentQOD.exp}</p>`;
     }
 
     // =========================================================================
-    // 6. محرك الاختبارات الرئيسي (Exam / Survival / Smart / Duel)
+    // 6. محرك الاختبار الرئيسي الكامل (وقت مفتوح + جميع الـ 67 سؤالاً)
     // =========================================================================
     let activeQuiz = {
-        mode: 'exam', // exam | survival | smart | duel
+        mode: 'exam',
         questions: [],
         idx: 0,
         selectedOptIdx: null,
         locked: false,
         lives: 3,
-        timerSec: 600,
-        timerInterval: null,
-        sessionAnswers: [], // { q, chosen, conf, pts, cat }
-        duelMyScore: 0,
-        duelOppScore: 0
+        elapsedSec: 0,
+        elapsedInterval: null,
+        sessionAnswers: []
     };
 
-    function startQuizMode(mode, filterScope = 'all', customList = null) {
-        clearInterval(activeQuiz.timerInterval);
-        let pool = customList ? [...customList] : getAllQuestions();
+    function startQuiz(scope = 'all', mode = 'exam', customList = null) {
+        clearInterval(activeQuiz.elapsedInterval);
+        let pool = customList ? [...customList] : [...RAW_QUESTIONS];
 
         if (!customList) {
-            if (filterScope === 'ch1') pool = pool.filter(q => q.ch === 1);
-            else if (filterScope === 'ch2') pool = pool.filter(q => q.ch === 2);
-            else if (filterScope === 'ch3') pool = pool.filter(q => q.ch === 3);
-            else if (filterScope.startsWith('star:')) {
-                const starId = filterScope.split(':')[1];
+            if (scope === 'ch1') pool = pool.filter(q => q.ch === 1);
+            else if (scope === 'ch2') pool = pool.filter(q => q.ch === 2);
+            else if (scope === 'ch3') pool = pool.filter(q => q.ch === 3);
+            else if (scope === 'mistakes') {
+                const ids = getMistakeQuestionIds();
+                if (ids.length === 0) {
+                    alert('ليس لديك أخطاء مسجلة حتى الآن! سيبدأ الامتحان الكامل (67 سؤالاً).');
+                } else {
+                    pool = pool.filter(q => ids.includes(q.id));
+                }
+            } else if (scope.startsWith('star:')) {
+                const starId = scope.split(':')[1];
                 pool = pool.filter(q => q.star === starId);
             }
         }
 
         if (mode === 'survival') {
-            // ترتيب تصاعدي حسب الصعوبة
             pool.sort((a, b) => a.diff - b.diff);
-        } else if (mode === 'smart') {
-            // الأسئلة التي أخطأ بها أو لم يجبها بعد
-            const wrongIds = new Set(appState.history.filter(h => !h.correct || h.conf < 70).map(h => h.qId));
-            const prioritized = pool.filter(q => wrongIds.has(q.id));
-            pool = prioritized.length >= 5 ? prioritized : pool.sort(() => Math.random() - 0.5).slice(0, 12);
-        } else if (mode === 'duel') {
-            pool = pool.sort(() => Math.random() - 0.5).slice(0, 7);
-        } else if (!customList && filterScope === 'all') {
-            pool = pool.sort(() => Math.random() - 0.5).slice(0, 20);
+        } else if (appState.shuffleQuestions && !customList) {
+            pool.sort(() => Math.random() - 0.5);
+        } else {
+            // الترتيب الأصلي للملزمة 1 -> 67
+            pool.sort((a, b) => a.id - b.id);
         }
 
         activeQuiz = {
@@ -1191,72 +947,49 @@
             selectedOptIdx: null,
             locked: false,
             lives: 3,
-            timerSec: pool.length * 45,
-            timerInterval: null,
-            sessionAnswers: [],
-            duelMyScore: 0,
-            duelOppScore: 0
+            elapsedSec: 0,
+            elapsedInterval: null,
+            sessionAnswers: []
         };
 
-        const modeTitles = {
-            exam: '📄 ورقة الامتحان الكلاسيكية',
-            survival: '❤️ وضع البقاء (3 أرواح)',
-            smart: '🧠 المراجعة الذكية',
-            duel: '⚔️ المبارزة الحاسمة (1 ضد 1)'
-        };
-        document.getElementById('quiz-mode-badge').innerText = modeTitles[mode] || 'ورقة الامتحان';
+        document.getElementById('quiz-mode-badge').innerText = mode === 'survival' ? '❤️ وضع البقاء' : `📄 الامتحان (${pool.length} سؤالاً)`;
         document.getElementById('quiz-lives-box').classList.toggle('hidden', mode !== 'survival');
-        document.getElementById('duel-tension-bar').classList.toggle('hidden', mode !== 'duel');
         updateLivesUI();
-        updateDuelTensionUI();
 
         navigate('quiz');
         renderCurrentQuizQuestion();
 
-        activeQuiz.timerInterval = setInterval(() => {
-            activeQuiz.timerSec--;
-            if (activeQuiz.timerSec <= 0) {
-                finishQuizNow();
-                return;
-            }
-            const m = String(Math.floor(activeQuiz.timerSec / 60)).padStart(2, '0');
-            const s = String(activeQuiz.timerSec % 60).padStart(2, '0');
-            document.getElementById('quiz-timer').innerText = `${m}:${s}`;
+        // عداد وقت مفتوح تصاعدي فقط لمعرفة مدة الدراسة بدون إغلاق الامتحان
+        document.getElementById('quiz-elapsed').innerText = '00:00';
+        activeQuiz.elapsedInterval = setInterval(() => {
+            activeQuiz.elapsedSec++;
+            const m = String(Math.floor(activeQuiz.elapsedSec / 60)).padStart(2, '0');
+            const s = String(activeQuiz.elapsedSec % 60).padStart(2, '0');
+            document.getElementById('quiz-elapsed').innerText = `${m}:${s}`;
         }, 1000);
+    }
+
+    function toggleQuestionMap() {
+        document.getElementById('quiz-map-drawer').classList.toggle('hidden');
     }
 
     function updateLivesUI() {
         document.getElementById('quiz-lives-box').innerText = '❤️'.repeat(activeQuiz.lives) + '🖤'.repeat(3 - activeQuiz.lives);
     }
 
-    function updateDuelTensionUI() {
-        if (activeQuiz.mode !== 'duel') return;
-        document.getElementById('duel-my-score').innerText = activeQuiz.duelMyScore;
-        document.getElementById('duel-opp-score').innerText = activeQuiz.duelOppScore;
-        const total = Math.max(1, Math.abs(activeQuiz.duelMyScore) + Math.abs(activeQuiz.duelOppScore) + 40);
-        const pct = Math.min(90, Math.max(10, 50 + ((activeQuiz.duelMyScore - activeQuiz.duelOppScore) / total) * 50));
-        document.getElementById('duel-bar-fill').style.width = `${pct}%`;
-        const isLast = activeQuiz.idx === activeQuiz.questions.length - 1;
-        document.getElementById('duel-status-label').innerText = isLast
-            ? '🔥 السؤال الأخير: النقاط مضاعفة لحسم المبارزة!'
-            : '⚡ عدّاد التوتر المباشر';
-    }
-
     function renderQuizNavPills() {
         const nav = document.getElementById('quiz-nav-pills');
         nav.innerHTML = '';
         activeQuiz.questions.forEach((q, idx) => {
-            const answered = activeQuiz.sessionAnswers[idx];
-            let cls = 'bg-black/5 dark:bg-white/10 opacity-70';
-            if (idx === activeQuiz.idx) cls = 'bg-ink text-white dark:bg-chalkYellow dark:text-board font-bold ring-2 ring-offset-1';
-            else if (answered) {
-                cls = answered.chosen.isCorrect
-                    ? 'bg-green-600 text-white'
-                    : 'bg-redPen text-white';
-            }
+            const ans = activeQuiz.sessionAnswers[idx];
+            let cls = 'bg-black/5 dark:bg-white/10 opacity-75';
+            if (idx === activeQuiz.idx) cls = 'bg-ink text-white dark:bg-chalkYellow dark:text-board font-bold ring-2';
+            else if (ans) cls = ans.chosen.isCorrect ? 'bg-green-600 text-white font-bold' : 'bg-redPen text-white font-bold';
+
             const btn = document.createElement('button');
             btn.className = `w-8 h-8 rounded-lg text-xs shrink-0 transition ${cls}`;
-            btn.innerText = idx + 1;
+            btn.innerText = q.id;
+            btn.title = `سؤال #${q.id}`;
             btn.onclick = () => {
                 activeQuiz.idx = idx;
                 renderCurrentQuizQuestion();
@@ -1267,38 +1000,37 @@
 
     function renderCurrentQuizQuestion() {
         const q = activeQuiz.questions[activeQuiz.idx];
-        const prevRecord = activeQuiz.sessionAnswers[activeQuiz.idx];
+        const prev = activeQuiz.sessionAnswers[activeQuiz.idx];
 
-        activeQuiz.selectedOptIdx = prevRecord ? prevRecord.selectedOptIdx : null;
-        activeQuiz.locked = !!prevRecord;
+        activeQuiz.selectedOptIdx = prev ? prev.selectedOptIdx : null;
+        activeQuiz.locked = !!prev;
 
-        document.getElementById('quiz-progress-text').innerText = `سؤال ${activeQuiz.idx + 1} من ${activeQuiz.questions.length}`;
+        document.getElementById('quiz-progress-text').innerText = `سؤال ${activeQuiz.idx + 1} من ${activeQuiz.questions.length} (رقم #${q.id} بالملزمة)`;
         const starObj = STARS_CONFIG.find(s => s.id === q.star);
-        document.getElementById('quiz-q-topic').innerText = starObj ? `${starObj.name} (سؤال #${q.id})` : `سؤال #${q.id}`;
-        const diffLabels = { 1: 'مستوى تأسيسي', 2: 'مستوى تحليلي', 3: 'مستوى متقدم' };
+        document.getElementById('quiz-q-topic').innerText = starObj ? `الفصل ${q.ch} • ${starObj.name}` : `الفصل ${q.ch}`;
+        const diffLabels = { 1: 'تأسيسي', 2: 'تحليلي', 3: 'متقدم' };
         document.getElementById('quiz-q-diff').innerText = diffLabels[q.diff] || 'متوسط';
-        document.getElementById('quiz-q-text').innerText = q.q;
+        document.getElementById('quiz-q-text').innerText = `${q.id}. ${q.q}`;
 
-        // إعادة ضبط شريط الثقة
         const slider = document.getElementById('quiz-conf-slider');
-        slider.value = prevRecord ? prevRecord.conf : 75;
+        slider.value = prev ? prev.conf : 75;
         slider.disabled = activeQuiz.locked;
         updateQuizConfLabel(slider.value);
 
-        // أزرار التثبيت والتالي
         const lockBtn = document.getElementById('quiz-lock-btn');
-        const nextBtn = document.getElementById('quiz-next-btn');
+        const revealBtn = document.getElementById('quiz-reveal-btn');
+        document.getElementById('quiz-prev-btn').disabled = activeQuiz.idx === 0;
+
         if (activeQuiz.locked) {
             lockBtn.classList.add('hidden');
-            nextBtn.classList.remove('hidden');
-            nextBtn.innerText = activeQuiz.idx === activeQuiz.questions.length - 1 ? 'إنهاء وعرض التشريح النهائي ←' : 'السؤال التالي ←';
-            populateQuizMargin(q, prevRecord.chosen, prevRecord.conf, prevRecord.pts, prevRecord.tag);
+            revealBtn.classList.add('hidden');
+            populateQuizMargin(q, prev.chosen, prev.conf, prev.pts, prev.tag);
         } else {
             lockBtn.classList.remove('hidden');
+            revealBtn.classList.remove('hidden');
             lockBtn.disabled = activeQuiz.selectedOptIdx === null;
             lockBtn.classList.toggle('opacity-40', activeQuiz.selectedOptIdx === null);
             lockBtn.classList.toggle('cursor-not-allowed', activeQuiz.selectedOptIdx === null);
-            nextBtn.classList.add('hidden');
             document.getElementById('quiz-margin-empty').classList.remove('hidden');
             document.getElementById('quiz-margin-content').classList.add('hidden');
             document.getElementById('margin-points-delta').innerText = '';
@@ -1306,7 +1038,6 @@
 
         renderQuizOptionsList(q);
         renderQuizNavPills();
-        updateDuelTensionUI();
     }
 
     function renderQuizOptionsList(q) {
@@ -1317,7 +1048,7 @@
         q.displayOpts.forEach((opt, i) => {
             const isSelected = activeQuiz.selectedOptIdx === i;
             const row = document.createElement('div');
-            row.className = `relative p-4 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
+            row.className = `relative p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
                 isSelected ? 'border-ink dark:border-chalkYellow bg-ink/5 dark:bg-white/5' : 'border-[#e2d5b8] dark:border-[#334e45] hover:bg-black/[0.02]'
             }`;
             row.onclick = () => {
@@ -1330,22 +1061,15 @@
                 renderQuizOptionsList(q);
             };
 
-            let circleSvg = '';
-            if (isSelected) {
-                circleSvg = `<svg class="hand-circle-svg" viewBox="0 0 50 50">
-                    <path class="hand-circle-path" stroke="currentColor" d="M25,5 C39,4 46,14 45,26 C44,39 33,46 21,45 C9,44 4,34 6,21 C8,10 18,6 29,8"/>
-                </svg>`;
-            }
-
+            const circleSvg = isSelected ? `<svg class="hand-circle-svg" viewBox="0 0 50 50"><path class="hand-circle-path" stroke="currentColor" d="M25,5 C39,4 46,14 45,26 C44,39 33,46 21,45 C9,44 4,34 6,21 C8,10 18,6 29,8"/></svg>` : '';
             let strikeSvg = '';
             let badgeHtml = '';
+
             if (activeQuiz.locked) {
                 if (opt.isCorrect) {
                     badgeHtml = `<span class="text-greenPen dark:text-chalkGreen font-bold text-xl">✓</span>`;
                 } else if (isSelected && !opt.isCorrect) {
-                    strikeSvg = `<svg class="hand-strike-svg" preserveAspectRatio="none" viewBox="0 0 300 40">
-                        <path class="hand-strike-path" d="M 8,26 Q 150,12 292,22" />
-                    </svg>`;
+                    strikeSvg = `<svg class="hand-strike-svg" preserveAspectRatio="none" viewBox="0 0 300 40"><path class="hand-strike-path" d="M 8,26 Q 150,12 292,22" /></svg>`;
                     badgeHtml = `<span class="text-xs px-2 py-0.5 rounded bg-red-100 dark:bg-red-950 text-redPen dark:text-chalkRed font-bold">${opt.trapType}</span>`;
                 } else {
                     badgeHtml = `<span class="text-[11px] opacity-60">${opt.trapType}</span>`;
@@ -1353,12 +1077,11 @@
             }
 
             row.innerHTML = `
-                <div class="flex items-center gap-3.5 relative z-10">
-                    <div class="relative w-9 h-9 rounded-lg flex items-center justify-center font-ruqaa font-bold text-xl text-ink dark:text-chalkYellow shrink-0">
-                        ${letters[i]}
-                        ${circleSvg}
+                <div class="flex items-center gap-3 relative z-10">
+                    <div class="relative w-8 h-8 rounded-lg flex items-center justify-center font-ruqaa font-bold text-xl text-ink dark:text-chalkYellow shrink-0">
+                        ${letters[i]}${circleSvg}
                     </div>
-                    <span class="text-sm md:text-base leading-snug">${opt.text}</span>
+                    <span class="text-sm md:text-base">${opt.text}</span>
                 </div>
                 <div class="relative z-10 shrink-0">${badgeHtml}</div>
                 ${strikeSvg}
@@ -1368,9 +1091,7 @@
     }
 
     function updateQuizConfLabel(val) {
-        let label = "متردد";
-        if (val >= 90) label = "يقين تام";
-        else if (val >= 70) label = "واثق";
+        const label = val >= 90 ? "يقين تام" : (val >= 70 ? "واثق" : "متردد");
         document.getElementById('quiz-conf-badge').innerText = `${val}% • ${label}`;
     }
 
@@ -1379,13 +1100,7 @@
         const q = activeQuiz.questions[activeQuiz.idx];
         const chosen = q.displayOpts[activeQuiz.selectedOptIdx];
         const conf = parseInt(document.getElementById('quiz-conf-slider').value, 10);
-
-        let calc = calculateCalibrationDelta(chosen.isCorrect, conf);
-        // مضاعفة النقاط في السؤال الأخير من المبارزة
-        if (activeQuiz.mode === 'duel' && activeQuiz.idx === activeQuiz.questions.length - 1) {
-            calc.pts *= 2;
-            calc.tag += ' (حسم مضاعف ×2)';
-        }
+        const calc = calculateCalibrationDelta(chosen.isCorrect, conf);
 
         activeQuiz.locked = true;
         activeQuiz.sessionAnswers[activeQuiz.idx] = {
@@ -1404,22 +1119,34 @@
         if (activeQuiz.mode === 'survival' && !chosen.isCorrect) {
             activeQuiz.lives--;
             updateLivesUI();
+            if (activeQuiz.lives <= 0) {
+                renderCurrentQuizQuestion();
+                setTimeout(() => finishQuizNow(), 1100);
+                return;
+            }
         }
-
-        if (activeQuiz.mode === 'duel') {
-            activeQuiz.duelMyScore += calc.pts;
-            // محاكاة ذكية للخصم المنافس
-            const oppRight = Math.random() < 0.72;
-            const oppPts = oppRight ? 15 : -5;
-            activeQuiz.duelOppScore += (activeQuiz.idx === activeQuiz.questions.length - 1) ? oppPts * 2 : oppPts;
-            updateDuelTensionUI();
-        }
-
         renderCurrentQuizQuestion();
+    }
 
-        if (activeQuiz.mode === 'survival' && activeQuiz.lives <= 0) {
-            setTimeout(() => finishQuizNow(), 1100);
-        }
+    // زر كشف الحل المباشر بدون نقاط
+    function revealAnswerDirectly() {
+        if (activeQuiz.locked) return;
+        const q = activeQuiz.questions[activeQuiz.idx];
+        const rightIdx = q.displayOpts.findIndex(o => o.isCorrect);
+        activeQuiz.selectedOptIdx = rightIdx;
+        const chosen = q.displayOpts[rightIdx];
+
+        activeQuiz.locked = true;
+        activeQuiz.sessionAnswers[activeQuiz.idx] = {
+            q,
+            selectedOptIdx: rightIdx,
+            chosen,
+            conf: 50,
+            pts: 0,
+            tag: "كشف مباشر (0)",
+            cat: "humble"
+        };
+        renderCurrentQuizQuestion();
     }
 
     function populateQuizMargin(q, chosen, conf, pts, tag) {
@@ -1433,31 +1160,37 @@
 
         const noteEl = document.getElementById('margin-handwritten-note');
         const pillEl = document.getElementById('margin-trap-pill');
+
         if (chosen.isCorrect) {
-            noteEl.innerText = conf >= 80 ? '✓ أصبتَ وأحسنتَ تقدير ثقتك!' : '✓ إجابة صحيحة، لكنك كنت متردداً أكثر من اللازم!';
+            noteEl.innerText = '✓ إجابة صحيحة!';
             noteEl.className = 'margin-note text-xl font-bold text-greenPen dark:text-chalkGreen';
             pillEl.innerText = 'معايرة ناجحة';
             pillEl.className = 'inline-block text-xs font-bold px-2.5 py-1 rounded-md bg-green-100 dark:bg-green-950 text-greenPen dark:text-chalkGreen';
         } else {
-            noteEl.innerText = conf >= 80
-                ? `✗ حذارِ من وهم المعرفة! ثقة ${conf}% في فخ «${chosen.trapType}»`
-                : `✗ وقعت في فخ «${chosen.trapType}»، لكن ترددك (${conf}%) حماك من خصم كبير.`;
+            noteEl.innerText = `✗ فخ: «${chosen.trapType}»`;
             noteEl.className = 'margin-note text-xl font-bold text-redPen dark:text-chalkRed';
-            pillEl.innerText = `نوع الفخ: ${chosen.trapType}`;
+            pillEl.innerText = `ثقتك كانت ${conf}%`;
             pillEl.className = 'inline-block text-xs font-bold px-2.5 py-1 rounded-md bg-red-100 dark:bg-red-950 text-redPen dark:text-chalkRed';
         }
 
         document.getElementById('margin-explanation').innerText = q.exp;
 
         const letters = ['أ', 'ب', 'ج', 'د'];
-        const anatomyList = document.getElementById('margin-all-options-anatomy');
-        anatomyList.innerHTML = '<div class="font-bold opacity-80 mb-1">تشريح الخيارات الأربعة:</div>' +
+        document.getElementById('margin-all-options-anatomy').innerHTML =
+            '<div class="font-bold opacity-80 mb-1">تصنيف الخيارات:</div>' +
             q.displayOpts.map((o, idx) => `
                 <div class="flex items-center justify-between gap-2 py-0.5">
                     <span class="truncate">${letters[idx]}. ${o.text}</span>
                     <span class="shrink-0 font-bold ${o.isCorrect ? 'text-greenPen dark:text-chalkGreen' : 'text-redPen dark:text-chalkRed'}">${o.isCorrect ? '✓ الصواب' : o.trapType}</span>
                 </div>
             `).join('');
+    }
+
+    function goPrevQuestion() {
+        if (activeQuiz.idx > 0) {
+            activeQuiz.idx--;
+            renderCurrentQuizQuestion();
+        }
     }
 
     function goNextQuestion() {
@@ -1481,10 +1214,9 @@
         if (!chosen.isCorrect && chosen.trapType && appState.trapsCount[chosen.trapType] !== undefined) {
             appState.trapsCount[chosen.trapType]++;
         }
-        // تحديث نجمة الموضوع في سماء المعرفة
         if (q.star && appState.starsMastery[q.star]) {
             const cur = appState.starsMastery[q.star].score;
-            const delta = chosen.isCorrect ? (conf >= 75 ? 12 : 8) : -10;
+            const delta = chosen.isCorrect ? 10 : -10;
             appState.starsMastery[q.star] = {
                 score: Math.max(10, Math.min(100, cur + delta)),
                 lastTs: Date.now()
@@ -1494,39 +1226,29 @@
     }
 
     function finishQuizNow() {
-        clearInterval(activeQuiz.timerInterval);
+        clearInterval(activeQuiz.elapsedInterval);
         const answered = activeQuiz.sessionAnswers.filter(Boolean);
         const correctCount = answered.filter(a => a.chosen.isCorrect).length;
         const total = activeQuiz.questions.length;
         const sessionPts = answered.reduce((s, a) => s + a.pts, 0);
 
-        document.getElementById('res-stamp-score').innerText = `${correctCount} / ${total}`;
+        document.getElementById('res-stamp-score').innerText = `${correctCount} / ${answered.length || total}`;
         document.getElementById('res-stamp-calib').innerText = `نقاط المعايرة: ${sessionPts >= 0 ? '+' + sessionPts : sessionPts}`;
+        document.getElementById('res-headline').innerText = `أتممت مراجعة ${answered.length} من أصل ${total} سؤالاً`;
+        document.getElementById('res-summary-sub').innerText = `إجاباتك الصحيحة: ${correctCount} • الأخطاء: ${answered.length - correctCount}`;
 
-        let headline = "قراءة معرفية متزنة لورقتك!";
-        if (activeQuiz.mode === 'duel') {
-            headline = activeQuiz.duelMyScore >= activeQuiz.duelOppScore
-                ? `🏆 حسمت المبارزة لصالحك (${activeQuiz.duelMyScore} مقابل ${activeQuiz.duelOppScore})!`
-                : `⚔️ تفوّق الخصم في هذه الجولة (${activeQuiz.duelOppScore} مقابل ${activeQuiz.duelMyScore})`;
-        } else if (activeQuiz.mode === 'survival' && activeQuiz.lives <= 0) {
-            headline = `💔 نفدت الأرواح الثلاثة بعد صمود ${answered.length} سؤالاً!`;
-        }
-        document.getElementById('res-headline').innerText = headline;
-        document.getElementById('res-summary-sub').innerText = `أجبت عن ${answered.length} من أصل ${total} سؤالاً. راجع تشريح الفخاخ بالأسفل لتثبيت المفاهيم.`;
-
-        // إحصائيات المعايرة الأربعة
         document.getElementById('res-solid-count').innerText = answered.filter(a => a.cat === 'solid').length;
         document.getElementById('res-humble-count').innerText = answered.filter(a => a.cat === 'humble').length;
         document.getElementById('res-honest-miss-count').innerText = answered.filter(a => a.cat === 'honest_miss').length;
         document.getElementById('res-blind-count').innerText = answered.filter(a => a.cat === 'blind').length;
 
         const breakdown = document.getElementById('res-questions-breakdown');
-        breakdown.innerHTML = answered.map((item, i) => {
+        breakdown.innerHTML = answered.map(item => {
             const rightOpt = item.q.displayOpts.find(o => o.isCorrect);
             return `
-                <div class="p-4 rounded-xl border ${item.chosen.isCorrect ? 'border-green-500/40 bg-green-500/5' : 'border-redPen/40 bg-red-500/5'} space-y-1.5">
+                <div class="p-3.5 rounded-xl border ${item.chosen.isCorrect ? 'border-green-500/40 bg-green-500/5' : 'border-redPen/40 bg-red-500/5'} space-y-1">
                     <div class="flex flex-wrap items-center justify-between gap-2">
-                        <span class="font-bold text-sm">س${i + 1}: ${item.q.q}</span>
+                        <span class="font-bold text-sm">#${item.q.id}. ${item.q.q}</span>
                         <span class="text-xs px-2 py-0.5 rounded font-bold ${item.chosen.isCorrect ? 'bg-green-600 text-white' : 'bg-redPen text-white'}">
                             ثقتك ${item.conf}% • ${item.tag}
                         </span>
@@ -1535,44 +1257,36 @@
                         <span>إجابتك: <strong>${item.chosen.text}</strong></span>
                         ${!item.chosen.isCorrect ? ` <span class="text-redPen dark:text-chalkRed font-bold">(فخ: ${item.chosen.trapType})</span> — الصواب: <strong class="text-greenPen dark:text-chalkGreen">${rightOpt.text}</strong>` : ''}
                     </div>
-                    <p class="text-xs opacity-80 leading-relaxed">${item.q.exp}</p>
+                    <p class="text-xs opacity-80">${item.q.exp}</p>
                 </div>
             `;
-        }).join('') || '<p class="text-sm opacity-70">لم يتم تثبيت أي إجابة في هذه الجلسة.</p>';
+        }).join('') || '<p class="text-sm opacity-70">لم تقم بتثبيت أي إجابة بعد.</p>';
 
         navigate('results');
     }
 
-    function toggleShuffleSetting(val) {
-        appState.shuffleOpts = val;
-        saveState();
-    }
-
     // =========================================================================
-    // 7. المكتبة (عرض وتصفية الـ 67 سؤالاً)
+    // 7. المكتبة وسماء المعرفة والملف الشخصي
     // =========================================================================
     function renderLibrary() {
         const query = (document.getElementById('lib-search').value || '').trim();
         const chFilter = document.getElementById('lib-chapter-filter').value;
-        const diffFilter = document.getElementById('lib-diff-filter').value;
 
-        const filtered = getAllQuestions().filter(q => {
+        const filtered = RAW_QUESTIONS.filter(q => {
             if (chFilter !== 'all' && String(q.ch) !== chFilter) return false;
-            if (diffFilter !== 'all' && String(q.diff) !== diffFilter) return false;
-            if (query && !q.q.includes(query) && !q.exp.includes(query)) return false;
+            if (query && !q.q.includes(query) && !q.exp.includes(query) && String(q.id) !== query) return false;
             return true;
         });
 
         const letters = ['أ', 'ب', 'ج', 'د'];
-        const container = document.getElementById('library-list');
-        container.innerHTML = filtered.map(q => `
+        document.getElementById('library-list').innerHTML = filtered.map(q => `
             <div class="p-4 rounded-xl border border-[#e2d5b8] dark:border-[#334e45] bg-white/60 dark:bg-black/20 space-y-2">
                 <div class="flex items-center justify-between text-xs opacity-75">
                     <span class="font-bold">سؤال #${q.id} • الفصل ${q.ch}</span>
-                    <button onclick="startQuizMode('exam', 'all', [RAW_QUESTIONS.find(x=>x.id===${q.id}) || getAllQuestions()[0]])" class="text-ink dark:text-chalkYellow font-bold hover:underline">اختبر هذا السؤال ←</button>
+                    <button onclick="startQuiz('custom', 'exam', [RAW_QUESTIONS.find(x=>x.id===${q.id})])" class="text-ink dark:text-chalkYellow font-bold hover:underline">اختبر هذا السؤال ←</button>
                 </div>
                 <p class="font-ruqaa text-xl">${q.q}</p>
-                <div class="grid sm:grid-cols-2 gap-1.5 text-xs pt-1">
+                <div class="grid sm:grid-cols-2 gap-1.5 text-xs">
                     ${q.opts.map((opt, idx) => `
                         <div class="p-2 rounded border ${idx === q.ans ? 'border-green-600/50 bg-green-500/10 font-bold' : 'border-transparent bg-black/[0.03] dark:bg-white/[0.03]'}">
                             ${letters[idx]}. ${opt}
@@ -1580,65 +1294,75 @@
                         </div>
                     `).join('')}
                 </div>
-                <p class="text-xs opacity-80 pt-1 border-t border-dashed border-[#e2d5b8] dark:border-[#334e45]">💡 <strong>التشريح:</strong> ${q.exp}</p>
+                <p class="text-xs opacity-80 pt-1 border-t border-dashed border-[#e2d5b8] dark:border-[#334e45]">💡 ${q.exp}</p>
             </div>
         `).join('');
     }
 
-    // =========================================================================
-    // 8. الملف الشخصي (منحنى صدق المعرفة SVG + رادار الفخاخ)
-    // =========================================================================
+    function renderSkyOfKnowledge() {
+        const svg = document.getElementById('sky-constellation-svg');
+        const cardsBox = document.getElementById('sky-stars-cards');
+
+        let linesHtml = '';
+        for (let i = 0; i < STARS_CONFIG.length - 1; i++) {
+            const a = STARS_CONFIG[i], b = STARS_CONFIG[i + 1];
+            linesHtml += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="rgba(148,163,184,0.3)" stroke-width="1.5" stroke-dasharray="4,4" />`;
+        }
+
+        let starsHtml = '', cardsHtml = '';
+        STARS_CONFIG.forEach(star => {
+            const m = appState.starsMastery[star.id] || { score: 50 };
+            const score = m.score;
+            const color = score >= 75 ? '#fde047' : (score >= 45 ? '#38bdf8' : '#94a3b8');
+            const r = 8 + (score / 100) * 9;
+
+            starsHtml += `
+                <g class="cursor-pointer" onclick="startQuiz('star:${star.id}', 'exam')">
+                    <circle cx="${star.x}" cy="${star.y}" r="${r * 2}" fill="${color}" fill-opacity="0.2" />
+                    <circle cx="${star.x}" cy="${star.y}" r="${r}" fill="${color}" stroke="#fff" stroke-width="1.5" />
+                    <text x="${star.x}" y="${star.y + r + 16}" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="bold">${star.name}</text>
+                </g>
+            `;
+
+            const count = RAW_QUESTIONS.filter(q => q.star === star.id).length;
+            cardsHtml += `
+                <div onclick="startQuiz('star:${star.id}', 'exam')" class="p-3 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-amber-400 cursor-pointer transition">
+                    <div class="flex justify-between text-xs text-amber-300 font-bold">
+                        <span>الفصل ${star.ch} (${count} أسئلة)</span>
+                        <span>${score}%</span>
+                    </div>
+                    <div class="font-ruqaa text-lg font-bold text-white mt-1">${star.name}</div>
+                </div>
+            `;
+        });
+
+        svg.innerHTML = linesHtml + starsHtml;
+        cardsBox.innerHTML = cardsHtml;
+    }
+
     function renderProfile() {
         const total = appState.history.length;
         const right = appState.history.filter(h => h.correct).length;
-        const rawAcc = total ? Math.round((right / total) * 100) : 0;
-
         document.getElementById('prof-total-answered').innerText = total;
-        document.getElementById('prof-raw-acc').innerText = `${rawAcc}%`;
-        document.getElementById('prof-streak').innerText = `${appState.streak} 🔥`;
+        document.getElementById('prof-raw-acc').innerText = total ? `${Math.round((right / total) * 100)}%` : '0%';
 
-        // رسم منحنى المعايرة SVG
         const buckets = [50, 60, 70, 80, 90, 100];
         const points = buckets.map((b, i) => {
             const matches = appState.history.filter(h => Math.abs(h.conf - b) <= 5);
             const acc = matches.length ? (matches.filter(m => m.correct).length / matches.length) * 100 : b;
-            const x = 45 + i * 56;
-            const y = 190 - (acc / 100) * 160;
-            const idealY = 190 - (b / 100) * 160;
-            return { b, acc: Math.round(acc), count: matches.length, x, y, idealY };
+            return { b, x: 45 + i * 56, y: 185 - (acc / 100) * 150, idealY: 185 - (b / 100) * 150 };
         });
 
-        const polyPoints = points.map(p => `${p.x},${p.y}`).join(' ');
-        const idealPoints = points.map(p => `${p.x},${p.idealY}`).join(' ');
-
-        const svg = document.getElementById('calibration-svg');
-        svg.innerHTML = `
-            <!-- محاور وشبكة -->
-            <line x1="45" y1="30" x2="45" y2="190" stroke="currentColor" stroke-opacity="0.25" />
-            <line x1="45" y1="190" x2="335" y2="190" stroke="currentColor" stroke-opacity="0.25" />
-            <!-- خط الصدق المثالي -->
-            <polyline fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" points="${idealPoints}" />
-            <!-- منحنى الطالب الفعلي -->
-            <polyline fill="none" stroke="#c53030" stroke-width="3" points="${polyPoints}" />
-            ${points.map(p => `
-                <circle cx="${p.x}" cy="${p.y}" r="5" fill="#16325c" stroke="#fbf7ee" stroke-width="2">
-                    <title>ثقة ${p.b}% -> دقة فعلية ${p.acc}% (${p.count} إجابة)</title>
-                </circle>
-                <text x="${p.x}" y="210" text-anchor="middle" font-size="10" fill="currentColor">${p.b}%</text>
-            `).join('')}
-            <text x="190" y="226" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.7">درجة الثقة المعلنة (50% - 100%)</text>
+        document.getElementById('calibration-svg').innerHTML = `
+            <line x1="45" y1="30" x2="45" y2="185" stroke="currentColor" stroke-opacity="0.25" />
+            <line x1="45" y1="185" x2="335" y2="185" stroke="currentColor" stroke-opacity="0.25" />
+            <polyline fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" points="${points.map(p => `${p.x},${p.idealY}`).join(' ')}" />
+            <polyline fill="none" stroke="#c53030" stroke-width="3" points="${points.map(p => `${p.x},${p.y}`).join(' ')}" />
+            ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#16325c" stroke="#fff" stroke-width="1.5"/><text x="${p.x}" y="205" text-anchor="middle" font-size="10" fill="currentColor">${p.b}%</text>`).join('')}
         `;
 
-        const cal = computeGlobalCalibrationIndex();
-        document.getElementById('calibration-diagnosis').innerHTML = `
-            <strong>تشخيص صدق معرفتك (${cal.index}% — ${cal.label}):</strong>
-            كلما اقترب الخط الأحمر من الخط المنقط، دلّ ذلك على أنك تدرك تماماً ما تعرفه وما تجهله. انخفاض الخط الأحمر عن المنقط عند 90%–100% يكشف مناطق «الثقة العمياء».
-        `;
-
-        // رادار الفخاخ الأربعة
         const maxTrap = Math.max(1, ...Object.values(appState.trapsCount));
-        const barsBox = document.getElementById('profile-traps-bars');
-        barsBox.innerHTML = TRAP_TYPES.map(t => {
+        document.getElementById('profile-traps-bars').innerHTML = TRAP_TYPES.map(t => {
             const count = appState.trapsCount[t] || 0;
             const pct = Math.round((count / maxTrap) * 100);
             return `
@@ -1648,7 +1372,7 @@
                         <span class="text-redPen dark:text-chalkRed">${count} مرة</span>
                     </div>
                     <div class="w-full h-2.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                        <div class="h-full bg-redPen dark:bg-chalkRed transition-all duration-500" style="width:${pct}%"></div>
+                        <div class="h-full bg-redPen dark:bg-chalkRed" style="width:${pct}%"></div>
                     </div>
                 </div>
             `;
@@ -1656,216 +1380,12 @@
     }
 
     function resetAllUserData() {
-        localStorage.removeItem(STORAGE_KEY);
-        location.reload();
-    }
-
-    // =========================================================================
-    // 9. سماء المعرفة (الخريطة السماوية + التكرار المتباعد)
-    // =========================================================================
-    function renderSkyOfKnowledge() {
-        const svg = document.getElementById('sky-constellation-svg');
-        const cardsBox = document.getElementById('sky-stars-cards');
-
-        // خطوط الكوكبة بين النجوم
-        let linesHtml = '';
-        for (let i = 0; i < STARS_CONFIG.length - 1; i++) {
-            const a = STARS_CONFIG[i];
-            const b = STARS_CONFIG[i + 1];
-            linesHtml += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="rgba(148,163,184,0.28)" stroke-width="1.5" stroke-dasharray="4,4" />`;
+        if (confirm('هل تريد تصفير جميع نقاطك وسجل إجاباتك؟')) {
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
         }
-
-        let starsHtml = '';
-        let cardsHtml = '';
-
-        STARS_CONFIG.forEach(star => {
-            const m = appState.starsMastery[star.id] || { score: 45, lastTs: Date.now() };
-            // خفوت تدريجي بالتقادم (كل يوم يقلل اللمعان قليلاً)
-            const daysIdle = Math.floor((Date.now() - m.lastTs) / 86400000);
-            const effectiveScore = Math.max(15, m.score - daysIdle * 5);
-
-            let color = '#94a3b8'; // خافتة
-            let statusText = 'خافتة • تحتاج مراجعة';
-            if (effectiveScore >= 75) {
-                color = '#fde047';
-                statusText = 'ساطعة متقنة ✨';
-            } else if (effectiveScore >= 45) {
-                color = '#38bdf8';
-                statusText = 'متوسطة اللمعان';
-            }
-
-            const radius = 8 + (effectiveScore / 100) * 10;
-
-            starsHtml += `
-                <g class="star-node" onclick="startQuizMode('exam', 'star:${star.id}')">
-                    <circle cx="${star.x}" cy="${star.y}" r="${radius * 2.1}" fill="${color}" fill-opacity="0.18" />
-                    <circle cx="${star.x}" cy="${star.y}" r="${radius}" fill="${color}" stroke="#fff" stroke-width="1.5" />
-                    <text x="${star.x}" y="${star.y + radius + 18}" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="bold">${star.name}</text>
-                    <text x="${star.x}" y="${star.y + radius + 33}" text-anchor="middle" fill="${color}" font-size="10">${effectiveScore}%</text>
-                </g>
-            `;
-
-            const qCount = getAllQuestions().filter(q => q.star === star.id).length;
-            cardsHtml += `
-                <div onclick="startQuizMode('exam', 'star:${star.id}')" class="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700 hover:border-amber-400 cursor-pointer transition space-y-1">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-amber-300">الفصل ${star.ch} (${qCount} أسئلة)</span>
-                        <span class="font-bold">${effectiveScore}%</span>
-                    </div>
-                    <h4 class="font-ruqaa text-lg font-bold text-white">${star.name}</h4>
-                    <p class="text-[11px] text-slate-300">${statusText}</p>
-                </div>
-            `;
-        });
-
-        svg.innerHTML = linesHtml + starsHtml;
-        cardsBox.innerHTML = cardsHtml;
     }
 
-    // =========================================================================
-    // 10. من ملاحظاتك إلى اختبار (توليد ذكي محلي أو عبر API)
-    // =========================================================================
-    function fillSampleNotes() {
-        document.getElementById('notes-input').value =
-            "قانون الطلب ينص على وجود علاقة عكسية بين سعر السلعة والكمية المطلوبة منها مع ثبات العوامل الأخرى. السلع البديلة هي السلع التي يمكن إحلال إحداها محل الأخرى وتكون العلاقة بين سعر السلعة البديلة والطلب على السلعة الأصلية علاقة طردية. أما السلع المكملة فتستهلك معاً وتكون العلاقة بين سعر السلعة المكملة والطلب على السلعة الأصلية علاقة عكسية. السلع الدنيا (سلع جيفين) تشذ عن قانون الطلب لأن ارتفاع سعرها يقلص الدخل الحقيقي للمستهلك الفقير فيزيد استهلاكه منها.";
-    }
-
-    async function generateQuizFromNotes() {
-        const text = (document.getElementById('notes-input').value || '').trim();
-        const diff = parseInt(document.getElementById('gen-difficulty').value, 10);
-        if (text.length < 25) {
-            alert('يرجى لصق نص أو ملخص كافٍ (جملتين على الأقل) لتوليد الأسئلة.');
-            return;
-        }
-
-        const sentences = text.split(/[.،!\n]+/).map(s => s.trim()).filter(s => s.length > 20);
-        const generated = [];
-
-        sentences.slice(0, 5).forEach((sent, idx) => {
-            const words = sent.split(/\s+/);
-            const pivot = words.slice(-4).join(' ');
-            const stem = words.slice(0, -4).join(' ');
-
-            let wrong1 = pivot.includes('عكسية') ? pivot.replace('عكسية', 'طردية') : 'تتحرك باتجاه معاكس تماماً لما ورد في القاعدة';
-            let wrong2 = pivot + ' في حالة السلع الحكومية المستوردة حصراً';
-            let wrong3 = 'يبقى ثابتاً عند الصفر بغض النظر عن المتغيرات المستقلة';
-
-            const newQ = {
-                id: 100 + appState.customQuestions.length + idx + 1,
-                ch: 1,
-                star: 'ch1_concept',
-                diff,
-                q: `بناءً على ملاحظاتك: «${stem}...» فإن التكملة الدقيقة هي:`,
-                opts: [wrong2, pivot, wrong1, wrong3],
-                ans: 1,
-                traps: ["نصف الحقيقة", "صحيح", "عكس المعنى", "معلومة صحيحة بمكان خاطئ"],
-                exp: `تم استخلاص هذا السؤال من ملخصك: «${sent}». الخيارات الأخرى صيغت كفخاخ (نصف الحقيقة، عكس المعنى، ومعلومة بمكان خاطئ).`
-            };
-            generated.push(newQ);
-        });
-
-        appState.customQuestions.push(...generated);
-        saveState();
-
-        const preview = document.getElementById('generated-preview');
-        preview.classList.remove('hidden');
-        preview.innerHTML = `
-            <div class="flex items-center justify-between">
-                <h4 class="font-ruqaa text-xl font-bold text-greenPen dark:text-chalkGreen">✓ تم توليد ${generated.length} أسئلة مع تشريح الفخاخ!</h4>
-                <button onclick='startQuizMode("exam", "custom", ${JSON.stringify(generated)})' class="px-4 py-2 rounded-xl bg-ink dark:bg-chalkYellow text-white dark:text-board text-xs font-bold">ابدأ اختبار ملاحظاتك الآن ←</button>
-            </div>
-        `;
-    }
-
-    // =========================================================================
-    // 11. لوحة المدرّس (مشاركة رابط + QR + تصدير CSV)
-    // =========================================================================
-    function renderTeacherDashboard() {
-        updateTeacherShareLink();
-        renderTeacherLiveTable();
-    }
-
-    function updateTeacherShareLink() {
-        const ch = document.getElementById('teacher-chapter').value;
-        const cnt = document.getElementById('teacher-q-count').value;
-        const base = window.location.href.split('?')[0];
-        const url = `${base}?mode=exam&ch=${ch}&n=${cnt}`;
-        document.getElementById('teacher-share-url').value = url;
-
-        // رسم QR شبكي رمزي سريع بـ SVG
-        const qrBox = document.getElementById('teacher-qr-box');
-        let cells = '';
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
-                const isCorner = (r < 3 && c < 3) || (r < 3 && c > 5) || (r > 5 && c < 3);
-                const seed = (r * 13 + c * 7 + ch.charCodeAt(0) + parseInt(cnt, 10)) % 3 === 0;
-                if (isCorner || seed) {
-                    cells += `<rect x="${c * 10 + 5}" y="${r * 10 + 5}" width="9" height="9" fill="#16325c" rx="1.5"/>`;
-                }
-            }
-        }
-        qrBox.innerHTML = `<svg viewBox="0 0 100 100" class="w-full h-full">${cells}</svg>`;
-    }
-
-    function renderTeacherLiveTable() {
-        const tbody = document.getElementById('teacher-live-tbody');
-        tbody.innerHTML = appState.teacherSubmissions.map(s => `
-            <tr>
-                <td class="p-3 font-bold">${s.name}</td>
-                <td class="p-3">${s.raw}</td>
-                <td class="p-3">${s.avgConf}</td>
-                <td class="p-3 font-bold text-greenPen dark:text-chalkGreen">${s.calib}</td>
-                <td class="p-3 text-redPen dark:text-chalkRed font-bold">${s.topTrap}</td>
-            </tr>
-        `).join('');
-    }
-
-    function simulateStudentSubmission() {
-        const names = ["أحمد الوائلي", "فاطمة الربيعي", "حسن الشمري", "نور الهدى", "عمر العبيدي"];
-        const pickName = names[Math.floor(Math.random() * names.length)];
-        const sc = 13 + Math.floor(Math.random() * 8);
-        const cf = 65 + Math.floor(Math.random() * 30);
-        const tr = TRAP_TYPES[Math.floor(Math.random() * TRAP_TYPES.length)];
-        appState.teacherSubmissions.unshift({
-            name: pickName,
-            raw: `${sc} / 20`,
-            avgConf: `${cf}%`,
-            calib: `${Math.min(98, 100 - Math.abs(cf - sc * 5))}%`,
-            topTrap: tr
-        });
-        saveState();
-        renderTeacherLiveTable();
-    }
-
-    function exportTeacherCSV() {
-        let csv = "\uFEFFالطالب,الدرجة الخام,متوسط الثقة,صدق المعرفة,أكثر فخ شائع\n";
-        appState.teacherSubmissions.forEach(s => {
-            csv += `${s.name},${s.raw},${s.avgConf},${s.calib},${s.topTrap}\n`;
-        });
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'mahakk_results.csv';
-        a.click();
-    }
-
-    function copyTeacherLink() {
-        const input = document.getElementById('teacher-share-url');
-        input.select();
-        navigator.clipboard?.writeText(input.value);
-        alert('تم نسخ رابط الاختبار لمشاركته مع الطلاب!');
-    }
-
-    function copyDuelInvite() {
-        const base = window.location.href.split('?')[0];
-        const url = `${base}?mode=duel`;
-        navigator.clipboard?.writeText(url);
-        alert('تم نسخ رابط المبارزة المباشرة (1 ضد 1)!');
-    }
-
-    // =========================================================================
-    // 12. التنقل بين الصفحات وتحديث الإحصائيات العليا
-    // =========================================================================
     function navigate(viewId) {
         document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
         const target = document.getElementById(`view-${viewId}`);
@@ -1880,34 +1400,27 @@
         });
 
         if (viewId === 'library') renderLibrary();
-        if (viewId === 'profile') renderProfile();
         if (viewId === 'sky') renderSkyOfKnowledge();
-        if (viewId === 'teacher') renderTeacherDashboard();
+        if (viewId === 'profile') renderProfile();
+        updateHeaderStats();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function updateHeaderStats() {
         document.getElementById('header-score').innerText = appState.score;
-        document.getElementById('header-streak').innerText = appState.streak;
         const cal = computeGlobalCalibrationIndex();
         document.getElementById('home-calibration-badge').innerText = `${cal.index}%`;
         document.getElementById('home-calibration-desc').innerText = cal.label;
+        const mistakesCount = getMistakeQuestionIds().length;
+        const mBadge = document.getElementById('mistakes-count-badge');
+        if (mBadge) mBadge.innerText = mistakesCount;
     }
 
-    // تشغيل التطبيق عند التحميل
     window.addEventListener('DOMContentLoaded', () => {
         loadState();
         applyTheme();
         updateHeaderStats();
         loadRandomQOD();
-
-        // فحص روابط المشاركة (وضع المدرّس أو المبارزة)
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('mode') === 'duel') {
-            startQuizMode('duel', 'all');
-        } else if (params.get('mode') === 'exam') {
-            startQuizMode('exam', params.get('ch') || 'all');
-        }
     });
     </script>
 </body>
